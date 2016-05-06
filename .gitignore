@@ -1,6 +1,6 @@
 *.pyc 
 
-settings.py 
+settings_local.py 
 
 *.json 
 
