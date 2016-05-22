@@ -10,7 +10,7 @@ class UserProfile(models.Model):
         (1, 'Student')
     )
     
-    user = models.OneToOneField(User, unique=True, related_name='user_profile')
+    user = models.OneToOneField(User, unique=True, related_name='user_login')
     first_name = models.CharField(null=True, max_length=100)
     last_name = models.CharField(null=True, max_length=100)
     designation = models.IntegerField( choices = DESIGNATION_CHOICES, default=0)
@@ -21,4 +21,4 @@ class UserProfile(models.Model):
         search_fields = ('first_name','last_name','designation')
 
     def __unicode__(self):
-        return first_name + " " + last_name
+        return self.first_name + " " + self.last_name
