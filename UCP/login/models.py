@@ -10,11 +10,11 @@ class UserProfile(models.Model):
         (1, 'Student')
     )
     
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, unique=True, related_name='user_profile')
     first_name = models.CharField(null=True, max_length=100)
     last_name = models.CharField(null=True, max_length=100)
-    designation = models.IntegerField(blank=True, choices = DESIGNATION_CHOICES, default=0, null=True)
-    profile_image = models.ImageField(upload_to="/user_images/profile_images")
+    designation = models.IntegerField( choices = DESIGNATION_CHOICES, default=0)
+    profile_image = models.ImageField(upload_to="/user_images/profile_images", blank=True)
 
     class Admin:
         list_display = ('first_name','designation')
