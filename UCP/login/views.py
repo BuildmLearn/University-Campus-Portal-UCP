@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 from login.serializers import UserSerializer, UserProfileSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -26,3 +28,27 @@ class UserRegistration(APIView):
         response["result"] = 0
         response["error"] = serializer.errors
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+class UserLogin(APIView):
+    '''
+    Handles Login API
+    '''
+    def post(self, request, format=None):
+        response = {}
+        
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(username=username, password=password)
+        
+        if user:
+            if user.is_active:
+                response["result"] = 1
+                response["message"] = "Login Successful"
+            else:
+                response["result"] = 0
+                response["message"] = "Your Account is not activated yet"
+        else:
+            response["result"] = 0
+            response["message"] = "Invalid Account details supplied"
+        return Response(response, status=status.HTTP_200_OK)
