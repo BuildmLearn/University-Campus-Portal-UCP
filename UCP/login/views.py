@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
- 
+
+from UCP.constants import result, message
 # Create your views here.
 class UserRegistration(APIView):
     '''
@@ -22,10 +23,10 @@ class UserRegistration(APIView):
             userProfileSerializer = UserProfileSerializer(data=request.data)
             if userProfileSerializer.is_valid():
                 userProfileSerializer.save(user = user)
-                response["result"] = 1
+                response["result"] = result.RESULT_SUCCESS
                 response["data"] = userProfileSerializer.data
                 return Response(response, status=status.HTTP_201_CREATED)
-        response["result"] = 0
+        response["result"] = result.RESULT_FAILURE
         response["error"] = serializer.errors
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
@@ -43,12 +44,12 @@ class UserLogin(APIView):
         
         if user:
             if user.is_active:
-                response["result"] = 1
-                response["message"] = "Login Successful"
+                response["result"] = result.RESULT_SUCCESS
+                response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
             else:
-                response["result"] = 0
-                response["message"] = "Your Account is not activated yet"
+                response["result"] = result.RESULT_FAILURE
+                response["message"] = message.MESSAGE_ACCOUNT_INACTIVE
         else:
-            response["result"] = 0
-            response["message"] = "Invalid Account details supplied"
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = message.MESSAGE_INVALID_LOGIN_DETAILS
         return Response(response, status=status.HTTP_200_OK)
