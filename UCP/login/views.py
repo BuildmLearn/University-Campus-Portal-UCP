@@ -22,11 +22,11 @@ def sendVerificationEmail(user):
     """
     emailVerificationCode = EmailVerificationCode.objects.create(user=user)
     emailSubject = "Verification Email"
-    emailMessage = emailVerificationCode.verification_code
+    emailMessage = "localhost:8000/user-auth/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
-    
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    print emailMessage
+    send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
     
 class UserRegistration(APIView):
@@ -57,7 +57,7 @@ class UserLogin(APIView):
     def post(self, request, format=None):
         response = {}
         
-        username = request.POST['username']
+        username = request.POST['email']
         password = request.POST['password']
         
         user = authenticate(username=username, password=password)
@@ -88,6 +88,8 @@ class VerifyEmail(APIView):
             user = User.objects.get(email=email)
             if EmailVerificationCode.objects.filter(verification_code = verification_code,user=user).exists():
                 #verify the user
+                user.is_active = True
+                user.save()
                 response["result"] = result.RESULT_SUCCESS
                 response["message"] = "User email is successfully verified"
             else:

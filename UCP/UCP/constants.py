@@ -14,5 +14,6 @@ class message():
     
 class error():
     '''
-    error codes
+    error codes and messages
     '''
+    VALIDATION_EMAIL_EXISTS = "Email ID already registered"

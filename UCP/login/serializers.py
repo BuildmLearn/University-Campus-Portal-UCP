@@ -1,6 +1,9 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
+
+from rest_framework import serializers
+
 from login.models import UserProfile
+from UCP.constants import error
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User(email=validated_data['email'], username=validated_data['email'])
         user.set_password(validated_data['password'])
+        user.is_active = False
         user.save()
         return user
     
@@ -20,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         Check if user with this email already exists
         """
         if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Email ID already registered")
+            raise serializers.ValidationError(error.VALIDATION_EMAIL_EXISTS)
         return value
 
 
