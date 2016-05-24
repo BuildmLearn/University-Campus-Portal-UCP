@@ -10,7 +10,16 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 
 from UCP.constants import result, message
+from login.models import EmailVerificationCode
 # Create your views here.
+
+def sendVerificationEmail(user):
+    """
+    Creates a EmailVerificationCode Object and send a verification mail to the user
+    """
+    emailVerificationCode = EmailVerificationCode.objects.create(user=user)
+
+    
 class UserRegistration(APIView):
     '''
     Creates a new user profile
@@ -25,6 +34,8 @@ class UserRegistration(APIView):
                 userProfileSerializer.save(user = user)
                 response["result"] = result.RESULT_SUCCESS
                 response["data"] = userProfileSerializer.data
+                #send a verification email
+                sendVerificationEmail(user)
                 return Response(response, status=status.HTTP_201_CREATED)
         response["result"] = result.RESULT_FAILURE
         response["error"] = serializer.errors
