@@ -92,6 +92,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#default local settings constants
+VERIFICATION_EMAIL_EXPIRY_TIME = 1
+
 #import local_settings.py file if it exists
 try:
     from settings_local import *

@@ -1,3 +1,5 @@
 Django==1.8.9
 MySQL-python==1.2.5
 wheel==0.24.0
+Pillow==3.2.0
+djangorestframework==3.3.3
