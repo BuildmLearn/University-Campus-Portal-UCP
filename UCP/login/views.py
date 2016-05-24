@@ -26,7 +26,7 @@ def sendVerificationEmail(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     
-    send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
     
 class UserRegistration(APIView):
