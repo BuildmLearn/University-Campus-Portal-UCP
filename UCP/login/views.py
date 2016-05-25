@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 
 from UCP.constants import result, message
-from login.models import EmailVerificationCode
+from login.models import EmailVerificationCode, PasswordResetCode
 from UCP.settings import EMAIL_HOST_USER
 # Create your views here.
 
@@ -26,7 +26,21 @@ def sendVerificationEmail(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+
+
+def sendPasswordResetEmail(user):
+    """
+    Creates a PasswordResetCode Object and send the code to the user
+    """
+    passwordResetCode = PasswordResetCode.objects.create(user=user)
+    emailSubject = "Reset your password"
+    emailMessage = "Use the code " + passwordResetCode.reset_code + " to reset your password"
+    to = [user.email]
+    senderEmail = EMAIL_HOST_USER
+    print emailMessage
+    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+
 
     
 class UserRegistration(APIView):
@@ -103,8 +117,45 @@ class VerifyEmail(APIView):
             
         return Response(response, status=status.HTTP_200_OK)
         
-    
-    
-    
-    
-    
+class ForgotPassword(APIView):
+    """
+    Sends a password reset link to the user
+    """
+    def get(self, request, format=None):
+        response = {}
+        
+        email = request.GET['email']
+        if User.objects.filter(email = email).exists():
+            user = User.objects.get(email=email)
+            sendPasswordResetEmail(user)
+            response["result"] = result.RESULT_SUCCESS
+            response["message"] = "Instructions to reset your password have been sent to your email id"
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = "Given email Id is not registered"
+            #invalid email provided
+            
+        return Response(response, status=status.HTTP_200_OK)
+        
+        
+class ResetPassword(APIView):
+    """
+    Resets a user's password using a password reset code
+    """
+    def post(self, request, format=None):
+        response = {}
+        reset_code = request.POST['reset_code']
+        password = request.POST['password']
+        
+        if PasswordResetCode.objects.filter(reset_code = reset_code).exists():
+            user = PasswordResetCode.objects.get(reset_code = reset_code).user
+            user.set_password(password)
+            user.save()
+            response["result"] = result.RESULT_SUCCESS
+            response["message"] = "Your password has been reset"
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = "The password code is not valid"
+        
+        return Response(response, status=status.HTTP_200_OK)
+

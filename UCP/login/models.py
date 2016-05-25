@@ -3,7 +3,7 @@ import os
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from UCP.settings import VERIFICATION_EMAIL_EXPIRY_TIME
+from UCP.settings import VERIFICATION_EMAIL_EXPIRY_TIME,PASSWORD_RESET_CODE_EXPIRY_TIME
 
 class UserProfile(models.Model):
     """
@@ -47,3 +47,25 @@ class EmailVerificationCode(models.Model):
             self.expiry_date = self.set_expiry_date()
             self.verification_code = self.create_hash_code()
         super(EmailVerificationCode, self).save(*args, **kwargs)
+
+class PasswordResetCode(models.Model):
+    """
+    Codes for users to recover their accounts
+    """
+    
+    user = models.ForeignKey(User)
+    reset_code = models.CharField(blank=True, max_length=100)
+    expiry_date = models.DateField()
+    
+    def set_expiry_date(self):
+        return timezone.now()+timedelta(days=PASSWORD_RESET_CODE_EXPIRY_TIME)
+        
+    def create_hash_code(self):
+        return os.urandom(6).encode('hex')
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.expiry_date = self.set_expiry_date()
+            self.reset_code = self.create_hash_code()
+        super(PasswordResetCode, self).save(*args, **kwargs)
+        
