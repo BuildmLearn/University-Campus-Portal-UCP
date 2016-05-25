@@ -23,7 +23,16 @@ Free &amp; Open source Web application for Universities
     }
 }
     ```
-5. Run python migrations.
+5.  Add SMTP details to the settings_local.py file
+
+    ```python
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'your_smtp_host'
+EMAIL_HOST_USER = 'your_smtp_username'
+EMAIL_HOST_PASSWORD = 'your_smtp_password'
+EMAIL_PORT = your_smtp_port_number
+    ```
+6. Run python migrations.
     
     ```bash
     python manage.py makemigrations
