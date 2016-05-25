@@ -1,18 +1,19 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
-from django.utils import timezone
 from django.shortcuts import render
+from django.utils import timezone
 
-from login.serializers import UserSerializer, UserProfileSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from UCP.constants import result, message
 from login.models import EmailVerificationCode, PasswordResetCode
+from login.serializers import UserSerializer, UserProfileSerializer
+from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 # Create your views here.
 
@@ -80,7 +81,13 @@ class UserLogin(APIView):
         
         if user:
             if user.is_active:
+                #create a authentication key for the user
+                token = Token.objects.create(user=user)
+                data = {}
+                data["access_token"] = token.key
+                
                 response["result"] = result.RESULT_SUCCESS
+                response["data"] = data
                 response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
             else:
                 response["result"] = result.RESULT_FAILURE
