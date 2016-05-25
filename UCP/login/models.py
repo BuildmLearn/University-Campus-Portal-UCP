@@ -15,8 +15,6 @@ class UserProfile(models.Model):
     )
     
     user = models.OneToOneField(User, unique=True, related_name='user_login')
-    first_name = models.CharField(null=True, max_length=100)
-    last_name = models.CharField(null=True, max_length=100)
     designation = models.IntegerField( choices = DESIGNATION_CHOICES, default=0)
     profile_image = models.ImageField(upload_to="/user_images/profile_images", blank=True)
 

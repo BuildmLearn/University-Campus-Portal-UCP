@@ -13,7 +13,7 @@ from rest_framework.permissions import AllowAny
 
 from UCP.constants import result, message
 from login.models import EmailVerificationCode, PasswordResetCode
-from UCP.settings import EMAIL_HOST_USER
+from UCP.settings import EMAIL_HOST_USER, BASE_URL
 # Create your views here.
 
 def sendVerificationEmail(user):
@@ -22,7 +22,8 @@ def sendVerificationEmail(user):
     """
     emailVerificationCode = EmailVerificationCode.objects.create(user=user)
     emailSubject = "Verification Email"
-    emailMessage = "localhost:8000/user-auth/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
+    emailMessage = "Use the following link to activate your account \n"
+    emailMessage += BASE_URL + "/user-auth/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
@@ -56,11 +57,12 @@ class UserRegistration(APIView):
             if userProfileSerializer.is_valid():
                 userProfileSerializer.save(user = user)
                 response["result"] = result.RESULT_SUCCESS
-                response["data"] = userProfileSerializer.data
+                response["message"]= message.MESSAGE_REGISTRATION_SUCCESSFUL 
                 #send a verification email
                 sendVerificationEmail(user)
                 return Response(response, status=status.HTTP_201_CREATED)
         response["result"] = result.RESULT_FAILURE
+        response["message"] = message.MESSAGE_REGISTRATION_FAILED
         response["error"] = serializer.errors
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
@@ -68,11 +70,11 @@ class UserLogin(APIView):
     '''
     Handles Login API
     '''
-    def post(self, request, format=None):
+    def get(self, request, format=None):
         response = {}
         
-        username = request.POST['email']
-        password = request.POST['password']
+        username = request.GET['email']
+        password = request.GET['password']
         
         user = authenticate(username=username, password=password)
         
@@ -105,14 +107,14 @@ class VerifyEmail(APIView):
                 user.is_active = True
                 user.save()
                 response["result"] = result.RESULT_SUCCESS
-                response["message"] = "User email is successfully verified"
+                response["message"] = message.MESSAGE_EMAIL_VERIFICATION_SUCCESSFUL
             else:
                 response["result"] = result.RESULT_FAILURE
-                response["message"] = "The verification code provided does not exist or might have been expired"
+                response["message"] = message.MESSAGE_VERIFICATION_CODE_EXPIRED
                 #invalid or expired verification code
         else:
             response["result"] = result.RESULT_FAILURE
-            response["message"] = "Given email Id is not registered"
+            response["message"] = message.MESSAGE_EMAIL_NOT_REGISTERED
             #invalid email provided
             
         return Response(response, status=status.HTTP_200_OK)
@@ -129,10 +131,10 @@ class ForgotPassword(APIView):
             user = User.objects.get(email=email)
             sendPasswordResetEmail(user)
             response["result"] = result.RESULT_SUCCESS
-            response["message"] = "Instructions to reset your password have been sent to your email id"
+            response["message"] = message.MESSAGE_PASSWORD_RESET_CODE_SENT
         else:
             response["result"] = result.RESULT_FAILURE
-            response["message"] = "Given email Id is not registered"
+            response["message"] = message.MESSAGE_EMAIL_NOT_REGISTERED
             #invalid email provided
             
         return Response(response, status=status.HTTP_200_OK)
