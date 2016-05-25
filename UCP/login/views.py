@@ -104,25 +104,25 @@ class VerifyEmail(APIView):
     def get(self, request, format=None):
         response = {}
         
-        email = request.GET['email']
         verification_code = request.GET['code']
         
-        if User.objects.filter(email = email).exists():
-            user = User.objects.get(email=email)
-            if EmailVerificationCode.objects.filter(verification_code = verification_code,user=user).exists():
-                #verify the user
-                user.is_active = True
-                user.save()
-                response["result"] = result.RESULT_SUCCESS
-                response["message"] = message.MESSAGE_EMAIL_VERIFICATION_SUCCESSFUL
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_VERIFICATION_CODE_EXPIRED
-                #invalid or expired verification code
+        if EmailVerificationCode.objects.filter(verification_code = verification_code).exists():
+            #verify the user
+            code = EmailVerificationCode.objects.get(verification_code = verification_code)
+            user = code.user
+            user.is_active = True
+            user.save()
+            
+            #delete verification code so it cant be used again
+            code.delete()
+            
+            response["result"] = result.RESULT_SUCCESS
+            response["message"] = message.MESSAGE_EMAIL_VERIFICATION_SUCCESSFUL
         else:
             response["result"] = result.RESULT_FAILURE
-            response["message"] = message.MESSAGE_EMAIL_NOT_REGISTERED
-            #invalid email provided
+            response["message"] = message.MESSAGE_VERIFICATION_CODE_EXPIRED
+            #invalid or expired verification code
+        
             
         return Response(response, status=status.HTTP_200_OK)
         
@@ -157,9 +157,14 @@ class ResetPassword(APIView):
         password = request.POST['password']
         
         if PasswordResetCode.objects.filter(reset_code = reset_code).exists():
-            user = PasswordResetCode.objects.get(reset_code = reset_code).user
+            code = PasswordResetCode.objects.get(reset_code = reset_code)
+            user = code.user
             user.set_password(password)
             user.save()
+            
+            #delete the password rest code so it cant be used again
+            code.delete()
+            
             response["result"] = result.RESULT_SUCCESS
             response["message"] = "Your password has been reset"
         else:
