@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'login',
     'rest_framework',
     'django.contrib.admin',
+    'rest_framework_swagger',
     'django.contrib.auth',
     'rest_framework.authtoken',
     'django.contrib.contenttypes',

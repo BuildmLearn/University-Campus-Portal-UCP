@@ -48,8 +48,38 @@ def sendPasswordResetEmail(user):
 class UserRegistration(APIView):
     '''
     Creates a new user profile
+    
     '''
     def post(self, request, format=None):
+        """
+        ---
+        # YAML
+        
+        parameters:
+            - name: email
+              description: user email
+              required: true
+              type: string
+              paramType: form
+            - name: password
+              required: true
+              type: string
+              paramType: form
+            - name: first_name
+              required: true
+              type: string
+              paramType: form
+            - name: last_name
+              required: true
+              type: string
+              paramType : form
+            - name: designation
+              required: true
+              paramType: form
+              type: string
+              description: 0-Teacher 1-Student
+        
+        """
         serializer = UserSerializer(data=request.data)
         response = {}
         if serializer.is_valid():
@@ -72,6 +102,10 @@ class UserLogin(APIView):
     Handles Login API
     '''
     def get(self, request, format=None):
+        """
+        email -- email
+        password -- password
+        """
         response = {}
         
         username = request.GET['email']
