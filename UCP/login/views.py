@@ -21,6 +21,7 @@ def sendVerificationEmail(user):
     """
     Creates a EmailVerificationCode Object and send a verification mail to the user
     """
+    
     emailVerificationCode = EmailVerificationCode.objects.create(user=user)
     emailSubject = "Verification Email"
     emailMessage = "Use the following link to activate your account \n"
@@ -35,6 +36,7 @@ def sendPasswordResetEmail(user):
     """
     Creates a PasswordResetCode Object and send the code to the user
     """
+    
     passwordResetCode = PasswordResetCode.objects.create(user=user)
     emailSubject = "Reset your password"
     emailMessage = "Use the code " + passwordResetCode.reset_code + " to reset your password"
@@ -44,12 +46,11 @@ def sendPasswordResetEmail(user):
     #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 
-    
 class UserRegistration(APIView):
-    '''
+    """
     Creates a new user profile
+    """
     
-    '''
     def post(self, request, format=None):
         """
         ---
@@ -97,6 +98,7 @@ class UserRegistration(APIView):
         response["error"] = serializer.errors
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserLogin(APIView):
     '''
     Handles Login API
@@ -106,6 +108,7 @@ class UserLogin(APIView):
         email -- email
         password -- password
         """
+        
         response = {}
         
         username = request.GET['email']
@@ -135,6 +138,7 @@ class VerifyEmail(APIView):
     """
     Verify user email from the link sent to their email 
     """
+    
     def get(self, request, format=None):
         response = {}
         
@@ -159,11 +163,13 @@ class VerifyEmail(APIView):
         
             
         return Response(response, status=status.HTTP_200_OK)
-        
+
+
 class ForgotPassword(APIView):
     """
     Sends a password reset link to the user
     """
+    
     def get(self, request, format=None):
         response = {}
         
@@ -179,12 +185,13 @@ class ForgotPassword(APIView):
             #invalid email provided
             
         return Response(response, status=status.HTTP_200_OK)
-        
-        
+
+
 class ResetPassword(APIView):
     """
     Resets a user's password using a password reset code
     """
+    
     def post(self, request, format=None):
         response = {}
         reset_code = request.POST['reset_code']
@@ -206,4 +213,5 @@ class ResetPassword(APIView):
             response["message"] = "The password code is not valid"
         
         return Response(response, status=status.HTTP_200_OK)
+
 

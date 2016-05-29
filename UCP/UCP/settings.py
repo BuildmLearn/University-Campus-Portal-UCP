@@ -96,7 +96,9 @@ STATIC_URL = '/static/'
 
 #default local settings constants
 VERIFICATION_EMAIL_EXPIRY_TIME = 1
+
 PASSWORD_RESET_CODE_EXPIRY_TIME = 1
+
 BASE_URL = 'localhost:8000'
 
 #import local_settings.py file if it exists

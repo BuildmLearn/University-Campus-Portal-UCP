@@ -5,10 +5,12 @@ from django.db import models
 from django.utils import timezone
 from UCP.settings import VERIFICATION_EMAIL_EXPIRY_TIME,PASSWORD_RESET_CODE_EXPIRY_TIME
 
+
 class UserProfile(models.Model):
     """
     Teachers and student profiles who are portal users.
     """
+    
     TEACHER = 'Teacher'
     STUDENT = 'Student'
     
@@ -27,6 +29,7 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.first_name + " " + self.user.last_name
+
 
 class EmailVerificationCode(models.Model):
     """
@@ -49,6 +52,7 @@ class EmailVerificationCode(models.Model):
             self.verification_code = self.create_hash_code()
         super(EmailVerificationCode, self).save(*args, **kwargs)
 
+
 class PasswordResetCode(models.Model):
     """
     Codes for users to recover their accounts
@@ -69,4 +73,5 @@ class PasswordResetCode(models.Model):
             self.expiry_date = self.set_expiry_date()
             self.reset_code = self.create_hash_code()
         super(PasswordResetCode, self).save(*args, **kwargs)
-        
+
+

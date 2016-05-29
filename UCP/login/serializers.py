@@ -5,7 +5,10 @@ from rest_framework import serializers
 from login.models import UserProfile
 from UCP.constants import error
 
+
+
 class UserSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = User
         fields = ('id', 'email', 'password', 'first_name', 'last_name')
@@ -26,15 +29,19 @@ class UserSerializer(serializers.ModelSerializer):
     
     def validate_email(self, value):
         """
-        Check if user with this email already exists
+        Checks if a user with this email already exists
         """
+        
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError(error.ERROR_VALIDATION_EMAIL_EXISTS)
         return value
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = UserProfile
         fields = ('id','designation', 'profile_image')
         read_only_fields = ('id',)
+
+
