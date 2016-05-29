@@ -9,13 +9,16 @@ class UserProfile(models.Model):
     """
     Teachers and student profiles who are portal users.
     """
+    TEACHER = 'Teacher'
+    STUDENT = 'Student'
+    
     DESIGNATION_CHOICES =(
-        (0, 'Teacher'),
-        (1, 'Student')
+        (TEACHER, 'Teacher'),
+        (STUDENT, 'Student')
     )
     
     user = models.OneToOneField(User, unique=True, related_name='user_login')
-    designation = models.IntegerField( choices = DESIGNATION_CHOICES, default=0)
+    designation = models.CharField( choices = DESIGNATION_CHOICES, default=STUDENT, max_length=10)
     profile_image = models.ImageField(upload_to="/user_images/profile_images", blank=True)
 
     class Admin:
@@ -23,7 +26,7 @@ class UserProfile(models.Model):
         search_fields = ('first_name','last_name','designation')
 
     def __unicode__(self):
-        return self.first_name + " " + self.last_name
+        return self.user.first_name + " " + self.user.last_name
 
 class EmailVerificationCode(models.Model):
     """
