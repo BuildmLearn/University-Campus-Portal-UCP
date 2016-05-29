@@ -52,3 +52,30 @@ class LoginRequestSerializer(serializers.Serializer):
     
     email = serializers.EmailField()
     password = serializers.CharField()
+    
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    """
+    Serializer for verifying if the request by the Reset password API is valid
+    """
+    
+    reset_code = serializers.CharField()
+    password = serializers.CharField()
+    
+
+class PasswordForgotRequestSerializer(serializers.Serializer):
+    """
+    Serializer for verifying if the request by the Forgot password API is valid
+    """
+    
+    email = serializers.EmailField()
+    
+    
+class VerifyEmailRequestSerializer(serializers.Serializer):
+    """
+    Serializer for verifying if the request by the verify email API is valid
+    """
+    
+    code = serializers.CharField()
+    
+    
