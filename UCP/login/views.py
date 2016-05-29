@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
-from login.serializers import UserSerializer, UserProfileSerializer
+from login.serializers import UserSerializer, UserProfileSerializer, LoginRequestSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 # Create your views here.
@@ -110,28 +110,33 @@ class UserLogin(APIView):
         """
         
         response = {}
+        serializer = LoginRequestSerializer(data = request.GET)
+        if serializer.is_valid(): 
+            
+            username = request.GET['email']
+            password = request.GET['password']
         
-        username = request.GET['email']
-        password = request.GET['password']
+            user = authenticate(username=username, password=password)
         
-        user = authenticate(username=username, password=password)
-        
-        if user:
-            if user.is_active:
-                #create a authentication key for the user
-                token = Token.objects.create(user=user)
-                data = {}
-                data["access_token"] = token.key
+            if user:
+                if user.is_active:
+                    #create a authentication key for the user
+                    token = Token.objects.create(user=user)
+                    data = {}
+                    data["access_token"] = token.key
                 
-                response["result"] = result.RESULT_SUCCESS
-                response["data"] = data
-                response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
+                    response["result"] = result.RESULT_SUCCESS
+                    response["data"] = data
+                    response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
+                else:
+                    response["result"] = result.RESULT_FAILURE
+                    response["message"] = message.MESSAGE_ACCOUNT_INACTIVE
             else:
                 response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_ACCOUNT_INACTIVE
+                response["message"] = message.MESSAGE_INVALID_LOGIN_DETAILS
         else:
             response["result"] = result.RESULT_FAILURE
-            response["message"] = message.MESSAGE_INVALID_LOGIN_DETAILS
+            response["error"] = serializer.errors
         return Response(response, status=status.HTTP_200_OK)
         
 class VerifyEmail(APIView):

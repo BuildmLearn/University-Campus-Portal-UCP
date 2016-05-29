@@ -45,3 +45,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class LoginRequestSerializer(serializers.Serializer):
+    """
+    Serializer for verifying if the request by the login API is valid
+    """
+    
+    email = serializers.EmailField()
+    password = serializers.CharField()
