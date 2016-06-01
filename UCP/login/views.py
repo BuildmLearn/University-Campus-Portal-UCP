@@ -142,7 +142,8 @@ class UserLogin(APIView):
             response["error"] = serializer.errors
             
         return Response(response, status=status.HTTP_200_OK)
-        
+
+
 class VerifyEmail(APIView):
     """
     Verify user email from the link sent to their email 

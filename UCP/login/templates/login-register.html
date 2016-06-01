@@ -1,20 +1,46 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Uninversity Campus Portal</title>
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/login-register.css' %}" />
     </head>
     <body>
-        <div class="container">
-            <div id="header" class="row">
-                <h1>Welcome to UCP!</h1>
+        <div class="page-header header">
+            <div class="container">
+            <h2>University</h2>
+            <h4>Campus Portal</h4>
             </div>
-            <div id="main" class="row">
-                <div id="login_container" class="col-md-6">login form goes here</div>
-                <div id="registration_container" class="col-md-6">registration form goes here</div>
+         </div>
+         
+          <div class="container tab-group">
+             <div class="row tab-group">
+                <div class="col-xs-6 tab tab-selected">Login</div>
+                <div class="col-xs-6 tab">Register</div>
+             </div>
+         </div>
+         <div class="container">
+             <form>
+                 <fieldset class="form-group">
+                   <input type="email" class="form-control" id="email" placeholder="Enter email">
+                 </fieldset>
+                 <fieldset class="form-group">
+                   <input type="password" class="form-control" id="password" placeholder="Enter password">
+                 </fieldset>  
+                 <button type="submit" class="btn btn-block btn-success">Submit</button>
+
+             </form>
+         </div>
+
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Sample Footer</span>
             </div>
-            <div id="footer" class="row">
-                <p>Hey this is the footer</p>
-            </div>
-        </div>
+        </footer>
+
+        <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
     </body>
 </html>
