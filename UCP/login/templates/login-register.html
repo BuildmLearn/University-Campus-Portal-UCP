@@ -17,18 +17,50 @@
          
           <div class="container tab-group">
              <div class="row tab-group">
-                <div class="col-xs-6 tab tab-selected">Login</div>
-                <div class="col-xs-6 tab">Register</div>
+                <div id="login-tab-button" class="col-xs-6 tab" onclick="showLoginForm()">Login</div>
+                <div id="register-tab-button" class="col-xs-6 tab tab-selected" onclick="showRegisterForm()">Register</div>
              </div>
          </div>
-         <div class="container">
-             <form>
+         <div id="form-container" class="container">
+             <form class="tab_form" id="login-form">
                  <fieldset class="form-group">
                    <input type="email" class="form-control" id="email" placeholder="Enter email">
                  </fieldset>
                  <fieldset class="form-group">
                    <input type="password" class="form-control" id="password" placeholder="Enter password">
                  </fieldset>  
+                 <button type="submit" class="btn btn-block btn-success">Submit</button>
+
+             </form>
+
+             <form class="tab_form" id="registration-form" action="/user/register/" method="post">
+                 {% csrf_token %}
+                 <fieldset class="form-group">
+                   <input type="email" class="form-control" name="email" placeholder="email">
+                 </fieldset>
+                 <fieldset class="form-group">
+                   <input type="password" class="form-control" name="password" placeholder="password">
+                 </fieldset>  
+                 <fieldset class="form-group">
+                   <input type="password" class="form-control" name="repassword" placeholder="Re-enter password">
+                 </fieldset>
+                 <fieldset class="form-group">
+                   <input  class="form-control" name="first_name" placeholder="First Name">
+                 </fieldset>  
+                 <fieldset class="form-group">
+                   <input  class="form-control" name="last_name" placeholder="Last Name">
+                 </fieldset>  
+                 <fieldset class="form-group">
+                     <div class="row">
+                     <label class="col-xs-4 ">Register as:</label>
+                     <label class="radio-inline col-xs-4">
+                         <input value="teacher" type="radio" name="designation">Teacher
+                     </label>
+                     <label class="radio-inline col-xs-offset-4">
+                         <input type="radio" value="student" checked name="designation">Student
+                     </label>
+                     </div>
+                  </fieldset>  
                  <button type="submit" class="btn btn-block btn-success">Submit</button>
 
              </form>
@@ -42,5 +74,27 @@
 
         <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script>
+        
+        function showRegisterForm(){
+            $('#registration-form').show();
+            $('#login-form').hide();
+            $("#login-tab-button").removeClass('tab-selected');
+            $("#register-tab-button").addClass('tab-selected');
+            
+            window.history.pushState('register', 'Register', '/user/register');
+        }
+        
+        function showLoginForm(){
+            $('#login-form').show();
+            $('#registration-form').hide();
+            $("#login-tab-button").addClass('tab-selected');
+            $("#register-tab-button").removeClass('tab-selected');
+            
+            window.history.pushState('login', 'Login', '/user/login');
+        }
+        
+        
+        </script>
     </body>
 </html>

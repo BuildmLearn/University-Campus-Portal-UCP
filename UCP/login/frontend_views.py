@@ -22,3 +22,32 @@ class Login(View):
     
     def get(self, request):
         return render(request, 'login-register.html')
+        
+
+
+class Register(View):
+    
+    def get(self, request):
+        return render(request, 'login-register.html')
+        
+    def post(self, request):
+        serializer = Serializers.UserSerializer(data=request.POST)
+        response = {}
+        if serializer.is_valid():
+            user = serializer.save()
+            userProfileSerializer = Serializers.UserProfileSerializer(data=request.POST)
+            if userProfileSerializer.is_valid():
+                userProfileSerializer.save(user = user)
+                response["result"] = result.RESULT_SUCCESS
+                response["message"]= message.MESSAGE_REGISTRATION_SUCCESSFUL 
+                #send a verification email
+                sendVerificationEmail(user)
+                return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = message.MESSAGE_REGISTRATION_FAILED
+            response["error"] = serializer.errors
+        
+        print response
+        return render(request, 'login-register.html')
+        
