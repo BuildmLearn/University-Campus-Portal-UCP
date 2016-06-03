@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
 from django.shortcuts import render
+from django.template import Context
 from django.utils import timezone
 from django.views.generic import View
 
@@ -21,9 +22,41 @@ from UCP.settings import EMAIL_HOST_USER, BASE_URL
 class Login(View):
     
     def get(self, request):
-        return render(request, 'login-register.html')
+        context = Context()
+        context["is_login_page"] = True
+        return render(request, 'login-register.html', context)
         
-
+    def post(self, request, format=None):
+        response = {}
+        serializer = Serializers.LoginRequestSerializer(data = request.GET)
+        if serializer.is_valid(): 
+            
+            username = request.GET['email']
+            password = request.GET['password']
+        
+            user = authenticate(username=username, password=password)
+        
+            if user:
+                if user.is_active:
+                    #create a authentication key for the user
+                    token = Token.objects.create(user=user)
+                    data = {}
+                    data["access_token"] = token.key
+                
+                    response["result"] = result.RESULT_SUCCESS
+                    response["data"] = data
+                    response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
+                else:
+                    response["result"] = result.RESULT_FAILURE
+                    response["message"] = message.MESSAGE_ACCOUNT_INACTIVE
+            else:
+                response["result"] = result.RESULT_FAILURE
+                response["message"] = message.MESSAGE_INVALID_LOGIN_DETAILS
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["error"] = serializer.errors
+            
+        return render(request, 'login-register.html')
 
 class Register(View):
     

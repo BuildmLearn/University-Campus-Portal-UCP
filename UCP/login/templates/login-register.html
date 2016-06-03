@@ -22,17 +22,18 @@
              </div>
          </div>
          <div id="form-container" class="container">
-             <form class="tab_form" id="login-form">
+             
+             <form class="tab_form" id="login-form" action="/user/login/" method="post">
+                 {% csrf_token %}
                  <fieldset class="form-group">
-                   <input type="email" class="form-control" id="email" placeholder="Enter email">
+                   <input type="email" class="form-control" name="email" placeholder="email">
                  </fieldset>
                  <fieldset class="form-group">
-                   <input type="password" class="form-control" id="password" placeholder="Enter password">
+                   <input type="password" class="form-control" name="password" placeholder="password">
                  </fieldset>  
                  <button type="submit" class="btn btn-block btn-success">Submit</button>
-
              </form>
-
+             
              <form class="tab_form" id="registration-form" action="/user/register/" method="post">
                  {% csrf_token %}
                  <fieldset class="form-group">
@@ -93,8 +94,15 @@
             
             window.history.pushState('login', 'Login', '/user/login');
         }
+        $( document ).ready(function() {
         
+            {% if is_login_page %}
+            
+                showLoginForm();
+            
+            {% endif %}
         
+        });
         </script>
     </body>
 </html>
