@@ -22,11 +22,12 @@ from UCP.settings import EMAIL_HOST_USER, BASE_URL
 class Login(View):
     
     def get(self, request):
-        context = Context()
+        context = {}
         context["is_login_page"] = True
-        return render(request, 'login-register.html', context)
         
-    def post(self, request, format=None):
+        if not 'email' in request.GET:
+            return render(request, 'login-register.html', context)
+        print "this is a form submission request"
         response = {}
         serializer = Serializers.LoginRequestSerializer(data = request.GET)
         if serializer.is_valid(): 
@@ -56,7 +57,9 @@ class Login(View):
             response["result"] = result.RESULT_FAILURE
             response["error"] = serializer.errors
             
-        return render(request, 'login-register.html')
+        context["response"] = response
+        return render(request, 'login-register.html', context)
+
 
 class Register(View):
     

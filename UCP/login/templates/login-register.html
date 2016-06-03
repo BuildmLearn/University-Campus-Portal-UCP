@@ -23,7 +23,7 @@
          </div>
          <div id="form-container" class="container">
              
-             <form class="tab_form" id="login-form" action="/user/login/" method="post">
+             <form class="tab_form" id="login-form" action="/user/login/" method="get">
                  {% csrf_token %}
                  <fieldset class="form-group">
                    <input type="email" class="form-control" name="email" placeholder="email">
@@ -72,7 +72,27 @@
                 <span class="text-muted">Sample Footer</span>
             </div>
         </footer>
-
+        <!-- Modal -->
+         <div class="modal fade" id="messageModal" role="dialog" style="margin-top:25%;">
+           <div class="modal-dialog">
+    
+             <!-- Modal content-->
+             <div class="modal-content">
+               <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 <h4 id="modal-heading" class="modal-title">Modal Header</h4>
+               </div>
+               <div class="modal-body">
+                 <p id="modal-text">Some text in the modal.</p>
+               </div>
+               <div class="modal-footer">
+                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </div>
+             </div>
+      
+           </div>
+         </div>
+         
         <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.js' %}"></script>
         <script>
@@ -99,7 +119,18 @@
             {% if is_login_page %}
             
                 showLoginForm();
-            
+                
+                $("#modal-heading").text("Error")
+                {% if response.message %}
+                $("#modal-text").text("{{ response.message }}")
+                {% endif %}
+                {% if response.error %}
+                $("#modal-text").text("{{ response.error }}")
+                {% endif %}
+                {% if response.message %}
+                $("#messageModal").modal();
+                {% endif %}
+                
             {% endif %}
         
         });
