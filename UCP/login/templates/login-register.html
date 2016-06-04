@@ -34,16 +34,18 @@
                  <button type="submit" class="btn btn-block btn-success">Submit</button>
              </form>
              
-             <form class="tab_form" id="registration-form" action="/user/register/" method="post">
+             <form class="tab_form" id="registration-form" action="/user/register/" data-toggle="validator" method="post">
                  {% csrf_token %}
                  <fieldset class="form-group">
                    <input type="email" class="form-control" name="email" placeholder="email">
                  </fieldset>
                  <fieldset class="form-group">
-                   <input type="password" class="form-control" name="password" placeholder="password">
+                   <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password">
                  </fieldset>  
                  <fieldset class="form-group">
-                   <input type="password" class="form-control" name="repassword" placeholder="Re-enter password">
+                   <input type="password" class="form-control" name="repassword"
+                   data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="confirm password">
+                   <div class="help-block with-errors"></div>
                  </fieldset>
                  <fieldset class="form-group">
                    <input  class="form-control" name="first_name" placeholder="First Name">
@@ -92,6 +94,7 @@
          
         <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="{% static 'js/validator.js' %}"></script>
         <script>
         
         function showRegisterForm(){
@@ -113,6 +116,7 @@
         }
         $( document ).ready(function() {
         
+                
             {% if is_login_page %}
             
                 showLoginForm();
