@@ -85,7 +85,7 @@ class UserRegistration(APIView):
         response = {}
         if serializer.is_valid():
             user = serializer.save()
-            userProfileSerializer = UserProfileSerializer(data=request.data)
+            userProfileSerializer = Serializers.UserProfileSerializer(data=request.data)
             if userProfileSerializer.is_valid():
                 userProfileSerializer.save(user = user)
                 response["result"] = result.RESULT_SUCCESS

@@ -21,8 +21,8 @@ class message():
     MESSAGE_INVALID_LOGIN_DETAILS = "the username or password provided was invalid"
     MESSAGE_ACCOUNT_INACTIVE = "your account has not been activated yet"
     
-    MESSAGE_REGISTRATION_SUCCESSFUL = "User successfully registered"
-    MESSAGE_REGISTRATION_FAILED = "User registration failed, please see the errors for more detail"
+    MESSAGE_REGISTRATION_SUCCESSFUL = "Registration successful. A verification email has been sent to your email"
+    MESSAGE_REGISTRATION_FAILED = "User registration failed"
     
     MESSAGE_EMAIL_VERIFICATION_SUCCESSFUL = "User email is successfully verified"
     MESSAGE_VERIFICATION_CODE_EXPIRED = "The verification code provided does not exist or might have been expired"

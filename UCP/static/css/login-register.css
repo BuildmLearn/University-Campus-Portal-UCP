@@ -42,3 +42,25 @@ body {
     margin: 0px;
     margin-bottom: 10px;
 }
+
+#form-container{
+    max-width: 800px;
+    position: relative;
+}
+
+.tab_form{
+    position: absolute;
+    top: 0px;
+    width:100%;
+    padding: 20px;
+    left: 0px;
+}
+
+
+@media (min-width: @screen-md-min) { 
+    #form-container{
+        background-color: red;
+    }
+}
+
+

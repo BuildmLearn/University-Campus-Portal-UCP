@@ -68,7 +68,9 @@ class Register(View):
         
     def post(self, request):
         serializer = Serializers.UserSerializer(data=request.POST)
+        context={}
         response = {}
+        
         if serializer.is_valid():
             user = serializer.save()
             userProfileSerializer = Serializers.UserProfileSerializer(data=request.POST)
@@ -76,14 +78,27 @@ class Register(View):
                 userProfileSerializer.save(user = user)
                 response["result"] = result.RESULT_SUCCESS
                 response["message"]= message.MESSAGE_REGISTRATION_SUCCESSFUL 
+                response["error"] = []
                 #send a verification email
-                sendVerificationEmail(user)
-                return Response(response, status=status.HTTP_201_CREATED)
+                #sendVerificationEmail(user)
+            else:
+                response["result"] = result.RESULT_FAILURE
+                response["message"] = message.MESSAGE_REGISTRATION_FAILED
+                response["error"] = userProfileSerializer.errors
         else:
             response["result"] = result.RESULT_FAILURE
             response["message"] = message.MESSAGE_REGISTRATION_FAILED
             response["error"] = serializer.errors
         
+        errors = []
+        
+        for key in response["error"]:
+            for error in response["error"][key]:
+                errors.append(error)
+        
+        response["errors"] = errors
+        context["response"] = response
+        
         print response
-        return render(request, 'login-register.html')
+        return render(request, 'login-register.html', context)
         

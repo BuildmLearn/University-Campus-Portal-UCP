@@ -55,3 +55,14 @@ body {
     padding: 20px;
     left: 0px;
 }
+
+#main-content{
+    width:400px;
+    height:200px;
+    background-color:yellow;
+}
+
+#message-modal{
+    margin-top: 25%;
+}
+

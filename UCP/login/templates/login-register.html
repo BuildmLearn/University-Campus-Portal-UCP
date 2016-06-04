@@ -55,10 +55,10 @@
                      <div class="row">
                      <label class="col-xs-4 ">Register as:</label>
                      <label class="radio-inline col-xs-4">
-                         <input value="teacher" type="radio" name="designation">Teacher
+                         <input value="Teacher" type="radio" name="designation">Teacher
                      </label>
                      <label class="radio-inline col-xs-offset-4">
-                         <input type="radio" value="student" checked name="designation">Student
+                         <input type="radio" value="Student" checked name="designation">Student
                      </label>
                      </div>
                   </fieldset>  
@@ -73,17 +73,14 @@
             </div>
         </footer>
         <!-- Modal -->
-         <div class="modal fade" id="messageModal" role="dialog" style="margin-top:25%;">
+         <div class="modal fade" id="message-modal" role="dialog" >
            <div class="modal-dialog">
     
              <!-- Modal content-->
              <div class="modal-content">
-               <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                 <h4 id="modal-heading" class="modal-title">Modal Header</h4>
-               </div>
+              
                <div class="modal-body">
-                 <p id="modal-text">Some text in the modal.</p>
+                 <p id="modal-text"></p>
                </div>
                <div class="modal-footer">
                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -119,19 +116,17 @@
             {% if is_login_page %}
             
                 showLoginForm();
-                
-                $("#modal-heading").text("Error")
-                {% if response.message %}
-                $("#modal-text").text("{{ response.message }}")
-                {% endif %}
-                {% if response.error %}
-                $("#modal-text").text("{{ response.error }}")
-                {% endif %}
-                {% if response.message %}
-                $("#messageModal").modal();
-                {% endif %}
-                
+            
             {% endif %}
+            
+            {% if response.message %}
+                $("#modal-text").append("<h3>{{ response.message }}</h3>")
+                {% for error in response.errors %}
+                    $("#modal-text").append("{{ error }}")
+                {% endfor %}
+                $("#message-modal").modal();
+            {% endif %}
+                
         
         });
         </script>
