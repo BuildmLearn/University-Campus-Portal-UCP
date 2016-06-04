@@ -13,126 +13,126 @@
             <h2>University</h2>
             <h4>Campus Portal</h4>
             </div>
-         </div>
+        </div>
          
-          <div class="container tab-group">
-             <div class="row tab-group">
+        <div class="container tab-group">
+            <div class="row tab-group">
                 <div id="login-tab-button" class="col-xs-6 tab" onclick="showLoginForm()">Login</div>
-                <div id="register-tab-button" class="col-xs-6 tab tab-selected" onclick="showRegisterForm()">Register</div>
+                <div id="register-tab-button" class="col-xs-6 tab tab-selected" onclick="showRegisterForm()">
+                    Register
+                </div>
              </div>
-         </div>
-         <div id="form-container" class="container">
+        </div>
+        
+        <div id="form-container" class="container">
+            <!--Login Form -->
+            <form class="tab_form" id="login-form" action="/user/login/" method="get">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="email">
+                </fieldset>
+                <fieldset class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="password">
+                </fieldset>  
+                    <button type="submit" class="btn btn-block btn-success">Submit</button>
+            </form>
+            <!--Login form ends -->
              
-             <form class="tab_form" id="login-form" action="/user/login/" method="get">
-                 {% csrf_token %}
-                 <fieldset class="form-group">
-                   <input type="email" class="form-control" name="email" placeholder="email">
-                 </fieldset>
-                 <fieldset class="form-group">
-                   <input type="password" class="form-control" name="password" placeholder="password">
-                 </fieldset>  
-                 <button type="submit" class="btn btn-block btn-success">Submit</button>
-             </form>
-             
-             <form class="tab_form" id="registration-form" action="/user/register/" data-toggle="validator" method="post">
-                 {% csrf_token %}
-                 <fieldset class="form-group">
-                   <input type="email" class="form-control" name="email" placeholder="email">
-                 </fieldset>
-                 <fieldset class="form-group">
-                   <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password">
-                 </fieldset>  
-                 <fieldset class="form-group">
-                   <input type="password" class="form-control" name="repassword"
-                   data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="confirm password">
-                   <div class="help-block with-errors"></div>
-                 </fieldset>
-                 <fieldset class="form-group">
-                   <input  class="form-control" name="first_name" placeholder="First Name">
-                 </fieldset>  
-                 <fieldset class="form-group">
-                   <input  class="form-control" name="last_name" placeholder="Last Name">
-                 </fieldset>  
-                 <fieldset class="form-group">
-                     <div class="row">
-                     <label class="col-xs-4 ">Register as:</label>
-                     <label class="radio-inline col-xs-4">
-                         <input value="Teacher" type="radio" name="designation">Teacher
-                     </label>
-                     <label class="radio-inline col-xs-offset-4">
-                         <input type="radio" value="Student" checked name="designation">Student
-                     </label>
-                     </div>
-                  </fieldset>  
-                 <button type="submit" class="btn btn-block btn-success">Submit</button>
+            <!--Registrations Form -->
+            <form class="tab_form" id="registration-form" action="/user/register/" 
+                data-toggle="validator" method="post">
+                {% csrf_token %}
+                
+                <fieldset class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="email">
+                </fieldset>
+                
+                <fieldset class="form-group">
+                    <input type="password" id="inputPassword" class="form-control" 
+                        name="password" placeholder="password">
+                </fieldset>  
+                
+                <fieldset class="form-group">
+                    <input type="password" class="form-control" name="repassword"
+                        data-match="#inputPassword" 
+                        data-match-error="Whoops, these don't match" 
+                        placeholder="confirm password">
+                <div class="help-block with-errors"></div>
+                </fieldset>
+                
+                <fieldset class="form-group">
+                    <input  class="form-control" name="first_name" placeholder="First Name">
+                </fieldset>  
+                
+                <fieldset class="form-group">
+                    <input  class="form-control" name="last_name" placeholder="Last Name">
+                </fieldset>  
+                
+                <fieldset class="form-group">
+                    <div class="row">
+                        <label class="col-xs-4 ">Register as:</label>
+                        <label class="radio-inline col-xs-4">
+                            <input value="Teacher" type="radio" name="designation">Teacher
+                        </label>
+                        <label class="radio-inline col-xs-offset-4">
+                            <input type="radio" value="Student" checked name="designation">Student
+                        </label>
+                    </div>
+                </fieldset>  
+                
+                <button type="submit" class="btn btn-block btn-success">Submit</button>
 
              </form>
+              <!--Registration Form Ends-->
          </div>
-
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted">Sample Footer</span>
-            </div>
-        </footer>
-        <!-- Modal -->
+         <!--Form Container Ends -->
+         
+         <footer class="footer">
+             <div class="container">
+                 <span class="text-muted">Sample Footer</span>
+             </div>
+         </footer>
+         
+         <!-- Modal -->
          <div class="modal fade" id="message-modal" role="dialog" >
-           <div class="modal-dialog">
-    
-             <!-- Modal content-->
-             <div class="modal-content">
-              
-               <div class="modal-body">
-                 <p id="modal-text"></p>
-               </div>
-               <div class="modal-footer">
-                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-               </div>
+             <div class="modal-dialog">
+                 <!-- Modal content-->
+                 <div class="modal-content">
+                     <div class="modal-body">
+                         <p id="modal-text"></p>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+                 </div>
              </div>
-      
-           </div>
          </div>
          
         <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.js' %}"></script>
         <script src="{% static 'js/validator.js' %}"></script>
+        <script src="{% static 'js/login-register.js' %}"></script>
+        
         <script>
-        
-        function showRegisterForm(){
-            $('#registration-form').show();
-            $('#login-form').hide();
-            $("#login-tab-button").removeClass('tab-selected');
-            $("#register-tab-button").addClass('tab-selected');
-            
-            window.history.pushState('register', 'Register', '/user/register');
-        }
-        
-        function showLoginForm(){
-            $('#login-form').show();
-            $('#registration-form').hide();
-            $("#login-tab-button").addClass('tab-selected');
-            $("#register-tab-button").removeClass('tab-selected');
-            
-            window.history.pushState('login', 'Login', '/user/login');
-        }
-        $( document ).ready(function() {
-        
-                
-            {% if is_login_page %}
-            
-                showLoginForm();
-            
-            {% endif %}
-            
-            {% if response.message %}
-                $("#modal-text").append("<h3>{{ response.message }}</h3>")
-                {% for error in response.errors %}
-                    $("#modal-text").append("{{ error }}")
-                {% endfor %}
-                $("#message-modal").modal();
-            {% endif %}
-                
-        
-        });
+            $( document ).ready(function() {
+
+
+             {% if is_login_page %}
+
+                 showLoginForm();
+
+             {% endif %}
+
+             {% if response.message %}
+                 $("#modal-text").append("<h3>{{ response.message }}</h3>")
+                 {% for error in response.errors %}
+                     $("#modal-text").append("{{ error }}")
+                 {% endfor %}
+                 $("#message-modal").modal();
+             {% endif %}
+
+
+            });
         </script>
     </body>
 </html>
