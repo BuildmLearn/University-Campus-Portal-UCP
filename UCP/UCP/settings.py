@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'login',
+    'discussion',
     'rest_framework',
     'django.contrib.admin',
     'rest_framework_swagger',
