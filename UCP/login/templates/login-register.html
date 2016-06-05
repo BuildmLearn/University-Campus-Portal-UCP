@@ -27,6 +27,7 @@
         <div id="form-container" class="container">
             <!--Login Form -->
             <form class="tab_form" id="login-form" action="/user/login/" method="get">
+                <h3 class="form-title">Login</h3>
                 {% csrf_token %}
                 <fieldset class="form-group">
                     <input type="email" class="form-control" name="email" placeholder="email">
@@ -41,6 +42,7 @@
             <!--Registrations Form -->
             <form class="tab_form" id="registration-form" action="/user/register/" 
                 data-toggle="validator" method="post">
+                <h3 class="form-title">Register</h3>
                 {% csrf_token %}
                 
                 <fieldset class="form-group">
