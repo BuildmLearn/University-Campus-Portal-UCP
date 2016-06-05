@@ -7,8 +7,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'css/login-register.css' %}" />
     </head>
-    <body>
-        <div class="page-header header">
+    <body><div class="page-header header">
             <div class="container">
             <h2>University</h2>
             <h4>Campus Portal</h4>
@@ -24,7 +23,7 @@
          <div id="form-container" class="container">
              
              <form class="tab_form" id="login-form" action="/user/login/" method="get">
-                 {% csrf_token %}
+                 <h3 class="form-title">Login</h3>
                  <fieldset class="form-group">
                    <input type="email" class="form-control" name="email" placeholder="email">
                  </fieldset>
@@ -35,7 +34,7 @@
              </form>
              
              <form class="tab_form" id="registration-form" action="/user/register/" method="post">
-                 {% csrf_token %}
+                 <h3 class="form-title">Register</h3>
                  <fieldset class="form-group">
                    <input type="email" class="form-control" name="email" placeholder="email">
                  </fieldset>
@@ -53,18 +52,18 @@
                  </fieldset>  
                  <fieldset class="form-group">
                      <div class="row">
-                     <label class="col-xs-4 ">Register as:</label>
-                     <label class="radio-inline col-xs-4">
-                         <input value="Teacher" type="radio" name="designation">Teacher
-                     </label>
-                     <label class="radio-inline col-xs-offset-4">
-                         <input type="radio" value="Student" checked name="designation">Student
-                     </label>
+                         <label class="col-xs-4 ">Register as:</label>
+                         <label class="radio-inline col-xs-4">
+                             <input value="Teacher" type="radio" name="designation">Teacher
+                         </label>
+                         <label class="radio-inline col-xs-offset-4">
+                             <input type="radio" value="Student" checked name="designation">Student
+                         </label>
                      </div>
                   </fieldset>  
                  <button type="submit" class="btn btn-block btn-success">Submit</button>
-
              </form>
+             
          </div>
 
         <footer class="footer">
@@ -95,8 +94,8 @@
         <script>
         
         function showRegisterForm(){
-            $('#registration-form').show();
-            $('#login-form').hide();
+            $('#registration-form').css("zIndex", 2);
+            $('#login-form').css("zIndex", 1);
             $("#login-tab-button").removeClass('tab-selected');
             $("#register-tab-button").addClass('tab-selected');
             
@@ -104,8 +103,8 @@
         }
         
         function showLoginForm(){
-            $('#login-form').show();
-            $('#registration-form').hide();
+            $('#login-form').css("zIndex", 2);
+            $('#registration-form').css("zIndex", 1);
             $("#login-tab-button").addClass('tab-selected');
             $("#register-tab-button").removeClass('tab-selected');
             
