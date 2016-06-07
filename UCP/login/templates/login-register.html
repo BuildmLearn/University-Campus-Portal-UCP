@@ -36,6 +36,9 @@
                     <input type="password" class="form-control" name="password" placeholder="password">
                 </fieldset>  
                     <button type="submit" class="btn btn-block btn-success">Submit</button>
+
+                    <a href="#" 
+                    data-toggle="modal" data-target="#password-modal" class="pull-right">forgot password?</a>
             </form>
             <!--Login form ends -->
              
@@ -95,7 +98,7 @@
              </div>
          </footer>
          
-         <!-- Modal -->
+         <!-- Message Modal -->
          <div class="modal fade" id="message-modal" role="dialog" >
              <div class="modal-dialog">
                  <!-- Modal content-->
@@ -106,6 +109,26 @@
                      <div class="modal-footer">
                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                      </div>
+                 </div>
+             </div>
+         </div>
+         
+         <!-- Forgot Password Modal -->
+         <div class="modal fade" id="password-modal" role="dialog" >
+             <div class="modal-dialog">
+                 <!-- Modal content-->
+                 <div class="modal-content">
+                     <!--Forgot Password Form -->
+                     <form id="forgot-password-form" action="/user/forgot_password/" style="padding:10px;" method="get">
+                         <h3 class="form-title">Forgot password</h3>
+                         {% csrf_token %}
+                         <label>Enter your registered email</label>
+                         <fieldset class="form-group">
+                             <input type="email" class="form-control" name="email" placeholder="email">
+                         </fieldset>
+                             <button type="submit" class="btn btn-block btn-success">Submit</button>
+                     </form>
+                     <!--Forgot password form ends -->
                  </div>
              </div>
          </div>
@@ -125,14 +148,14 @@
 
              {% endif %}
 
-             {% if response.message %}
-                 $("#modal-text").append("<h3>{{ response.message }}</h3>")
-                 {% for error in response.errors %}
-                     $("#modal-text").append("{{ error }}")
-                 {% endfor %}
-                 $("#message-modal").modal();
-             {% endif %}
+             {% for error in response.errors %}
+                 $("#modal-text").append("{{ error }}")
+             {% endfor %}
 
+             {% if response.message %}
+                 $("#modal-text").append("<h3>{{ response.message }}</h3>");
+                 $("#message-modal".modal();
+             {% endif %}
 
             });
         </script>

@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
 import login.serializers as Serializers
-from login.functions import login, register
+from login.functions import login, register, forgot_password, reset_password
 
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
@@ -59,4 +59,36 @@ class Register(View):
         
         print response
         return render(request, 'login-register.html', context)
+        
+
+class ForgotPassword(View):
+    
+    def get(self, request):
+        
+        context={}
+        response = forgot_password(request)
+        context["response"] = response
+        
+        if(response["result"] == 0):
+            return render(request, 'login-register.html', context)
+        if(response["result"] == 1):
+            return render(request, 'reset-password.html', context)
+       
+        
+class ResetPassword(View):
+    
+    def post(self, request):
+        
+        context={}
+        response = reset_password(request)
+        context["response"] = response
+        
+        
+        if(response["result"] == 1):
+            return render(request, 'login-register.html', context)
+        if(response["result"] == 0):
+            return render(request, 'reset-password.html', context)
+        
+        
+        
         

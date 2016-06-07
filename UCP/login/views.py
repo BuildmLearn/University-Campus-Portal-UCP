@@ -13,39 +13,10 @@ from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
 import login.serializers as Serializers
-from login.functions import login, register
+from login.functions import login, register, forgot_password, reset_password, verify_email
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 # Create your views here.
-
-def sendVerificationEmail(user):
-    """
-    Creates a EmailVerificationCode Object and send a verification mail to the user
-    """
-    
-    emailVerificationCode = EmailVerificationCode.objects.create(user=user)
-    emailSubject = "Verification Email"
-    emailMessage = "Use the following link to activate your account \n"
-    emailMessage += BASE_URL + "/user-auth/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
-    to = [user.email]
-    senderEmail = EMAIL_HOST_USER
-    print emailMessage
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
-
-
-def sendPasswordResetEmail(user):
-    """
-    Creates a PasswordResetCode Object and send the code to the user
-    """
-    
-    passwordResetCode = PasswordResetCode.objects.create(user=user)
-    emailSubject = "Reset your password"
-    emailMessage = "Use the code " + passwordResetCode.reset_code + " to reset your password"
-    to = [user.email]
-    senderEmail = EMAIL_HOST_USER
-    print emailMessage
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
-
 
 class UserRegistration(APIView):
     """
@@ -112,33 +83,9 @@ class VerifyEmail(APIView):
         """
         code -- code for email verification
         """
-        response = {}
-
-        serializer = Serializers.VerifyEmailRequestSerializer(data = request.GET)
-        if serializer.is_valid():
         
-            verification_code = request.GET['code']
+        response = verify_email(request)
         
-            if EmailVerificationCode.objects.filter(verification_code = verification_code).exists():
-                #verify the user
-                code = EmailVerificationCode.objects.get(verification_code = verification_code)
-                user = code.user
-                user.is_active = True
-                user.save()
-            
-                #delete verification code so it cant be used again
-                code.delete()
-            
-                response["result"] = result.RESULT_SUCCESS
-                response["message"] = message.MESSAGE_EMAIL_VERIFICATION_SUCCESSFUL
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_VERIFICATION_CODE_EXPIRED
-                #invalid or expired verification code
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["error"] = serializer.errors
-            
         return Response(response, status=status.HTTP_200_OK)
 
 
@@ -151,23 +98,7 @@ class ForgotPassword(APIView):
         """
         email -- Email of the user
         """
-        response = {}
-        
-        serializer = Serializers.PasswordForgotRequestSerializer(data = request.GET)
-        if serializer.is_valid():
-            email = request.GET['email']
-            if User.objects.filter(email = email).exists():
-                user = User.objects.get(email=email)
-                sendPasswordResetEmail(user)
-                response["result"] = result.RESULT_SUCCESS
-                response["message"] = message.MESSAGE_PASSWORD_RESET_CODE_SENT
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_EMAIL_NOT_REGISTERED
-                #invalid email provided
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["error"] = serializer.errors
+        response = forgot_password(request)
             
         return Response(response, status=status.HTTP_200_OK)
 
@@ -183,30 +114,8 @@ class ResetPassword(APIView):
         ---
         request_serializer: Serializers.PasswordResetRequestSerializer
         """
-        response = {}
         
-        serializer = Serializers.VerifyEmailRequestSerializer(data = request.GET)
-        if serializer.is_valid():
-            reset_code = request.POST['reset_code']
-            password = request.POST['password']
-        
-            if PasswordResetCode.objects.filter(reset_code = reset_code).exists():
-                code = PasswordResetCode.objects.get(reset_code = reset_code)
-                user = code.user
-                user.set_password(password)
-                user.save()
-            
-                #delete the password rest code so it cant be used again
-                code.delete()
-            
-                response["result"] = result.RESULT_SUCCESS
-                response["message"] = "Your password has been reset"
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = "The password code is not valid"
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["error"] = serializer.errors
+        response = reset_password(request)
             
         return Response(response, status=status.HTTP_200_OK)
 

@@ -18,6 +18,33 @@ import login.serializers as Serializers
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
+def send_verification_email(user):
+    """
+    Creates a EmailVerificationCode Object and send a verification mail to the user
+    """
+    
+    emailVerificationCode = EmailVerificationCode.objects.create(user=user)
+    emailSubject = "Verification Email"
+    emailMessage = "Use the following link to activate your account \n"
+    emailMessage += BASE_URL + "/user-auth/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
+    to = [user.email]
+    senderEmail = EMAIL_HOST_USER
+    print emailMessage
+    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+
+
+def send_password_reset_email(user):
+    """
+    Creates a PasswordResetCode Object and send the code to the user
+    """
+    
+    passwordResetCode = PasswordResetCode.objects.create(user=user)
+    emailSubject = "Reset your password"
+    emailMessage = "Use the code " + passwordResetCode.reset_code + " to reset your password"
+    to = [user.email]
+    senderEmail = EMAIL_HOST_USER
+    print emailMessage
+    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 def login(request):
     
@@ -68,7 +95,7 @@ def register(request):
             response["message"]= message.MESSAGE_REGISTRATION_SUCCESSFUL 
             response["error"] = []
             #send a verification email
-            #sendVerificationEmail(user)
+            send_verification_email(user)
         else:
             response["result"] = result.RESULT_FAILURE
             response["message"] = message.MESSAGE_REGISTRATION_FAILED
@@ -79,4 +106,87 @@ def register(request):
         response["error"] = serializer.errors
     
     return response
+    
+def forgot_password(request):
+    
+    response = {}
+    
+    serializer = Serializers.PasswordForgotRequestSerializer(data = request.GET)
+    if serializer.is_valid():
+        email = request.GET['email']
+        if User.objects.filter(email = email).exists():
+            user = User.objects.get(email=email)
+            send_password_reset_email(user)
+            response["result"] = result.RESULT_SUCCESS
+            response["message"] = message.MESSAGE_PASSWORD_RESET_CODE_SENT
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = message.MESSAGE_EMAIL_NOT_REGISTERED
+            #invalid email provided
+    else:
+        response["result"] = result.RESULT_FAILURE
+        response["error"] = serializer.errors
+    
+    return response
+    
+def reset_password(request):
+    
+    response = {}
+    
+    serializer = Serializers.PasswordResetRequestSerializer(data = request.POST)
+    if serializer.is_valid():
+        reset_code = request.POST['reset_code']
+        password = request.POST['password']
+    
+        if PasswordResetCode.objects.filter(reset_code = reset_code).exists():
+            code = PasswordResetCode.objects.get(reset_code = reset_code)
+            user = code.user
+            user.set_password(password)
+            user.save()
+        
+            #delete the password rest code so it cant be used again
+            code.delete()
+        
+            response["result"] = result.RESULT_SUCCESS
+            response["message"] = "Your password has been reset"
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = "The password code is not valid"
+    else:
+        response["result"] = result.RESULT_FAILURE
+        response["error"] = serializer.errors
+        
+    return response
+    
+def verify_email(request):
+    
+    response = {}
+
+    serializer = Serializers.VerifyEmailRequestSerializer(data = request.GET)
+    if serializer.is_valid():
+    
+        verification_code = request.GET['code']
+    
+        if EmailVerificationCode.objects.filter(verification_code = verification_code).exists():
+            #verify the user
+            code = EmailVerificationCode.objects.get(verification_code = verification_code)
+            user = code.user
+            user.is_active = True
+            user.save()
+        
+            #delete verification code so it cant be used again
+            code.delete()
+        
+            response["result"] = result.RESULT_SUCCESS
+            response["message"] = message.MESSAGE_EMAIL_VERIFICATION_SUCCESSFUL
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["message"] = message.MESSAGE_VERIFICATION_CODE_EXPIRED
+            #invalid or expired verification code
+    else:
+        response["result"] = result.RESULT_FAILURE
+        response["error"] = serializer.errors
+        
+    return response
+    
     
