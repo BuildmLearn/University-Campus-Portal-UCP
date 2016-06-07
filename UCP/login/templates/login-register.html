@@ -148,13 +148,9 @@
 
              {% endif %}
 
-             {% for error in response.errors %}
-                 $("#modal-text").append("{{ error }}")
-             {% endfor %}
-
-             {% if response.message %}
-                 $("#modal-text").append("<h3>{{ response.message }}</h3>");
-                 $("#message-modal".modal();
+             {% if message %}
+                 $("#modal-text").append("{{ message | safe }}");
+                 $("#message-modal").modal();
              {% endif %}
 
             });

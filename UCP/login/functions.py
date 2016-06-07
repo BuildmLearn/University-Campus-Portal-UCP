@@ -18,6 +18,18 @@ import login.serializers as Serializers
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
+def get_response_text(response):
+    messageHTML = ""
+    if "message" in response:
+        messageHTML += "<h4>" + response["message"] + "</h4>"
+        
+    if "error" in response:
+        for key in response["error"]:
+            for error in response["error"][key]:
+                messageHTML += "<h4>" + error + "</h4>"
+    
+    return messageHTML
+    
 def send_verification_email(user):
     """
     Creates a EmailVerificationCode Object and send a verification mail to the user

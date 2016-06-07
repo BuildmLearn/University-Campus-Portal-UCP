@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import Context
 from django.utils import timezone
 from django.views.generic import View
@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
 import login.serializers as Serializers
-from login.functions import login, register, forgot_password, reset_password
+from login.functions import login, register, forgot_password, reset_password, get_response_text
 
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
@@ -32,8 +32,8 @@ class Login(View):
         
         response = login(request)
         
-            
-        context["response"] = response
+        context["message"] = get_response_text(response)
+        
         return render(request, 'login-register.html', context)
 
 
@@ -48,16 +48,8 @@ class Register(View):
         
         response = register(request)
         
-        errors = []
+        context["message"] = get_response_text(response)
         
-        for key in response["error"]:
-            for error in response["error"][key]:
-                errors.append(error)
-        
-        response["errors"] = errors
-        context["response"] = response
-        
-        print response
         return render(request, 'login-register.html', context)
         
 
@@ -67,9 +59,11 @@ class ForgotPassword(View):
         
         context={}
         response = forgot_password(request)
-        context["response"] = response
+        context["message"] = get_response_text(response)
         
         if(response["result"] == 0):
+            context["is_login_page"] = True
+            print context
             return render(request, 'login-register.html', context)
         if(response["result"] == 1):
             return render(request, 'reset-password.html', context)
@@ -81,10 +75,10 @@ class ResetPassword(View):
         
         context={}
         response = reset_password(request)
-        context["response"] = response
-        
+        context["message"] = get_response_text(response)
         
         if(response["result"] == 1):
+            context["is_login_page"] = True
             return render(request, 'login-register.html', context)
         if(response["result"] == 0):
             return render(request, 'reset-password.html', context)
