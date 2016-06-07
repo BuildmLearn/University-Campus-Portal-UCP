@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
 import login.serializers as Serializers
+from login.functions import login, register
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 # Create your views here.
@@ -81,22 +82,7 @@ class UserRegistration(APIView):
               description: 0-Teacher 1-Student
         
         """
-        serializer = Serializers.UserSerializer(data=request.data)
-        response = {}
-        if serializer.is_valid():
-            user = serializer.save()
-            userProfileSerializer = Serializers.UserProfileSerializer(data=request.data)
-            if userProfileSerializer.is_valid():
-                userProfileSerializer.save(user = user)
-                response["result"] = result.RESULT_SUCCESS
-                response["message"]= message.MESSAGE_REGISTRATION_SUCCESSFUL 
-                #send a verification email
-                sendVerificationEmail(user)
-                return Response(response, status=status.HTTP_201_CREATED)
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["message"] = message.MESSAGE_REGISTRATION_FAILED
-            response["error"] = serializer.errors
+        response = register(request)
         
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
@@ -112,34 +98,7 @@ class UserLogin(APIView):
         password -- User's password
         """
         
-        response = {}
-        serializer = Serializers.LoginRequestSerializer(data = request.GET)
-        if serializer.is_valid(): 
-            
-            username = request.GET['email']
-            password = request.GET['password']
-        
-            user = authenticate(username=username, password=password)
-        
-            if user:
-                if user.is_active:
-                    #create a authentication key for the user
-                    token = Token.objects.create(user=user)
-                    data = {}
-                    data["access_token"] = token.key
-                
-                    response["result"] = result.RESULT_SUCCESS
-                    response["data"] = data
-                    response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
-                else:
-                    response["result"] = result.RESULT_FAILURE
-                    response["message"] = message.MESSAGE_ACCOUNT_INACTIVE
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_INVALID_LOGIN_DETAILS
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["error"] = serializer.errors
+        response = login(request)
             
         return Response(response, status=status.HTTP_200_OK)
 

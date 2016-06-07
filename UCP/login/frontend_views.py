@@ -15,6 +15,8 @@ from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
 import login.serializers as Serializers
+from login.functions import login, register
+
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
@@ -27,35 +29,9 @@ class Login(View):
         
         if not 'email' in request.GET:
             return render(request, 'login-register.html', context)
-        print "this is a form submission request"
-        response = {}
-        serializer = Serializers.LoginRequestSerializer(data = request.GET)
-        if serializer.is_valid(): 
-            
-            username = request.GET['email']
-            password = request.GET['password']
         
-            user = authenticate(username=username, password=password)
+        response = login(request)
         
-            if user:
-                if user.is_active:
-                    #create a authentication key for the user
-                    token = Token.objects.create(user=user)
-                    data = {}
-                    data["access_token"] = token.key
-                
-                    response["result"] = result.RESULT_SUCCESS
-                    response["data"] = data
-                    response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
-                else:
-                    response["result"] = result.RESULT_FAILURE
-                    response["message"] = message.MESSAGE_ACCOUNT_INACTIVE
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_INVALID_LOGIN_DETAILS
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["error"] = serializer.errors
             
         context["response"] = response
         return render(request, 'login-register.html', context)
@@ -67,28 +43,10 @@ class Register(View):
         return render(request, 'login-register.html')
         
     def post(self, request):
-        serializer = Serializers.UserSerializer(data=request.POST)
+
         context={}
-        response = {}
         
-        if serializer.is_valid():
-            user = serializer.save()
-            userProfileSerializer = Serializers.UserProfileSerializer(data=request.POST)
-            if userProfileSerializer.is_valid():
-                userProfileSerializer.save(user = user)
-                response["result"] = result.RESULT_SUCCESS
-                response["message"]= message.MESSAGE_REGISTRATION_SUCCESSFUL 
-                response["error"] = []
-                #send a verification email
-                #sendVerificationEmail(user)
-            else:
-                response["result"] = result.RESULT_FAILURE
-                response["message"] = message.MESSAGE_REGISTRATION_FAILED
-                response["error"] = userProfileSerializer.errors
-        else:
-            response["result"] = result.RESULT_FAILURE
-            response["message"] = message.MESSAGE_REGISTRATION_FAILED
-            response["error"] = serializer.errors
+        response = register(request)
         
         errors = []
         
