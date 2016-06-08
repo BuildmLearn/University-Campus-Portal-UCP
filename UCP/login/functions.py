@@ -61,15 +61,15 @@ def send_password_reset_email(user):
 def login(request):
     
     serializer = Serializers.LoginRequestSerializer(data = request.GET)
+    response = {}
+    
     if serializer.is_valid(): 
         
         username = request.GET['email']
         password = request.GET['password']
     
         user = authenticate(username=username, password=password)
-        
-        response = {}
-        
+                
         if user:
             if user.is_active:
                 #create a authentication key for the user

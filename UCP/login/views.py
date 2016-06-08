@@ -1,8 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.template import Context
 from django.utils import timezone
+from django.views.generic import View
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -13,110 +15,74 @@ from rest_framework.views import APIView
 
 from login.models import EmailVerificationCode, PasswordResetCode
 import login.serializers as Serializers
-from login.functions import login, register, forgot_password, reset_password, verify_email
+from login.functions import login, register, forgot_password, reset_password, get_response_text
+
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
-# Create your views here.
 
-class UserRegistration(APIView):
-    """
-    Creates a new user profile
-    """
+
+class Login(View):
     
-    def post(self, request, format=None):
-        """
-        ---
-        # YAML
+    def get(self, request):
+        context = {}
+        context["is_login_page"] = True
         
-        parameters:
-            - name: email
-              description: user email
-              required: true
-              type: string
-              paramType: form
-            - name: password
-              required: true
-              type: string
-              paramType: form
-            - name: first_name
-              required: true
-              type: string
-              paramType: form
-            - name: last_name
-              required: true
-              type: string
-              paramType : form
-            - name: designation
-              required: true
-              paramType: form
-              type: string
-              description: 0-Teacher 1-Student
-        
-        """
-        response = register(request)
-        
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserLogin(APIView):
-    '''
-    Handles Login API
-    '''
-    serializer_class = Serializers.LoginRequestSerializer
-    def get(self, request, format=None):
-        """
-        email -- User's email
-        password -- User's password
-        """
+        if not 'email' in request.GET:
+            return render(request, 'login-register.html', context)
         
         response = login(request)
-            
-        return Response(response, status=status.HTTP_200_OK)
-
-
-class VerifyEmail(APIView):
-    """
-    Verify user email from the link sent to their email 
-    """
-    
-    def get(self, request, format=None):
-        """
-        code -- code for email verification
-        """
         
-        response = verify_email(request)
+        context["message"] = get_response_text(response)
         
-        return Response(response, status=status.HTTP_200_OK)
+        return render(request, 'login-register.html', context)
 
 
-class ForgotPassword(APIView):
-    """
-    Sends a password reset link to the user
-    """
+class Register(View):
     
-    def get(self, request, format=None):
-        """
-        email -- Email of the user
-        """
+    def get(self, request):
+        return render(request, 'login-register.html')
+        
+    def post(self, request):
+
+        context={}
+        
+        response = register(request)
+        
+        context["message"] = get_response_text(response)
+        
+        return render(request, 'login-register.html', context)
+        
+
+class ForgotPassword(View):
+    
+    def get(self, request):
+        
+        context={}
         response = forgot_password(request)
-            
-        return Response(response, status=status.HTTP_200_OK)
-
-
-class ResetPassword(APIView):
-    """
-    Resets a user's password using a password reset code
-    """
-    
-    
-    def post(self, request, format=None):
-        """
-        ---
-        request_serializer: Serializers.PasswordResetRequestSerializer
-        """
+        context["message"] = get_response_text(response)
         
+        if(response["result"] == 0):
+            context["is_login_page"] = True
+            print context
+            return render(request, 'login-register.html', context)
+        if(response["result"] == 1):
+            return render(request, 'reset-password.html', context)
+       
+        
+class ResetPassword(View):
+    
+    def post(self, request):
+        
+        context={}
         response = reset_password(request)
-            
-        return Response(response, status=status.HTTP_200_OK)
-
-
+        context["message"] = get_response_text(response)
+        
+        if(response["result"] == 1):
+            context["is_login_page"] = True
+            return render(request, 'login-register.html', context)
+        if(response["result"] == 0):
+            return render(request, 'reset-password.html', context)
+        
+        
+        
+        
