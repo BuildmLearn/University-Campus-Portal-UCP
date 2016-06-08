@@ -1,3 +1,10 @@
+"""
+Seriliazers file for Login App
+
+contains serializers for models of the login app, as well as request serializers that are used to check if a request 
+is valid.
+"""
+
 from django.contrib.auth.models import User
 
 from rest_framework import serializers

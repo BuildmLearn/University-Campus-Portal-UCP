@@ -1,3 +1,9 @@
+"""
+Urls file for Login App
+
+contains url patterns for the frontend pages of the login app
+"""
+
 from django.conf.urls import include, patterns, url
 from django.views.generic import TemplateView
 

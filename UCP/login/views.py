@@ -1,24 +1,13 @@
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.template import Context
-from django.utils import timezone
+"""
+Views file for Login App
+
+contains views for the frontend pages of the Login App
+"""
+
+from django.shortcuts import render
 from django.views.generic import View
 
-from rest_framework import status
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from login.models import EmailVerificationCode, PasswordResetCode
-import login.serializers as Serializers
 from login.functions import login, register, forgot_password, reset_password, get_response_text
-
-from UCP.constants import result, message
-from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
 
 class Login(View):

@@ -1,3 +1,8 @@
+"""
+Functions file for login app
+
+consists of common functions used by both api.py and views.py file
+"""
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail

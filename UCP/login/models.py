@@ -1,3 +1,9 @@
+"""
+Models file for Login App
+
+consists of the model definitions for the login app
+"""
+
 from datetime import timedelta
 import os
 from django.contrib.auth.models import User

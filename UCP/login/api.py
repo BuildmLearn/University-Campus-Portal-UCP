@@ -1,23 +1,15 @@
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from django.core.mail import send_mail
-from django.shortcuts import render
-from django.template import Context
-from django.utils import timezone
-from django.views.generic import View
+"""
+API file for login app
+
+consists of the viewsets for the apis in the login app
+"""
 
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.decorators import detail_route, list_route
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import viewsets
 
-from login.models import EmailVerificationCode, PasswordResetCode
 from login.functions import login, register, forgot_password, reset_password, verify_email
-import login.serializers as Serializers
-from UCP.constants import result, message
-from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
 
 class UserViewSet(viewsets.ViewSet):
@@ -28,10 +20,22 @@ class UserViewSet(viewsets.ViewSet):
     @list_route()
     def login(self, request):
         """
-        email -- User's email
-        password -- User's password
-        """
+        Logging in a user
+        ---
+        # YAML
         
+        parameters:
+            -   name: email
+                description: User's email
+                required: true
+                type: string
+                paramType: query
+            -   name: password
+                description: User's password
+                required: true
+                type: string
+                paramType: query
+        """
         response = login(request)
             
         return Response(response, status=status.HTTP_200_OK)
@@ -39,6 +43,7 @@ class UserViewSet(viewsets.ViewSet):
     @list_route(methods=['post'])
     def register(self, request, format=None):
         """
+        Registering a new user
         ---
         # YAML
         
@@ -64,7 +69,7 @@ class UserViewSet(viewsets.ViewSet):
               required: true
               paramType: form
               type: string
-              description: 0-Teacher 1-Student
+              description: Teacher or Student
         
         """
         response = register(request)
@@ -74,12 +79,22 @@ class UserViewSet(viewsets.ViewSet):
     @list_route()
     def verify_email(self, request, format=None):
         """
-        code -- code for email verification
+        Verify user's email after registration
+        ---
+        # YAML
+        
+        parameters:
+            - name: code
+              description: code for email verification
+              required: true
+              type: string
+              paramType: query
         """
         
         response = verify_email(request)
         
         return Response(response, status=status.HTTP_200_OK)
+
 
 class UserPasswordViewSet(viewsets.ViewSet):
     """
@@ -89,7 +104,17 @@ class UserPasswordViewSet(viewsets.ViewSet):
     @list_route()
     def forgot_password(self, request):
         """
-        email -- Email of the user
+        Send password reset email to user
+        ---
+        # YAML
+        
+        parameters:
+            - name: email
+              description: user email
+              required: true
+              type: string
+              paramType: query
+        
         """
         response = forgot_password(request)
             
@@ -98,10 +123,25 @@ class UserPasswordViewSet(viewsets.ViewSet):
     @list_route(methods=['post'])
     def reset_password(self, request):
         """
+        Reset user's password
         ---
-        request_serializer: Serializers.PasswordResetRequestSerializer
+        # YAML
+        
+        parameters:
+            - name: reset_code
+              description: Password reset code mailed to the user
+              required: true
+              type: string
+              paramType: form
+            - name: password
+              description: New password to set for the user
+              required: true
+              type: string
+              paramType: form
+        
         """
         
         response = reset_password(request)
             
         return Response(response, status=status.HTTP_200_OK)
+
