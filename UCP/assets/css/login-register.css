@@ -42,17 +42,58 @@ body {
 }
 
 #form-container{
-    max-width: 800px;
+    width:100%;
     position: relative;
 }
-
-.tab_form{
-    position: absolute;
-    top: 0px;
-    width:100%;
-    padding: 20px;
-    left: 0px;
+@media (max-width: 750px) {
+    .tab_form{
+        position: absolute;
+        top: 0px;
+        height: 400px;
+        background-color: white;
+        width:100%;
+        padding: 20px;
+        left: 0px;
+    }
+    
+    #form-container{
+        max-width: 800px;
+    }
+    
+    .form-title{
+        display: none;
+    }
+    
 }
+
+@media (min-width: 751px) {
+    
+    .tab, .tab-selected{
+        display: none;
+    }
+    
+    .form-title{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .tab_form{
+        position: absolute;
+        top: 0px;
+        width: 40%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    
+    #login-form{
+        left:0px;
+    }
+    
+    #registration-form{
+        left:50%;
+    }
+}
+
 
 #main-content{
     width:400px;
@@ -60,7 +101,10 @@ body {
     background-color:yellow;
 }
 
-#message-modal{
+.modal{
     margin-top: 25%;
 }
+
+
+
 

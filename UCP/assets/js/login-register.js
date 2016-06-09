@@ -1,6 +1,6 @@
 function showRegisterForm(){
-    $('#registration-form').show();
-    $('#login-form').hide();
+    $('#registration-form').css("zIndex",2);
+    $('#login-form').css("zIndex",1);
     $("#login-tab-button").removeClass('tab-selected');
     $("#register-tab-button").addClass('tab-selected');
     
@@ -8,8 +8,8 @@ function showRegisterForm(){
 }
 
 function showLoginForm(){
-    $('#login-form').show();
-    $('#registration-form').hide();
+    $('#login-form').css("zIndex",2);
+    $('#registration-form').css("zIndex",1);
     $("#login-tab-button").addClass('tab-selected');
     $("#register-tab-button").removeClass('tab-selected');
     
