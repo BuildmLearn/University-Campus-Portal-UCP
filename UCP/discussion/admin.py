@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib import admin
 import nested_admin
 
-from discussion.models import DiscussionThread, Reply, Attachment
+from discussion.models import DiscussionThread, Reply, Attachment, Tag
 
 class AttachmentInline(nested_admin.NestedStackedInline):
     model = Attachment
@@ -18,3 +18,4 @@ class DiscussionThreadAdmin(nested_admin.NestedModelAdmin):
     extra = 1
 
 admin.site.register(DiscussionThread, DiscussionThreadAdmin)
+admin.site.register(Tag)

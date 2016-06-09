@@ -2,11 +2,14 @@ from django.db import models
 
 from login.models import UserProfile
 
-# Create your models here.
 
 class Tag(models.Model):
     
     name = models.CharField(null=True, max_length=100)
+    
+    def __unicode__(self):
+        return self.name
+
 
 class DiscussionThread(models.Model):
     
@@ -41,6 +44,8 @@ class Reply(models.Model):
 class Attachment(models.Model):
     
     reply = models.ForeignKey(Reply)
-    uploaded_file = models.FileField(upload_to="/user-attachments/")
-    size = models.FloatField(null=True)
+    uploaded_file = models.FileField(upload_to="user-attachments")
+    size = models.FloatField(null=True, blank=True)
+    
+    
     
