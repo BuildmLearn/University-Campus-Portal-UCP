@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^user/', include('login.urls')),
+    url(r'^nested_admin/', include('nested_admin.urls')),
 ]
