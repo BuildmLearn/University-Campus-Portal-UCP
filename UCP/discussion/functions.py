@@ -20,8 +20,8 @@ from rest_framework.views import APIView
 
 from login.models import UserProfile
 import login.serializers as Serializers
-from discussion.models import DiscussionThread
-from discussion.serializers import DiscussionThreadSerializer
+from discussion.models import DiscussionThread, Reply
+from discussion.serializers import DiscussionThreadSerializer, ReplySerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
@@ -53,3 +53,40 @@ def get_discussion_list(request):
     response["data"] = serializer.data
     
     return response
+    
+def get_replies(pk):
+    
+    response = {}
+    
+    if DiscussionThread.objects.filter(id = pk).exists():
+        discussion = DiscussionThread.objects.get(id = pk)
+        replies = Reply.objects.filter(thread = discussion)
+        
+        serializer = ReplySerializer(replies, many=True)
+        
+        response["data"] = serializer.data
+        
+        return response
+    else:
+        response["error"] = "This discussion id does not exist"
+        
+def add_reply(pk, request):
+    
+    response = {}
+    serializer = ReplySerializer(data=request.POST)
+
+    if serializer.is_valid():
+        user_profile = UserProfile.objects.get(user = request.user)
+        discussion = DiscussionThread.objects.get(id = pk)
+        
+        serializer.save(
+            posted_by = user_profile,
+            posted_at = timezone.now(),
+            thread = discussion
+        )
+        response["error"] = []
+    else:
+        response["error"] = serializer.errors
+        
+    return response
+    

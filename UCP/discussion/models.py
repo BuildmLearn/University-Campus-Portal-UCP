@@ -16,7 +16,7 @@ class DiscussionThread(models.Model):
     title = models.CharField( max_length=100)
     description = models.CharField( max_length=1000)
     posted_by = models.ForeignKey(UserProfile, null=True)
-    posted_at = models.DateField()
+    posted_at = models.DateField(null=True)
     no_of_replies = models.IntegerField(blank=True, null=True, default=0)
     no_of_views = models.IntegerField(blank=True, null=True, default=0)
     last_reply = models.ForeignKey("Reply", related_name="last_reply", null=True, blank=True)
@@ -33,8 +33,8 @@ class DiscussionThread(models.Model):
 class Reply(models.Model):
     
     thread = models.ForeignKey(DiscussionThread)
-    posted_by = models.ForeignKey(UserProfile)
-    posted_at = models.DateField()
+    posted_by = models.ForeignKey(UserProfile, null=True)
+    posted_at = models.DateField(null=True)
     text = models.CharField(null=True, max_length="1000")
     
     def __unicode__(self):

@@ -60,6 +60,32 @@ class DiscussionViewSet(viewsets.ViewSet):
 
         return Response(response, status=status.HTTP_200_OK)
     
+    @detail_route(methods=['post'])
+    def add_reply(self, request, pk):
+        """
+        Post a reply to a discussion thread
+        ---
+        # YAML
+        
+        parameters:
+            -   name: text
+                description: Title for the thread
+                required: true
+                type: string
+                paramType: form
+        """
+        response = functions.add_reply(pk, request)
+    
+        return Response(response, status=status.HTTP_200_OK)
+    
+    @detail_route()
+    def replies(self, request, pk):
+        """
+        Get all replies of a discussion thread
+        """
+        response = functions.get_replies(pk)
+    
+        return Response(response, status=status.HTTP_200_OK)
     
     
     
