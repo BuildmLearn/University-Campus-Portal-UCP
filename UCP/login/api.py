@@ -2,12 +2,14 @@
 API file for login app
 
 consists of the viewsets for the apis in the login app
+
 """
 
 from rest_framework import status
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework import viewsets
+
 
 from login.functions import login, register, forgot_password, reset_password, verify_email
 

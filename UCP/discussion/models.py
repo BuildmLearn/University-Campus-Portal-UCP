@@ -15,10 +15,10 @@ class DiscussionThread(models.Model):
     
     title = models.CharField( max_length=100)
     description = models.CharField( max_length=1000)
-    posted_by = models.ForeignKey(UserProfile)
+    posted_by = models.ForeignKey(UserProfile, null=True)
     posted_at = models.DateField()
-    no_of_replies = models.IntegerField(blank=True, null=True)
-    no_of_views = models.IntegerField(blank=True, null=True)
+    no_of_replies = models.IntegerField(blank=True, null=True, default=0)
+    no_of_views = models.IntegerField(blank=True, null=True, default=0)
     last_reply = models.ForeignKey("Reply", related_name="last_reply", null=True, blank=True)
     tag = models.ForeignKey(Tag,null=True)
     
