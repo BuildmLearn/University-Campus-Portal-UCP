@@ -103,6 +103,10 @@
              <div class="modal-dialog">
                  <!-- Modal content-->
                  <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         <h4 class="modal-title">Error</h4>
+                     </div>
                      <div class="modal-body">
                          <p id="modal-text"></p>
                      </div>
@@ -118,16 +122,26 @@
              <div class="modal-dialog">
                  <!-- Modal content-->
                  <div class="modal-content">
+                     <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         <h4 class="modal-title">Forgot password</h4>
+                     </div>
                      <!--Forgot Password Form -->
-                     <form id="forgot-password-form" action="/user/forgot_password/" style="padding:10px;" method="get">
-                         <h3 class="form-title">Forgot password</h3>
-                         {% csrf_token %}
-                         <label>Enter your registered email</label>
-                         <fieldset class="form-group">
-                             <input type="email" class="form-control" name="email" placeholder="email">
-                         </fieldset>
-                             <button type="submit" class="btn btn-block btn-success">Submit</button>
-                     </form>
+                     <div class="modal-body">
+                         <form id="forgot-password-form" action="/user/forgot_password/" 
+                           style="padding:10px;" method="get">
+                             {% csrf_token %}
+                             <label>Enter your registered email</label>
+                             <fieldset class="form-group">
+                                 <input type="email" class="form-control" name="email" placeholder="email">
+                             </fieldset>
+                                 <button type="submit" class="btn btn-block btn-success">Submit</button>
+                         </form>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     </div>
+                     
                      <!--Forgot password form ends -->
                  </div>
              </div>
