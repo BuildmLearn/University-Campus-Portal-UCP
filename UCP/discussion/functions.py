@@ -48,12 +48,17 @@ def get_discussion_list(request):
     response = {}
     
     threads = DiscussionThread.objects.all()
-    page_no = int(request.GET["page"]) - 1
+    count = len(threads)
+    if("page" in request.GET):
+        page_no = int(request.GET["page"]) - 1
+    else:
+        page_no = 0
     offset = page_no * PAGE_SIZE
     threads = threads[offset:offset+PAGE_SIZE]
     
     serializer = DiscussionThreadSerializer(threads, many=True)
 
+    response["count"] = count
     response["data"] = serializer.data
     
     return response
@@ -65,12 +70,17 @@ def get_replies(pk, request):
     if DiscussionThread.objects.filter(id = pk).exists():
         discussion = DiscussionThread.objects.get(id = pk)
         replies = Reply.objects.filter(thread = discussion)
-        page_no = int(request.GET["page"]) - 1
+        count = len(replies)
+        if("page" in request.GET):
+            page_no = int(request.GET["page"]) - 1
+        else:
+            page_no = 0
         offset = page_no * PAGE_SIZE
         replies = replies[offset:offset+PAGE_SIZE]
         
         serializer = ReplySerializer(replies, many=True)
         
+        response["count"] = count
         response["data"] = serializer.data
         
         return response

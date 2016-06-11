@@ -54,6 +54,14 @@ class DiscussionViewSet(viewsets.ViewSet):
     def get_discussion_list(self, request):
         """
         Get a list of all discussion threads
+        ---
+        # YAML
+        
+        parameters:
+            -   name: page
+                description: page no. of the results
+                type: string
+                paramType: query
         """
         
         response = functions.get_discussion_list(request)
@@ -88,7 +96,6 @@ class DiscussionViewSet(viewsets.ViewSet):
         parameters:
             -   name: page
                 description: page no. of the results
-                required: true
                 type: string
                 paramType: query
         """
