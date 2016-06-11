@@ -78,10 +78,14 @@ def login(request):
         if user:
             if user.is_active:
                 #create a authentication key for the user
-                token = Token.objects.create(user=user)
                 data = {}
-                data["access_token"] = token.key
+                if Token.objects.filter(user=user).exists():
+                    token = Token.objects.get(user=user)
+                else:
+                    token = Token.objects.create(user=user)
             
+                data["access_token"] = token.key
+                
                 response["result"] = result.RESULT_SUCCESS
                 response["data"] = data
                 response["message"] = message.MESSAGE_LOGIN_SUCCESSFUL
