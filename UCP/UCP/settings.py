@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.core.urlresolvers import reverse_lazy
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -122,6 +124,9 @@ MEDIA_URL = '/media/'
 
 #Page size for pagination
 PAGE_SIZE = 10
+
+#Setting up login and logout URLS
+LOGIN_URL = reverse_lazy('login')
 
 #default local settings constants
 VERIFICATION_EMAIL_EXPIRY_TIME = 1
