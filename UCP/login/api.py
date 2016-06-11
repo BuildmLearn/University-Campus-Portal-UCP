@@ -19,6 +19,9 @@ class UserViewSet(viewsets.ViewSet):
     Viewset for registering and logging in users
     """
     
+    authentication_classes = ()
+    permission_classes = ()
+    
     @list_route()
     def login(self, request):
         """
@@ -102,6 +105,9 @@ class UserPasswordViewSet(viewsets.ViewSet):
     """
     Viewsets for password related apis
     """
+    
+    authentication_classes = ()
+    permission_classes = ()
     
     @list_route()
     def forgot_password(self, request):

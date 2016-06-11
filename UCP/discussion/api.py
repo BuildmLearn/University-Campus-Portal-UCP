@@ -82,8 +82,17 @@ class DiscussionViewSet(viewsets.ViewSet):
     def replies(self, request, pk):
         """
         Get all replies of a discussion thread
+        ---
+        # YAML
+        
+        parameters:
+            -   name: page
+                description: page no. of the results
+                required: true
+                type: string
+                paramType: query
         """
-        response = functions.get_replies(pk)
+        response = functions.get_replies(pk, request)
     
         return Response(response, status=status.HTTP_200_OK)
     

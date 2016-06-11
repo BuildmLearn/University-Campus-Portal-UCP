@@ -114,8 +114,10 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-
 MEDIA_URL = '/media/'
+
+#Page size for pagination
+PAGE_SIZE = 10
 
 #default local settings constants
 VERIFICATION_EMAIL_EXPIRY_TIME = 1
