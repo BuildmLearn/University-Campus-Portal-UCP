@@ -37,8 +37,11 @@ def add_discussion_thread(request):
             posted_by = user_profile,
             posted_at = timezone.now()
         )
+        response["result"] = result.RESULT_SUCCESS
         response["error"] = []
     else:
+
+        response["result"] = result.RESULT_FAILURE
         response["error"] = serializer.errors
         
     return response

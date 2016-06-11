@@ -5,7 +5,7 @@ contains views for the frontend pages of the Discussions App
 """
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 
@@ -49,5 +49,10 @@ class AddDiscussion(View):
     
     @method_decorator(login_required)
     def post(self, request):
-        print(request.POST)
-        return render(request, 'add-discussion.html')
+        
+        response = functions.add_discussion_thread(request)
+        
+        if response["result"] == 1:
+            return redirect('/discussions/')
+        else:
+            return render(request, 'add-discussion.html')
