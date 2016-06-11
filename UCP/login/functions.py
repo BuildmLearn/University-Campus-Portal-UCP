@@ -4,7 +4,8 @@ Functions file for login app
 consists of common functions used by both api.py and views.py file
 """
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as django_login
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.template import Context
@@ -78,6 +79,9 @@ def login(request):
         if user:
             if user.is_active:
                 #create a authentication key for the user
+                
+                django_login(request, user)
+                
                 data = {}
                 if Token.objects.filter(user=user).exists():
                     token = Token.objects.get(user=user)
