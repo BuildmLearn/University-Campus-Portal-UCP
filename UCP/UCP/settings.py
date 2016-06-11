@@ -65,6 +65,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django_settings_export.settings_export',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -76,6 +77,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'UCP.wsgi.application'
 
+SETTINGS_EXPORT = [
+    'SITE_TITLE',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -125,6 +129,8 @@ VERIFICATION_EMAIL_EXPIRY_TIME = 1
 PASSWORD_RESET_CODE_EXPIRY_TIME = 1
 
 BASE_URL = 'localhost:8000'
+
+SITE_TITLE = "University"
 
 #import local_settings.py file if it exists
 try:

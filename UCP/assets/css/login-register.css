@@ -92,6 +92,7 @@ body {
     #registration-form{
         left:50%;
     }
+    
 }
 
 
@@ -101,8 +102,25 @@ body {
     background-color:yellow;
 }
 
-.modal{
-    margin-top: 25%;
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 90%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  width: 70%;
+  max-width: 800px;
+  vertical-align: middle;
 }
 
 
