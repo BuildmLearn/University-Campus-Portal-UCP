@@ -4,11 +4,11 @@ Views file for Login App
 contains views for the frontend pages of the Login App
 """
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
 
 from login.functions import login, register, forgot_password, reset_password, get_response_text
-
+from UCP.constants import result
 
 class Login(View):
     
@@ -21,9 +21,12 @@ class Login(View):
         
         response = login(request)
         
-        context["message"] = get_response_text(response)
+        if response["result"] == result.RESULT_SUCCESS:
+            return redirect('/discussions/')
+        else:
+            context["message"] = get_response_text(response)
         
-        return render(request, 'login-register.html', context)
+            return render(request, 'login-register.html', context)
 
 
 class Register(View):

@@ -1,0 +1,7 @@
+<h1>Add new Discussion</h1>
+<form action="/discussions/add_new_thread" method= "post">
+    {% csrf_token %}
+    <input name="title"/>
+    <input name="description"/>
+    <input type="submit"/>
+</form>

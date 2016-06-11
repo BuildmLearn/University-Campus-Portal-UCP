@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^user/', include('login.urls')),
+    url(r'^discussions/', include('discussion.urls')),
     url(r'^nested_admin/', include('nested_admin.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
