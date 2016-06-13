@@ -43,11 +43,11 @@ def send_verification_email(user):
     emailVerificationCode = EmailVerificationCode.objects.create(user=user)
     emailSubject = "Verification Email"
     emailMessage = "Use the following link to activate your account \n"
-    emailMessage += BASE_URL + "/user-auth/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
+    emailMessage += BASE_URL + "/api/user/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 
 def send_password_reset_email(user):
@@ -61,7 +61,7 @@ def send_password_reset_email(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 def login(request):
     
