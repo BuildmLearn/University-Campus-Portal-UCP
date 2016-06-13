@@ -11,6 +11,6 @@ from discussion import views
 
 urlpatterns = [
     url(r'^(?P<pk>[0-9]+)', views.DiscussionDetails.as_view(), name='discussion_detail'),
-    url(r'^add_new_thread', views.AddDiscussion.as_view(), name='add-discussion'),
+    url(r'^add', views.AddDiscussion.as_view(), name='add-discussion'),
     url(r'^', views.DiscussionList.as_view(), name='discussion_list'),
 ]

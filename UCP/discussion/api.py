@@ -28,7 +28,7 @@ class DiscussionViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticated,)
        
     @list_route(methods=['post'])
-    def add_discussion_thread(self, request):
+    def add(self, request):
         """
         Create a new discussion thread
         ---
@@ -51,7 +51,7 @@ class DiscussionViewSet(viewsets.ViewSet):
         return Response(response, status=status.HTTP_200_OK)
     
     @list_route()
-    def get_discussion_list(self, request):
+    def get(self, request):
         """
         Get a list of all discussion threads
         ---
@@ -69,7 +69,7 @@ class DiscussionViewSet(viewsets.ViewSet):
         return Response(response, status=status.HTTP_200_OK)
     
     @detail_route(methods=['post'])
-    def add_reply(self, request, pk):
+    def reply(self, request, pk):
         """
         Post a reply to a discussion thread
         ---

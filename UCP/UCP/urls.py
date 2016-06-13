@@ -11,7 +11,7 @@ from discussion.api import DiscussionViewSet
 router = DefaultRouter()
 router.register(r'user', UserViewSet, base_name="Authentication")
 router.register(r'password', UserPasswordViewSet, base_name="Passwords")
-router.register(r'discussion', DiscussionViewSet, base_name="Discussions")
+router.register(r'discussions', DiscussionViewSet, base_name="Discussions")
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
