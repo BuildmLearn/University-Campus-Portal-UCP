@@ -6,6 +6,7 @@ from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
 from login.api import UserViewSet, UserPasswordViewSet
+from login.views import Login
 from discussion.api import DiscussionViewSet
 
 router = DefaultRouter()
@@ -21,4 +22,5 @@ urlpatterns = [
     url(r'^user/', include('login.urls')),
     url(r'^discussions/', include('discussion.urls')),
     url(r'^nested_admin/', include('nested_admin.urls')),
+    url(r'^', Login.as_view(), name='home'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

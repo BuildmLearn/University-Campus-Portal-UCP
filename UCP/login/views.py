@@ -16,6 +16,9 @@ class Login(View):
         context = {}
         context["is_login_page"] = True
         
+        if request.user.is_authenticated():
+            return render(request, 'home.html', context)
+            
         if not 'email' in request.GET:
             return render(request, 'login-register.html', context)
         
