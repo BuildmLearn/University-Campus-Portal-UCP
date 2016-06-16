@@ -4,6 +4,7 @@ Views file for Login App
 contains views for the frontend pages of the Login App
 """
 
+from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
@@ -30,6 +31,14 @@ class Login(View):
             context["message"] = get_response_text(response)
         
             return render(request, 'login-register.html', context)
+
+
+class Logout(View):
+    
+    def get(self, request):
+        print('logging out')
+        django_logout(request)
+        return redirect('/user/login')
 
 
 class Register(View):

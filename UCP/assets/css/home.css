@@ -48,7 +48,7 @@ button {
     }
 }
 
-#desktop-nav-container{
+#desktop-nav-container, #logout{
     display:none;
 }
 
@@ -56,6 +56,13 @@ button {
 
   #navBarTop, #myNavmenu {
       display: none;
+  }
+  
+  #logout-button{
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 20px;
   }
   
   #desktop-nav-container{
@@ -112,7 +119,11 @@ button {
       text-decoration: none;
   }
 
+  ul#menu li a .active {
+      background-color: white;
+  }
+  
   ul#menu li a:hover {
-      background-color: orange;
+      background-color: white;
   }
 }

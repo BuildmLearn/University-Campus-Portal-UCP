@@ -18,6 +18,12 @@
     <![endif]-->
   </head>
   <body>
+      <style>
+      textarea {
+          resize: none;
+          height: 150px;
+      }
+      </style>
       {% include 'header.html' %}
 
 <div class="container main-content">
@@ -27,8 +33,12 @@
     
     <form action="/discussions/add_new_thread" method= "post">
         {% csrf_token %}
-        <input name="title" placeholder="title"/><br>
-        <input name="description" placeholder="description"/><br>
+        <fieldset class="form-group">
+            <input class="form-control" name="title" placeholder="Thread Title">
+        </fieldset>
+        <fieldset class="form-group">
+            <textarea type="text" class="form-control" name="description" placeholder="description"></textarea>
+        </fieldset>
         <input type="submit"/>
     </form>
         
