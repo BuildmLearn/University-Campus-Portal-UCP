@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <title>IITB Campus Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
@@ -31,9 +31,45 @@
     </div>
     <ul class="list-group">
     {% for discussion in discussions %}
-        <li class="list-group-item"><a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a></li>
+        <li class="list-group-item">
+            <h4 class="list-group-item-heading">
+                <a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
+                <span class="label label-default label-pill pull-right">14</span>
+            </h4>
+            <p class="list-group-item-text">
+                {{ discussion.description }}
+            </p>
+            <span>
+                by <a>pranav tiwari</a>
+            </span><br>
+            <span>
+                posted on {{ discussion.posted_at }}
+            </span>
+            
+        </li>
     {% endfor %}
     </ul>
+    <nav>
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
         
 </div><!-- /.container -->
 
