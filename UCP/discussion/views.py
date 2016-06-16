@@ -35,7 +35,8 @@ class DiscussionDetails(View):
         
         response = functions.get_replies(pk, request)
         
-        context["replies"] = response["data"]
+        context["replies"] = response["data"]["replies"]
+        context["discussion"] = response["data"]["discussion"]
         
         return render(request, 'discussion-detail.html', context)
         

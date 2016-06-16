@@ -22,11 +22,15 @@
 
 <div class="container main-content">
     <div class="page-header">
-        <h1>Discussion Title</h1>
+        <h1>{{ discussion.title }} 
+            <button type="button" class="btn btn-primary pull-right">
+                <a>Add Reply<a>
+            </button>
+        </h1>
     </div>
-    <ul>
+    <ul class="list-group">
     {% for reply in replies %}
-        <li><a>{{ reply.text }}</a></li>
+        <li class="list-group-item">{{ reply.text }}</li>
     {% endfor %}
     </ul>
     

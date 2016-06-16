@@ -22,12 +22,16 @@
 
 <div class="container main-content">
     <div class="page-header">
-        <h1>Discussions</h1>
+        <h1>Discussions 
+            <a type="button" href="/discussions/add" class="btn btn-primary pull-right">
+                Add new
+            </a>
+        </h1>
+        
     </div>
-    <a href="/discussions/add_new_thread" >+ Add new</a>
-    <ul>
+    <ul class="list-group">
     {% for discussion in discussions %}
-        <li><a>{{ discussion.title }}</a></li>
+        <li class="list-group-item"><a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a></li>
     {% endfor %}
     </ul>
         

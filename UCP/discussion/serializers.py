@@ -29,3 +29,5 @@ class DiscussionThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscussionThread
         fields = ('id', 'title', 'description', 'no_of_replies', 'no_of_views')
+
+
