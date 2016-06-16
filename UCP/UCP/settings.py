@@ -141,6 +141,7 @@ SITE_TITLE = "University"
 try:
     from settings_local import *
 except ImportError:
+    print "please create a local settings file"
     pass
 
 

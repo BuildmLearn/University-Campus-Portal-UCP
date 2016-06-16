@@ -1,56 +1,79 @@
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Uninversity Campus Portal</title>
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/login-register.css' %}" />
-    </head>
-    <body>
-        
-        <div class="page-header header">
-            <div class="container">
-            <h2>{{ settings.SITE_TITLE }}</h2>
-            <h4>Campus Portal</h4>
-            </div>
-        </div>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed pull-left" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-             
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
-                <li><a href="#">Link</a></li>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap 101 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+      <div id="desktop-nav-container">
+          <div id="header-title">
+              <span class="title-college-name">IIT Bombay</span><br>
+              <span class="title-portal">Campus Portal</span>
+          </div>
+          <div id="desktop-nav-list">
+              <ul id="menu">
+                <li><a href="#">Home</a></li>
+                <li class="active"><a href="/discussions/">Forums</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Results</a></li>
+                <li><a href="#">Schedule</a></li>
+                <li><a href="#">Recruitments</a></li>
               </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-          
-       
-         <footer class="footer">
-             <div class="container">
-                 <span class="text-muted">Footer</span>
-             </div>
-         </footer>
-         
-         
-         
-        <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap.js' %}"></script>
+          </div>
+      </div>
+<nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
+    <a class="navmenu-brand" href="#">
+        <span style="color: #333;">IIT Bombay<span><br>
+        <span style="color: #337ab7;">Campus Portal</span>
+    </a>
+      <ul class="nav navmenu-nav">
+        <li><a href="../navmenu-reveal/">Recruitments</a></li>
+        <li><a href="../navbar-offcanvas/">Schedule</a></li>
+        <li><a href="../navmenu-reveal/">Results</a></li>
+        <li><a href="../navbar-offcanvas/">Events</a></li>
+        <li><a href="../navmenu-reveal/">News</a></li>
+        <li><a href="./">Forums</a></li>
+        <li><a href="../navmenu/">Home</a></li>
+      </ul>
+</nav>
+<div id="navBarTop" class="navbar navbar-default navbar-fixed-top">
+  <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+</div>
+
+<div class="container main-content">
+    <div class="page-header">
+        <h1>Welcome to IIT Bombay's Campus Portal!</h1>
+    </div>
+        <p class="lead">This is the home page, that will contain a feed of ongoing events, news and discussions.</p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+        </p>
         
+</div><!-- /.container -->
     
-    </body>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+  </body>
 </html>

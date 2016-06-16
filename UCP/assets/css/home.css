@@ -1,0 +1,118 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  padding:0px;
+}
+
+.header{
+    text-align: center;
+    padding: 10px;
+    background-color: #2196F3;
+    margin-bottom: 0px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+button {
+    padding:0px;
+    margin:0px;
+    margin-top:auto;
+    margin-bottom:auto;
+    background:none;
+    border:none;
+}
+
+
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+}
+
+.main-content {
+    margin-top:70px;
+}
+
+
+
+@media ( min-width: 992px ){
+    .title, .sub-title{
+        text-align: left;
+        margin-left: 10px;
+    }
+}
+
+#desktop-nav-container{
+    display:none;
+}
+
+@media (min-width: 768px) {
+
+  #navBarTop, #myNavmenu {
+      display: none;
+  }
+  
+  #desktop-nav-container{
+      display: block;
+      height: 100px;
+      width: 100%;
+      background: #f8f8f8;
+      position: relative;
+  }
+  
+  #desktop-nav-list{
+      position:absolute;
+      bottom:0px;
+      right:0px;
+      height:50px;
+      min-width:50%;
+  }
+  
+  #header-title{
+      position: absolute;
+      height: 80px;
+      top: 10px;
+      left: 40px;
+      padding: 5px;
+  }
+  
+  .title-college-name {
+      font-size: 2.2em;
+  }
+  
+  .title-portal{
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #337ab7;
+  }
+  
+  .main-content {
+      margin-top: 0px;
+  }
+  
+  ul#menu {
+      padding: 0;
+  }
+
+  ul#menu li {
+      display: inline;
+      float: right;
+      height: 50px;
+      margin-top:22px;
+  }
+
+  ul#menu li a {
+      padding: 10px 20px;
+      text-decoration: none;
+  }
+
+  ul#menu li a:hover {
+      background-color: orange;
+  }
+}

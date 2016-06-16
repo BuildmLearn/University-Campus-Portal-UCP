@@ -22,7 +22,7 @@ class Login(View):
         response = login(request)
         
         if response["result"] == result.RESULT_SUCCESS:
-            return redirect('/discussions/')
+            return render(request, 'home.html', context)
         else:
             context["message"] = get_response_text(response)
         
