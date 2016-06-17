@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from discussion import views
 
 urlpatterns = [
+    url(r'^(?P<pk>[0-9]+)/reply', views.Reply.as_view(), name='reply'),
     url(r'^(?P<pk>[0-9]+)', views.DiscussionDetails.as_view(), name='discussion_detail'),
     url(r'^add', views.AddDiscussion.as_view(), name='add-discussion'),
     url(r'^', views.DiscussionList.as_view(), name='discussion_list'),

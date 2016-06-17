@@ -93,6 +93,16 @@ def get_replies(pk, request):
     else:
         response["error"] = "This discussion id does not exist"
         
+def get_discussion(pk):
+    
+    response = {}
+    discussion = DiscussionThread.objects.get(id = pk)
+    serializer = DiscussionThreadSerializer(discussion)
+    
+    response["data"] = serializer.data
+    
+    return response
+
 def add_reply(pk, request):
     
     response = {}
@@ -101,15 +111,20 @@ def add_reply(pk, request):
     if serializer.is_valid():
         user_profile = UserProfile.objects.get(user = request.user)
         discussion = DiscussionThread.objects.get(id = pk)
+
+        discussion_serializer = DiscussionThreadSerializer(discussion)
         
         serializer.save(
             posted_by = user_profile,
             posted_at = timezone.now(),
             thread = discussion
         )
-        response["error"] = []
+        response["result"] = 1
+        response["data"] = discussion_serializer.data
     else:
+        response["result"] = 0
         response["error"] = serializer.errors
+        response["data"] = discussion_serializer.data
         
     return response
     

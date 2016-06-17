@@ -56,4 +56,28 @@ class AddDiscussion(View):
         if response["result"] == 1:
             return redirect('/discussions/')
         else:
-            return render(request, 'add-discussion.html')
+            return render(request, 'add-discussion.html')        
+        
+        
+class Reply(View):
+    
+    @method_decorator(login_required)
+    def get(self, request, pk):
+        context = {}
+        
+        response = functions.get_discussion(pk)
+        context["discussion"] = response["data"]
+        
+        return render(request, 'reply.html', context)
+    
+    @method_decorator(login_required)
+    def post(self, request, pk):
+        context = {}
+        
+        response = functions.add_reply(pk, request)
+        context["discussion"] = response["data"]
+        
+        if response["result"] == 1:
+            return redirect('/discussions/'+str(pk))
+        else:
+            return render(request, 'reply.html', context)
