@@ -121,6 +121,10 @@ def add_reply(pk, request):
             posted_at = timezone.now(),
             thread = discussion
         )
+        
+        discussion.no_of_replies += 1
+        discussion.save()
+        
         response["result"] = 1
         response["data"] = discussion_serializer.data
     else:

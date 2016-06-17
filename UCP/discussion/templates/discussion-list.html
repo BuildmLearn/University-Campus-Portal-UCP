@@ -55,7 +55,7 @@
         <li class="discussion-card card">
             <h4 class="list-group-item-heading">
                 <a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
-                <span class="label label-default label-pill pull-right">14</span>
+                <span class="label label-default label-pill pull-right">{{ discussion.no_of_replies }}</span>
             </h4>
             <p class="list-group-item-text">
                 {{ discussion.description }}
