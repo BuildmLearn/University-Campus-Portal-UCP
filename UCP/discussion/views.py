@@ -20,6 +20,10 @@ class DiscussionList(View):
         context={}
         print request.user
         response = functions.get_discussion_list(request)
+
+        page_count = response["page_count"]
+        
+        context["pages"] = range(1, page_count+1)
         
         context["discussions"] = response["data"]
         

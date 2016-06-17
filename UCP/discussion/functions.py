@@ -52,6 +52,8 @@ def get_discussion_list(request):
     
     threads = DiscussionThread.objects.all()
     count = len(threads)
+    page_count = count/PAGE_SIZE + 1
+    
     if("page" in request.GET):
         page_no = int(request.GET["page"]) - 1
     else:
@@ -61,7 +63,7 @@ def get_discussion_list(request):
     
     serializer = DiscussionThreadSerializer(threads, many=True)
 
-    response["count"] = count
+    response["page_count"] = page_count
     response["data"] = serializer.data
     
     return response
