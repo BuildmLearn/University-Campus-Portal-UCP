@@ -73,7 +73,7 @@ def get_replies(pk, request):
     if DiscussionThread.objects.filter(id = pk).exists():
         discussion = DiscussionThread.objects.get(id = pk)
         replies = Reply.objects.filter(thread = discussion)
-        count = len(replies)
+        page_count = len(replies)/PAGE_SIZE + 1
         if("page" in request.GET):
             page_no = int(request.GET["page"]) - 1
         else:
@@ -84,7 +84,7 @@ def get_replies(pk, request):
         reply_serializer = ReplySerializer(replies, many=True)
         discussion_serializer = DiscussionThreadSerializer(discussion)
         
-        response["count"] = count
+        response["page_count"] = page_count
         response["data"] = {}
         response["data"]["discussion"] = discussion_serializer.data
         response["data"]["replies"] = reply_serializer.data

@@ -34,7 +34,8 @@ class DiscussionDetails(View):
         context={}
         
         response = functions.get_replies(pk, request)
-        
+        page_count = response["page_count"]
+        context["pages"] = range(1, page_count+1)
         context["replies"] = response["data"]["replies"]
         context["discussion"] = response["data"]["discussion"]
         
