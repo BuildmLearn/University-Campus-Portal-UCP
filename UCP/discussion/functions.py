@@ -21,7 +21,7 @@ from rest_framework.views import APIView
 from login.models import UserProfile
 import login.serializers as Serializers
 from discussion.models import DiscussionThread, Reply
-from discussion.serializers import DiscussionThreadSerializer, ReplySerializer
+from discussion.serializers import DiscussionThreadSerializer, ReplySerializer, ReplyFullSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL, PAGE_SIZE
 
@@ -83,7 +83,7 @@ def get_replies(pk, request):
         offset = page_no * PAGE_SIZE
         replies = replies[offset:offset+PAGE_SIZE]
         
-        reply_serializer = ReplySerializer(replies, many=True)
+        reply_serializer = ReplyFullSerializer(replies, many=True)
         discussion_serializer = DiscussionThreadSerializer(discussion)
         
         response["page_count"] = page_count

@@ -40,6 +40,13 @@ class ReplySerializer(serializers.ModelSerializer):
         fields = ('id', 'text', 'posted_at', 'time_elapsed')
 
 
+class ReplyFullSerializer(serializers.ModelSerializer):
+    posted_by = UserProfileShortSerializer()
+    
+    class Meta:
+        model = Reply
+        fields = ('id', 'text', 'posted_at', 'time_elapsed', 'posted_by')
+
 class DiscussionThreadSerializer(serializers.ModelSerializer):
         
     class Meta:
