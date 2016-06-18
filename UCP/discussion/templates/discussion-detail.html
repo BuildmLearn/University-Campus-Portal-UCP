@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IIT Bombay Campus Portal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ settings.SITE_TITLE }} Campus Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
@@ -52,6 +52,8 @@
     <ul class="list-group">
     {% for reply in replies %}
         <li class="card discussion-card">
+            <h4>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</h4>
+            <h5> posted on {{ reply.posted_at }}</h5>
             {{ reply.text }}
         </li>
     {% endfor %}

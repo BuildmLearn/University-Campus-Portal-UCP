@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IITB Campus Portal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ settings.SITE_TITLE }} Campus Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
@@ -64,7 +64,7 @@
                 by <a>pranav tiwari</a>
             </span><br>
             <span>
-                posted on {{ discussion.posted_at }}
+                {{ discussion.time_elapsed }}
             </span>
             
         </li>

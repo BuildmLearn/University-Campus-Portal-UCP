@@ -10,7 +10,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 
 from discussion import functions
-
+from UCP.functions import get_time_elapsed_string
 
 class DiscussionList(View):
     
@@ -18,7 +18,6 @@ class DiscussionList(View):
     def get(self, request):
         
         context={}
-        print request.user
         response = functions.get_discussion_list(request)
 
         page_count = response["page_count"]
@@ -42,7 +41,7 @@ class DiscussionDetails(View):
         context["pages"] = range(1, page_count+1)
         context["replies"] = response["data"]["replies"]
         context["discussion"] = response["data"]["discussion"]
-        
+        print context
         return render(request, 'discussion-detail.html', context)
         
         
@@ -61,6 +60,7 @@ class AddDiscussion(View):
         if response["result"] == 1:
             return redirect('/discussions/')
         else:
+            print response
             return render(request, 'add-discussion.html')        
         
         
@@ -85,4 +85,5 @@ class Reply(View):
         if response["result"] == 1:
             return redirect('/discussions/'+str(pk))
         else:
+            print response
             return render(request, 'reply.html', context)

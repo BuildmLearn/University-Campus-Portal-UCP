@@ -110,11 +110,12 @@ def add_reply(pk, request):
     response = {}
     serializer = ReplySerializer(data=request.POST)
 
+
+    discussion = DiscussionThread.objects.get(id = pk)
+
+    discussion_serializer = DiscussionThreadSerializer(discussion)
     if serializer.is_valid():
         user_profile = UserProfile.objects.get(user = request.user)
-        discussion = DiscussionThread.objects.get(id = pk)
-
-        discussion_serializer = DiscussionThreadSerializer(discussion)
         
         serializer.save(
             posted_by = user_profile,
