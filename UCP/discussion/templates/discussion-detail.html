@@ -53,7 +53,7 @@
     {% for reply in replies %}
         <li class="card discussion-card">
             <h4>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</h4>
-            <h5> posted on {{ reply.posted_at }}</h5>
+            <h5>{{ reply.time_elapsed }}</h5>
             {{ reply.text }}
         </li>
     {% endfor %}

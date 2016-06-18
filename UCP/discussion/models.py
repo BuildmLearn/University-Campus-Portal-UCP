@@ -41,6 +41,9 @@ class Reply(models.Model):
     posted_at = models.DateTimeField(default=timezone.now)
     text = models.CharField(null=True, max_length="1000")
     
+    def time_elapsed(self):
+        return get_time_elapsed_string(self.posted_at)
+    
 
 
 class Attachment(models.Model):

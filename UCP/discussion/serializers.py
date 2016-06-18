@@ -37,7 +37,7 @@ class ReplySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Reply
-        fields = ('id', 'text', 'posted_at')
+        fields = ('id', 'text', 'posted_at', 'time_elapsed')
 
 
 class DiscussionThreadSerializer(serializers.ModelSerializer):
