@@ -72,20 +72,28 @@ class ForgotPassword(View):
         if(response["result"] == 1):
             return render(request, 'reset-password.html', context)
        
-        
+
 class ResetPassword(View):
+
+   def post(self, request):
+
+       context={}
+       response = reset_password(request)
+       context["message"] = get_response_text(response)
+
+       if(response["result"] == 1):
+           context["is_login_page"] = True
+           return render(request, 'login-register.html', context)
+       if(response["result"] == 0):
+           return render(request, 'reset-password.html', context)
+        
+class EditProfile(View):
     
-    def post(self, request):
+    def get(self, request):
         
         context={}
-        response = reset_password(request)
-        context["message"] = get_response_text(response)
         
-        if(response["result"] == 1):
-            context["is_login_page"] = True
-            return render(request, 'login-register.html', context)
-        if(response["result"] == 0):
-            return render(request, 'reset-password.html', context)
+        return render(request, 'edit-profile.html', context)
         
         
         

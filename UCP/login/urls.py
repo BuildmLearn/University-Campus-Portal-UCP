@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^register/', views.Register.as_view(), name='register'),
     url(r'^forgot_password/', views.ForgotPassword.as_view(), name='forgot_password'),
     url(r'^reset_password/', views.ResetPassword.as_view(), name='reset_password'),
+    url(r'^edit_profile', views.EditProfile.as_view(), name='edit_profile'),
 ]
