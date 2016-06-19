@@ -27,7 +27,7 @@ class UserProfile(models.Model):
     
     user = models.OneToOneField(User, unique=True, related_name='user_login')
     designation = models.CharField( choices = DESIGNATION_CHOICES, default=STUDENT, max_length=10)
-    profile_image = models.ImageField(upload_to="/user_images/profile_images", blank=True)
+    profile_image = models.ImageField(upload_to="user_images/profile_images", blank=True)
 
     class Admin:
         list_display = ('first_name','designation')

@@ -52,6 +52,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class UserProfileFullSerializer(serializers.ModelSerializer):
+    
+    user = UserSerializer()
+    
+    class Meta:
+        model = UserProfile
+        fields = ('id','designation', 'profile_image', 'user')
+        read_only_fields = ('id',)
+        
+
 class LoginRequestSerializer(serializers.Serializer):
     """
     Serializer for verifying if the request by the login API is valid

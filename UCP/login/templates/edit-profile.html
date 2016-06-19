@@ -16,6 +16,14 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+        <style>
+        .profile-img{
+            height : 200px;
+            width : 200px;
+            clip: rect(0px,200px,200px,0px);
+            margin-bottom: 20px;
+        }
+        </style>
   </head>
   <body>
       <style>
@@ -30,19 +38,21 @@
     <div class="page-header">
         <h1>Edit Profile</h1>
     </div>
+
+    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img">
     
-    <form action="/user/edit_profile/" method= "post">
+    <form action="/user/edit_profile/" method= "post" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-            <input class="form-control" name="first_name" placeholder="First Name">
+            <input class="form-control" name="first_name" placeholder="First Name" value="{{ user.user.first_name }}">
         </fieldset>
         <fieldset class="form-group">
-            <input class="form-control" name="last_name" placeholder="Last Name">
+            <input class="form-control" name="last_name" placeholder="Last Name" value="{{ user.user.last_name }}">
         </fieldset>
         <fieldset class="form-group">
             <input type=file class="form-control" name="profile_picture">
         </fieldset>
-        <input type="submit"/>
+        <input class="btn btn-primary" type="submit">
     </form>
         
 </div><!-- /.container -->

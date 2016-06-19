@@ -19,10 +19,42 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from login.models import EmailVerificationCode, PasswordResetCode
+from login.models import EmailVerificationCode, PasswordResetCode, UserProfile
 import login.serializers as Serializers
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
+
+
+def get_user_details(request):
+    """
+    returns a dict with the details of the logged in user
+    """
+    user = UserProfile.objects.get(user=request.user)
+    serializer = Serializers.UserProfileFullSerializer(user)
+    
+    return serializer.data
+
+def update_profile(request):
+    """
+    updates user profile details
+    """
+    
+    user = UserProfile.objects.get(user=request.user)
+    
+    if "first_name" in request.POST:
+        user.user.first_name = request.POST["first_name"]
+    if "last_name" in request.POST:
+        user.user.last_name = request.POST["last_name"]
+    if "profile_picture" in request.FILES:
+        user.profile_image = request.FILES["profile_picture"]
+        
+    user.user.save()
+    user.save()
+    
+    response = {}
+    
+    response["message"] = "Your details were updated"
+    return response
 
 def get_response_text(response):
     messageHTML = ""

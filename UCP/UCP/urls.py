@@ -14,7 +14,10 @@ router.register(r'user', UserViewSet, base_name="Authentication")
 router.register(r'password', UserPasswordViewSet, base_name="Passwords")
 router.register(r'discussions', DiscussionViewSet, base_name="Discussions")
 
-urlpatterns = [
+urlpatterns = []
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(router.urls)),
@@ -22,5 +25,5 @@ urlpatterns = [
     url(r'^user/', include('login.urls')),
     url(r'^discussions/', include('discussion.urls')),
     url(r'^nested_admin/', include('nested_admin.urls')),
-    url(r'^', Login.as_view(), name='home'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^', Login.as_view()),
+]

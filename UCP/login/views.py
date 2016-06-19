@@ -8,7 +8,7 @@ from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
-from login.functions import login, register, forgot_password, reset_password, get_response_text
+from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile
 from UCP.constants import result
 
 class Login(View):
@@ -86,6 +86,7 @@ class ResetPassword(View):
            return render(request, 'login-register.html', context)
        if(response["result"] == 0):
            return render(request, 'reset-password.html', context)
+    
         
 class EditProfile(View):
     
@@ -93,7 +94,19 @@ class EditProfile(View):
         
         context={}
         
+        context['user'] = get_user_details(request)
+         
         return render(request, 'edit-profile.html', context)
+    
+    def post(self, request):
+        context={}
+        
+        response = update_profile(request)
+        context['user'] = get_user_details(request)
+        context["response"] = response
+        
+        return render(request, 'edit-profile.html', context)
+        
         
         
         
