@@ -39,7 +39,11 @@
         <h1>Edit Profile</h1>
     </div>
 
-    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img">
+    {% if user.profile_image %}
+    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" >
+    {% else %}
+    <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
+    {% endif%}
     
     <form action="/user/edit_profile/" method= "post" enctype="multipart/form-data">
         {% csrf_token %}

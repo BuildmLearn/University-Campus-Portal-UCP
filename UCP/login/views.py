@@ -95,7 +95,8 @@ class EditProfile(View):
         context={}
         
         context['user'] = get_user_details(request)
-         
+        print context
+        
         return render(request, 'edit-profile.html', context)
     
     def post(self, request):
