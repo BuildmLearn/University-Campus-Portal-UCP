@@ -16,7 +16,7 @@ class UserProfileShortSerializer(serializers.ModelSerializer):
     user = UserShortSerializer()
     class Meta:
         model = UserProfile
-        fields = ('id', 'designation', 'user')
+        fields = ('id', 'designation', 'user', 'profile_image')
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -54,3 +54,9 @@ class DiscussionThreadSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'no_of_replies', 'no_of_views', 'posted_at', 'time_elapsed')
 
 
+class DiscussionThreadFullSerializer(serializers.ModelSerializer):
+    posted_by = UserProfileShortSerializer()
+    
+    class Meta:
+        model = DiscussionThread
+        fields = ('id', 'title', 'description', 'no_of_replies', 'no_of_views', 'posted_at', 'posted_by', 'time_elapsed')

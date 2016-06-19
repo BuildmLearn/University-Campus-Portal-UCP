@@ -22,6 +22,11 @@
       ul {
           list-style: none;
       }
+      
+      .image-inline{
+          height:20px;
+          width: 20px;
+      }
     
       .discussion-card{
           padding: 10px;
@@ -52,7 +57,14 @@
     <ul class="list-group">
     {% for reply in replies %}
         <li class="card discussion-card">
-            <h4>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</h4>
+            <h4>
+                {% if reply.posted_by.profile_image %}
+                    <img src="{{ reply.posted_by.profile_image }}" class="img-circle image-inline">
+                {% else %}
+                    <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                {% endif %}
+                {{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}
+            </h4>
             <h5>{{ reply.time_elapsed }}</h5>
             {{ reply.text }}
         </li>

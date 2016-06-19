@@ -18,6 +18,7 @@ class DiscussionList(View):
     def get(self, request):
         
         context={}
+        
         response = functions.get_discussion_list(request)
 
         page_count = response["page_count"]
@@ -25,7 +26,7 @@ class DiscussionList(View):
         context["pages"] = range(1, page_count+1)
         
         context["discussions"] = response["data"]
-        
+        print response
         return render(request, 'discussion-list.html', context)
         
         

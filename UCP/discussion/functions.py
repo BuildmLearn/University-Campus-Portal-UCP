@@ -21,7 +21,7 @@ from rest_framework.views import APIView
 from login.models import UserProfile
 import login.serializers as Serializers
 from discussion.models import DiscussionThread, Reply
-from discussion.serializers import DiscussionThreadSerializer, ReplySerializer, ReplyFullSerializer
+from discussion.serializers import DiscussionThreadSerializer,DiscussionThreadFullSerializer, ReplySerializer, ReplyFullSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL, PAGE_SIZE
 
@@ -61,7 +61,7 @@ def get_discussion_list(request):
     offset = page_no * PAGE_SIZE
     threads = threads[offset:offset+PAGE_SIZE]
     
-    serializer = DiscussionThreadSerializer(threads, many=True)
+    serializer = DiscussionThreadFullSerializer(threads, many=True)
 
     response["page_count"] = page_count
     response["data"] = serializer.data
