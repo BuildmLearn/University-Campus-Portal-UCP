@@ -61,8 +61,8 @@ button {
   #profile-dropdown{
       cursor: pointer;
       position: absolute;
-      right: 0px;
-      top: 0px;
+      right: 10px;
+      top: 10px;
   }
   
   #profile-dropdown li{
