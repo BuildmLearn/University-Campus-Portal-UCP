@@ -10,11 +10,12 @@ from django.views.generic import View
 
 from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile
 from UCP.constants import result
+from UCP.functions import get_base_context
 
 class Login(View):
     
     def get(self, request):
-        context = {}
+        context = get_base_context(request)
         context["is_login_page"] = True
         
         if request.user.is_authenticated():
@@ -36,7 +37,7 @@ class Login(View):
 class Logout(View):
     
     def get(self, request):
-        print('logging out')
+        
         django_logout(request)
         return redirect('/user/login')
 

@@ -5,6 +5,9 @@ contains functions common to all apps
 """
 
 from django.utils import timezone
+from login.models import UserProfile
+from login.serializers import UserProfileFullSerializer
+
 
 def get_time_elapsed_string(date):
     """
@@ -25,3 +28,15 @@ def get_time_elapsed_string(date):
     else:
         return str(seconds_elapsed) + " seconds ago"
         
+
+def get_base_context(request):
+    """
+    returns a base context with user details to be sent to a template
+    """
+    user = UserProfile.objects.get(user=request.user)
+    serializer = UserProfileFullSerializer(user)
+    
+    context = {}
+    context["user"] = serializer.data
+    
+    return context
