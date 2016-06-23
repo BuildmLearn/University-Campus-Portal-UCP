@@ -24,14 +24,24 @@
       }
       
       .image-inline{
-          height:20px;
-          width: 20px;
+          height:30px;
+          width: 30px;
+          margin-right:5px;
       }
     
       .discussion-card{
           padding: 10px;
           margin-top: 15px;
           background-color: #f5f5f5;
+      }
+      
+      .reply-card-time{
+          color:#9E9E9E;
+          font-size:0.8em;
+      }
+      
+      .reply-card-text{
+          margin-left:40px;
       }
     
       .card {
@@ -72,16 +82,19 @@
     <ul class="list-group">
     {% for reply in replies %}
         <li class="card discussion-card">
-            <h4>
+            <span>
                 {% if reply.posted_by.profile_image %}
                     <img src="{{ reply.posted_by.profile_image }}" class="img-circle image-inline">
                 {% else %}
                     <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
                 {% endif %}
-                {{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}
-            </h4>
-            <h5>{{ reply.time_elapsed }}</h5>
-            {{ reply.text }}
+                <b>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</b>
+                
+                 <span class="reply-card-time">| {{ reply.time_elapsed }} </span>
+            </span>
+            <p class="reply-card-text">
+                {{ reply.text }}
+            </p>
         </li>
     {% endfor %}
     </ul>
