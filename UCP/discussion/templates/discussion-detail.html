@@ -28,6 +28,7 @@
           width: 30px;
           margin-right:5px;
       }
+      
     
       .discussion-card{
           padding: 10px;
@@ -89,7 +90,7 @@
                     <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
                 {% endif %}
                 <b>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</b>
-                
+            
                  <span class="reply-card-time">| {{ reply.time_elapsed }} </span>
             </span>
             <p class="reply-card-text">
@@ -98,7 +99,7 @@
         </li>
     {% endfor %}
     </ul>
-    
+   
     <nav>
       <ul class="pagination">
         {% for page in pages %}
