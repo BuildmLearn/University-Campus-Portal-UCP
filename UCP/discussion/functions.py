@@ -84,7 +84,7 @@ def get_replies(pk, request):
         replies = replies[offset:offset+PAGE_SIZE]
         
         reply_serializer = ReplyFullSerializer(replies, many=True)
-        discussion_serializer = DiscussionThreadSerializer(discussion)
+        discussion_serializer = DiscussionThreadFullSerializer(discussion)
         
         response["page_count"] = page_count
         response["data"] = {}

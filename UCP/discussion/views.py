@@ -42,7 +42,7 @@ class DiscussionDetails(View):
         context["pages"] = range(1, page_count+1)
         context["replies"] = response["data"]["replies"]
         context["discussion"] = response["data"]["discussion"]
-
+        
         return render(request, 'discussion-detail.html', context)
         
         

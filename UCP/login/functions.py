@@ -42,9 +42,9 @@ def update_profile(request):
     user = UserProfile.objects.get(user=request.user)
     
     if "first_name" in request.POST:
-        user.user.first_name = request.POST["first_name"]
+        user.user.first_name = request.POST["first_name"].capitalize()
     if "last_name" in request.POST:
-        user.user.last_name = request.POST["last_name"]
+        user.user.last_name = request.POST["last_name"].capitalize()
     if "profile_picture" in request.FILES:
         user.profile_image = request.FILES["profile_picture"]
         

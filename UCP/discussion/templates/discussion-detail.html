@@ -56,6 +56,11 @@
         <p>
             {{ discussion.description }}
         </p>
+        <span>
+            by 
+            <b>{{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}</b>,
+            {{ discussion.time_elapsed }}
+        <span>
     </div>
     <ul class="list-group">
     {% for reply in replies %}

@@ -15,7 +15,7 @@ from UCP.functions import get_base_context
 class Login(View):
     
     def get(self, request):
-        context = get_base_context(request)
+        context = {}
         context["is_login_page"] = True
         
         if request.user.is_authenticated():
@@ -27,6 +27,8 @@ class Login(View):
         response = login(request)
         
         if response["result"] == result.RESULT_SUCCESS:
+
+            context = get_base_context(request)
             return render(request, 'home.html', context)
         else:
             context["message"] = get_response_text(response)
