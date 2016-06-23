@@ -19,6 +19,7 @@ class Login(View):
         context["is_login_page"] = True
         
         if request.user.is_authenticated():
+            context = get_base_context(request)
             return render(request, 'home.html', context)
             
         if not 'email' in request.GET:
@@ -27,7 +28,6 @@ class Login(View):
         response = login(request)
         
         if response["result"] == result.RESULT_SUCCESS:
-
             context = get_base_context(request)
             return render(request, 'home.html', context)
         else:

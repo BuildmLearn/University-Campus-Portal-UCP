@@ -58,7 +58,14 @@
         </p>
         <span>
             by 
-            <b>{{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}</b>,
+            <b>
+                {% if discussion.posted_by.profile_image %}
+                    <img src="{{ discussion.posted_by.profile_image }}" class="img-circle image-inline">
+                {% else %}
+                    <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                {% endif %}
+                {{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}
+            </b>,
             {{ discussion.time_elapsed }}
         <span>
     </div>

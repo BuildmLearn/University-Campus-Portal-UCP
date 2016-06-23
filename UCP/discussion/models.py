@@ -23,6 +23,9 @@ class DiscussionThread(models.Model):
     last_reply = models.ForeignKey("Reply", related_name="last_reply", null=True, blank=True)
     tag = models.ForeignKey(Tag,null=True)
     
+    class Meta:
+        ordering = ['-posted_at']
+    
     def time_elapsed(self):
         return get_time_elapsed_string(self.posted_at)
     
