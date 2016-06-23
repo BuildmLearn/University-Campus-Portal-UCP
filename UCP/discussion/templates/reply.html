@@ -19,6 +19,11 @@
   </head>
   <body>
       <style>
+      ul {
+          list-style: none;
+          padding:0px;
+      }
+      
       textarea {
           resize: none;
           height: 150px;
@@ -37,12 +42,9 @@
             <textarea type="text" class="form-control" name="text" placeholder="enter your reply"></textarea>
         </fieldset>
 
-        <fieldset class="form-group">
-            <ul id="attachment-list">
-            </ul>
-            <label class="btn btn-default btn-file">
-                Attach files <input type="file" name="attachments" multiple style="display: none;">
-            </label>
+        <fieldset class="form-group" id="attachment-group">
+            <label>Add Attachments</label>
+            <input type="file" name="attachments">
         </fieldset>
         <input type="submit"/>
     </form>
@@ -59,7 +61,7 @@
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
     <script>
     $(function() {
-
+      inputs = 1
       // We can attach the `fileselect` event to all file inputs on the page
       $(document).on('change', ':file', function() {
         var input = $(this),
@@ -78,13 +80,22 @@
               if( input.length ) {
                   input.val(log);
               } else {
-                  attachment = $("<li>").html(log)
-                  $("#attachment-list").append(attachment)
+                  file = $('<input/>').attr('type', 'file').attr('name', 'attachments').attr('id',inputs++)
+                  file.on('change',add_more_inputs)
+                  $("#attachment-group").append(file)
+                  
               }
 
           });
       });
-  
+      
+      function add_more_inputs(){
+          file = $('<input/>').attr('type', 'file').attr('name', 'attachments').attr('id',inputs)
+          inputs += 1
+          file.on('change',add_more_inputs)
+          $("#attachment-group").append(file)
+      }
+
     });
     </script>
   </body>

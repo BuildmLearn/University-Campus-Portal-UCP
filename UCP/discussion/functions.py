@@ -109,11 +109,8 @@ def add_reply(pk, request):
     
     response = {}
     serializer = ReplySerializer(data=request.POST)
-
-    print request.FILES
     
     discussion = DiscussionThread.objects.get(id = pk)
-        
         
     discussion_serializer = DiscussionThreadSerializer(discussion)
     if serializer.is_valid():
@@ -124,6 +121,8 @@ def add_reply(pk, request):
             posted_at = timezone.now(),
             thread = discussion
         )
+        print "--"*40
+        print request.FILES.getlist('attachments') 
         
         for _file in request.FILES.getlist('attachments'):
             print _file
