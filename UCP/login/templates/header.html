@@ -1,11 +1,11 @@
       <div id="desktop-nav-container">
           <div id="header-title">
-              <span class="title-college-name">IIT Bombay</span><br>
+              <span class="title-college-name">{{ settings.SITE_TITLE }}</span><br>
               <span class="title-portal">Campus Portal</span>
           </div>
           
           <div class="dropdown pull-right" id="profile-dropdown">
-            <a data-toggle="dropdown">Hi! Pranav
+            <a data-toggle="dropdown">Hi! {{user.user.first_name}}
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/user/logout">Logout</a></li>
@@ -27,7 +27,7 @@
       </div>
 <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
     <a class="navmenu-brand" href="#">
-        <span style="color: #333;">IIT Bombay<span><br>
+        <span style="color: #333;">{{ settings.SITE_TITLE }}<span><br>
         <span style="color: #337ab7;">Campus Portal</span>
     </a>
       <ul class="nav navmenu-nav">
