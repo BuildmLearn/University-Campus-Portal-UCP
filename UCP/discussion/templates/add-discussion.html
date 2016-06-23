@@ -31,7 +31,7 @@
         <h1>Add new Discussion</h1>
     </div>
     
-    <form action="/discussions/add_new_thread" method= "post">
+    <form action="/discussions/add_new_thread" method="post" >
         {% csrf_token %}
         <fieldset class="form-group">
             <input class="form-control" name="title" placeholder="Thread Title">

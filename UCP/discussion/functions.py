@@ -20,7 +20,7 @@ from rest_framework.views import APIView
 
 from login.models import UserProfile
 import login.serializers as Serializers
-from discussion.models import DiscussionThread, Reply
+from discussion.models import DiscussionThread, Reply, Attachment
 from discussion.serializers import DiscussionThreadSerializer,DiscussionThreadFullSerializer, ReplySerializer, ReplyFullSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL, PAGE_SIZE
@@ -110,18 +110,29 @@ def add_reply(pk, request):
     response = {}
     serializer = ReplySerializer(data=request.POST)
 
-
+    print request.FILES
+    
     discussion = DiscussionThread.objects.get(id = pk)
-
+        
+        
     discussion_serializer = DiscussionThreadSerializer(discussion)
     if serializer.is_valid():
         user_profile = UserProfile.objects.get(user = request.user)
         
-        serializer.save(
+        reply = serializer.save(
             posted_by = user_profile,
             posted_at = timezone.now(),
             thread = discussion
         )
+        
+        for _file in request.FILES.getlist('attachments'):
+            print _file
+            attachment = Attachment(
+                reply = reply,
+                uploaded_file = _file
+            )
+            attachment.save()
+        
         
         discussion.no_of_replies += 1
         discussion.save()

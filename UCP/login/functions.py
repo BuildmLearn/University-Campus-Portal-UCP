@@ -40,7 +40,7 @@ def update_profile(request):
     """
     
     user = UserProfile.objects.get(user=request.user)
-    
+    print request.FILES
     if "first_name" in request.POST:
         user.user.first_name = request.POST["first_name"].capitalize()
     if "last_name" in request.POST:

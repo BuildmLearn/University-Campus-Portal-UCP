@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from login.models import UserProfile
-from UCP.functions import get_time_elapsed_string
+from UCP.functions import get_time_elapsed_string, get_file_size_string
 
 class Tag(models.Model):
     
@@ -51,9 +51,19 @@ class Reply(models.Model):
 
 class Attachment(models.Model):
     
-    reply = models.ForeignKey(Reply)
-    uploaded_file = models.FileField(upload_to="user-attachments")
-    size = models.FloatField(null=True, blank=True)
+    name = models.CharField(blank=True ,null=True, max_length=100)
+    reply = models.ForeignKey(Reply, related_name="attachments")
+    uploaded_file = models.ImageField(upload_to="user-attachments")
+    size = models.FloatField(default=0, blank=True)
+    
+    def size_in_kb(self):
+        return get_file_size_string(self.size)
+    
+    def save(self, *args, **kwargs):
+        self.name = self.uploaded_file.name
+        self.size = self.uploaded_file.size
+        super(Attachment, self).save(*args, **kwargs)
+        
     
     
     

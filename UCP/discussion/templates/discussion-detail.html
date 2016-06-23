@@ -29,6 +29,13 @@
           margin-right:5px;
       }
       
+      .attachment{
+          margin-top:4px;
+          border:2px solid #64B5F6;
+          background-color: #BBDEFB;
+          border-radius: 4px;
+          padding: 5px;
+      }
     
       .discussion-card{
           padding: 10px;
@@ -36,9 +43,30 @@
           background-color: #f5f5f5;
       }
       
-      .reply-card-time{
+      .attachment-name{
+          font-size:0.9em;
+      }
+      .reply-card-time,.attachment-size, .attachment-size-small{
           color:#9E9E9E;
           font-size:0.8em;
+      }
+
+      @media (min-width: 768px) {
+      
+          .attachment-size{
+              float: right;
+          }
+          
+          .attachment-size-small{
+              display: none;
+          }
+      }
+
+      @media (max-width: 768px) {
+      
+          .attachment-size{
+              display:none;
+          }
       }
       
       .reply-card-text{
@@ -96,6 +124,15 @@
             <p class="reply-card-text">
                 {{ reply.text }}
             </p>
+            <ul>
+                {% for attachment in reply.attachments %}
+                <li class="attachment">
+                    <a class="attachment-name" href="{{ attachment.uploaded_file }}">{{attachment.name}}</a> 
+                    <span class="attachment-size">{{attachment.size_in_kb}}</span>
+                    <p class="attachment-size-small">{{attachment.size_in_kb}}</p>
+                </li>
+                {% endfor %}
+            </ul>
         </li>
     {% endfor %}
     </ul>

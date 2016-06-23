@@ -31,10 +31,18 @@
         <h1>Reply to {{ discussion.title }}</h1>
     </div>
     
-    <form action="/discussions/{{ discussion.id }}/reply/" method= "post">
+    <form action="/discussions/{{ discussion.id }}/reply/" method= "post" enctype="multipart/form-data"> 
         {% csrf_token %}
         <fieldset class="form-group">
             <textarea type="text" class="form-control" name="text" placeholder="enter your reply"></textarea>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <ul id="attachment-list">
+            </ul>
+            <label class="btn btn-default btn-file">
+                Attach files <input type="file" name="attachments" multiple style="display: none;">
+            </label>
         </fieldset>
         <input type="submit"/>
     </form>
@@ -49,5 +57,35 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+    <script>
+    $(function() {
+
+      // We can attach the `fileselect` event to all file inputs on the page
+      $(document).on('change', ':file', function() {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+      });
+
+      // We can watch for our custom `fileselect` event like this
+      $(document).ready( function() {
+          $(':file').on('fileselect', function(event, numFiles, label) {
+
+              var input = $(this).parents('.input-group').find(':text'),
+                  log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+              if( input.length ) {
+                  input.val(log);
+              } else {
+                  attachment = $("<li>").html(log)
+                  $("#attachment-list").append(attachment)
+              }
+
+          });
+      });
+  
+    });
+    </script>
   </body>
 </html>

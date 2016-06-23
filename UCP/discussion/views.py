@@ -39,6 +39,7 @@ class DiscussionDetails(View):
         
         response = functions.get_replies(pk, request)
         page_count = response["page_count"]
+        print response
         context["pages"] = range(1, page_count+1)
         context["replies"] = response["data"]["replies"]
         context["discussion"] = response["data"]["discussion"]
@@ -87,6 +88,7 @@ class Reply(View):
         response = functions.add_reply(pk, request)
         context["discussion"] = response["data"]
         
+        print request.FILES
         if response["result"] == 1:
             return redirect('/discussions/'+str(pk))
         else:

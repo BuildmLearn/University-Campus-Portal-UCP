@@ -29,6 +29,15 @@ def get_time_elapsed_string(date):
         return str(seconds_elapsed) + " seconds ago"
         
 
+def get_file_size_string(size):
+    """
+    returns the size in kbs 
+    """
+    
+    size_in_kb = "{0:.3f}".format(size/1000.0)
+    return str(size_in_kb) + " kb"
+    
+
 def get_base_context(request):
     """
     returns a base context with user details to be sent to a template
