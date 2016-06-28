@@ -10,23 +10,16 @@
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-        <style>
+  </head>
+  <body>
+      <style>
         .profile-img{
             height : 200px;
             width : 200px;
             clip: rect(0px,200px,200px,0px);
             margin-bottom: 20px;
         }
-        </style>
-  </head>
-  <body>
-      <style>
+        
       textarea {
           resize: none;
           height: 150px;
@@ -54,9 +47,32 @@
             <input class="form-control" name="last_name" placeholder="Last Name" value="{{ user.user.last_name }}">
         </fieldset>
         <fieldset class="form-group">
-            <input type=file style="display:none" name="profile_picture" id="profile-picture-input" type=hidden>
+            <input class="form-control" name="last_name" placeholder="Age" value="{{ user.user.age }}">
         </fieldset>
-        <input class="btn btn-primary" type="submit">
+       <div class="form-group">
+         <label for="sel1">Year</label>
+         <select class="form-control" id="year">
+           <option>1st</option>
+           <option>2nd</option>
+           <option>3rd</option>
+           <option>4th</option>
+           <option>5th</option>
+         </select>
+       </div>
+       <div class="form-group">
+         <label for="sel1">Gender</label>
+         <select class="form-control" id="gender">
+           <option>Female</option>
+           <option>Male</option>
+           <option>Other</option>
+         </select>
+       </div>
+       <label for="dob">Date of birth</label>
+       <input id="dob" name="dob" type="date" />
+       <input type=file style="display:none" name="profile_picture" id="profile-picture-input" type=hidden>
+       <fieldset class="form-group">
+            <button class="btn btn-primary" type="submit">Save changes</button>
+        </fieldset>
     </form>
         
 </div><!-- /.container -->
@@ -77,11 +93,9 @@
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                // get loaded data and render thumbnail.
                 document.getElementById("profile-picture").src = e.target.result;
             };
 
-            // read the image file as a data URL.
             reader.readAsDataURL(this.files[0]);
         };
     </script>

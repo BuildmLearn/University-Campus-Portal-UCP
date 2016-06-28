@@ -39,6 +39,9 @@ button {
     margin-top:70px;
 }
 
+.page-header{
+    margin-top: 0px;
+}
 
 
 @media ( min-width: 992px ){
