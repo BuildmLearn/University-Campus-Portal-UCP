@@ -44,6 +44,9 @@ class Reply(models.Model):
     posted_at = models.DateTimeField(default=timezone.now)
     text = models.CharField(default="", max_length="1000")
     
+    class Meta:
+        ordering = ['-posted_at']
+    
     def time_elapsed(self):
         return get_time_elapsed_string(self.posted_at)
     
