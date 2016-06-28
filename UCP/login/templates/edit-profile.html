@@ -40,7 +40,7 @@
     </div>
 
     {% if user.profile_image %}
-    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" >
+    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
     {% else %}
     <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
     {% endif%}
@@ -54,7 +54,7 @@
             <input class="form-control" name="last_name" placeholder="Last Name" value="{{ user.user.last_name }}">
         </fieldset>
         <fieldset class="form-group">
-            <input type=file class="form-control" name="profile_picture">
+            <input type=file style="display:none" name="profile_picture" id="profile-picture-input" type=hidden>
         </fieldset>
         <input class="btn btn-primary" type="submit">
     </form>
@@ -68,5 +68,22 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+    <script>
+        $("#profile-picture").click(function() {
+            $("#profile-picture-input").click();
+        });
+        
+        document.getElementById("profile-picture-input").onchange = function () {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                document.getElementById("profile-picture").src = e.target.result;
+            };
+
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        };
+    </script>
   </body>
 </html>
