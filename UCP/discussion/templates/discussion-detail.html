@@ -87,14 +87,14 @@
             {{ discussion.description }}
         </p>
         <span>
-            <b>
+            <a href="/user/{{ discussion.posted_by.id }}">
                 {% if discussion.posted_by.profile_image %}
                     <img src="{{ discussion.posted_by.profile_image }}" class="img-circle image-inline">
                 {% else %}
                     <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
                 {% endif %}
                 {{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}
-            </b>,
+            </a>,
             {{ discussion.time_elapsed }}
         <span>
     </div>
@@ -116,13 +116,14 @@
     {% for reply in replies %}
         <li class="card discussion-card">
             <span>
-                {% if reply.posted_by.profile_image %}
-                    <img src="{{ reply.posted_by.profile_image }}" class="img-circle image-inline">
-                {% else %}
-                    <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
-                {% endif %}
-                <b>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</b>
-            
+                <a href="/user/{{ reply.posted_by.id }}">
+                    {% if reply.posted_by.profile_image %}
+                        <img src="{{ reply.posted_by.profile_image }}" class="img-circle image-inline">
+                    {% else %}
+                        <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                    {% endif %}
+                    <b>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</b>
+                </a>
                  <span class="reply-card-time">| {{ reply.time_elapsed }} </span>
             </span>
             <p class="reply-card-text">
