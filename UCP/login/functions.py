@@ -33,6 +33,15 @@ def get_user_details(request):
     serializer = Serializers.UserProfileFullSerializer(user)
     
     return serializer.data
+    
+def get_user_profile(pk):
+    """
+    returns a dict with the details of a user with a given id
+    """
+    user = UserProfile.objects.get(id=pk)
+    serializer = Serializers.UserProfileFullSerializer(user)
+    
+    return serializer.data
 
 def update_profile(request):
     """

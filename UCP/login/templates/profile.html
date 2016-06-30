@@ -1,0 +1,48 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ settings.SITE_TITLE }} Campus Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
+
+  </head>
+  <body>
+      <style>
+        .profile-img{
+            height : 200px;
+            width : 200px;
+            clip: rect(0px,200px,200px,0px);
+            margin-bottom: 20px;
+        }
+      </style>
+      {% include 'header.html' %}
+
+<div class="container main-content">
+    <div class="page-header">
+        <h1>{{ user.first_name }}{{ user.last_name }}</h1>
+    </div>
+
+    {% if user.profile_image %}
+    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
+    {% else %}
+    <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
+    {% endif%}
+    
+        
+</div><!-- /.container -->
+
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+
+  </body>
+</html>

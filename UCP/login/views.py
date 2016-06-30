@@ -8,7 +8,7 @@ from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
-from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile
+from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile
 from UCP.constants import result
 from UCP.functions import get_base_context
 
@@ -110,6 +110,18 @@ class EditProfile(View):
         context["response"] = response
         
         return render(request, 'edit-profile.html', context)
+    
+        
+class Profile(View):
+    
+    def get(self, request, pk):
+        
+        context={}
+        
+        context['user'] = get_user_profile(pk)
+        
+        return render(request, 'profile.html', context)
+    
         
         
         
