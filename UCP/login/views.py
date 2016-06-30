@@ -22,8 +22,25 @@ class Login(View):
             context = get_base_context(request)
             return render(request, 'home.html', context)
             
-        if not 'email' in request.GET:
+        return render(request, 'login-register.html', context)
+        
+        response = login(request)
+        
+        if response["result"] == result.RESULT_SUCCESS:
+            context = get_base_context(request)
+            return render(request, 'home.html', context)
+        else:
+            context["message"] = get_response_text(response)
+        
             return render(request, 'login-register.html', context)
+    
+    def post(self, request):
+        context = {}
+        context["is_login_page"] = True
+        
+        if request.user.is_authenticated():
+            context = get_base_context(request)
+            return render(request, 'home.html', context)
         
         response = login(request)
         

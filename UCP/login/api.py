@@ -22,7 +22,7 @@ class UserViewSet(viewsets.ViewSet):
     authentication_classes = ()
     permission_classes = ()
     
-    @list_route()
+    @list_route(methods=['post'])
     def login(self, request):
         """
         Logging in a user

@@ -107,13 +107,13 @@ def send_password_reset_email(user):
 
 def login(request):
     
-    serializer = Serializers.LoginRequestSerializer(data = request.GET)
+    serializer = Serializers.LoginRequestSerializer(data = request.POST)
     response = {}
     
     if serializer.is_valid(): 
         
-        username = request.GET['email']
-        password = request.GET['password']
+        username = request.POST['email']
+        password = request.POST['password']
     
         user = authenticate(username=username, password=password)
                 
