@@ -85,7 +85,7 @@ def send_verification_email(user):
     emailVerificationCode = EmailVerificationCode.objects.create(user=user)
     emailSubject = "Verification Email"
     emailMessage = "Use the following link to activate your account \n"
-    emailMessage += BASE_URL + "/api/user/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
+    emailMessage += BASE_URL + "/user/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage

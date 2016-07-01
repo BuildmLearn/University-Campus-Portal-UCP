@@ -8,7 +8,7 @@ from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
-from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile
+from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile, verify_email
 from UCP.constants import result
 from UCP.functions import get_base_context
 
@@ -139,7 +139,18 @@ class Profile(View):
         
         return render(request, 'profile.html', context)
     
+
+class VerificationPage(View):
+    
+    def get(self, request):
         
+        context={}
+        
+        response = verify_email(request)
+        
+        context["response"] = response
+        
+        return render(request, 'email-verification.html', context)
         
         
         
