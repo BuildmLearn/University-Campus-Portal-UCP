@@ -102,7 +102,8 @@
         <form action="/discussions/{{ discussion.id }}/reply/" method= "post" enctype="multipart/form-data"> 
             {% csrf_token %}
             <fieldset class="form-group">
-                <textarea type="text" class="form-control" name="text" placeholder="enter your reply"></textarea>
+                <textarea type="text" class="form-control" name="text" id="reply-textarea" placeholder="enter your reply"></textarea>
+                
             </fieldset>
 
             <fieldset class="form-group" id="attachment-group">

@@ -15,6 +15,17 @@ body {
     margin-bottom: 0px;
 }
 
+#header-image{
+    background-color:red;
+    width:70px;
+    float:left;
+    height:70px;
+}
+
+#header-logo{
+    float:left;
+}
+
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
