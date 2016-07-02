@@ -20,7 +20,7 @@ from rest_framework.views import APIView
 
 from login.models import UserProfile
 import login.serializers as Serializers
-from discussion.models import DiscussionThread, Reply, Attachment
+from discussion.models import DiscussionThread, Reply, Attachment, Tag
 from discussion.serializers import DiscussionThreadSerializer,DiscussionThreadFullSerializer, ReplySerializer, ReplyFullSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL, PAGE_SIZE
@@ -68,6 +68,18 @@ def get_discussion_list(request):
     response["data"] = serializer.data
     
     return response
+    
+def get_tags(query):
+    """returns a list of tags whose name match the query"""
+    tags = Tag.objects.filter(name__icontains=query)
+    data = []
+    for tag in tags:
+        item = {}
+        item["id"] = tag.id
+        item["value"] = tag.name
+        item["label"] = tag.name
+        data.append(item)
+    return data
     
 def get_replies(pk, request):
     

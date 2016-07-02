@@ -67,6 +67,23 @@ class DiscussionViewSet(viewsets.ViewSet):
         response = functions.get_discussion_list(request)
 
         return Response(response, status=status.HTTP_200_OK)
+        
+    @list_route()
+    def tags(self, request):
+        """
+        Get a list of all Tags matching the given query
+        ---
+        # YAML
+        
+        parameters:
+            -   name: query
+                type: string
+                paramType: query
+        """
+        
+        response = functions.get_tags(request.GET["query"])
+
+        return Response(response, status=status.HTTP_200_OK)
     
     @detail_route(methods=['post'])
     def reply(self, request, pk):
