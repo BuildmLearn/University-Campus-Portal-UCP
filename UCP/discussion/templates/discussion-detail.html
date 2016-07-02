@@ -6,6 +6,8 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
@@ -128,7 +130,7 @@
                  <span class="reply-card-time">| {{ reply.time_elapsed }} </span>
             </span>
             <p class="reply-card-text">
-                {{ reply.text }}
+                {{ reply.text | safe }}
             </p>
             <ul>
                 {% for attachment in reply.attachments %}
@@ -163,5 +165,21 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+    <script>
+    tinymce.init({
+      selector: 'textarea',
+      height: 200,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+      ],
+      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      content_css: [
+        '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+        '//www.tinymce.com/css/codepen.min.css'
+      ]
+    });
+    </script>
   </body>
 </html>
