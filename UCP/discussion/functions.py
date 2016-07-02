@@ -121,6 +121,8 @@ def add_reply(pk, request):
             posted_at = timezone.now(),
             thread = discussion
         )
+        
+        
         print "--"*40
         print request.FILES.getlist('attachments') 
         
