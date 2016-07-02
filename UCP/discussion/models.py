@@ -22,6 +22,7 @@ class DiscussionThread(models.Model):
     no_of_views = models.IntegerField(blank=True, null=True, default=0)
     last_reply = models.ForeignKey("Reply", related_name="last_reply", null=True, blank=True)
     tag = models.ForeignKey(Tag,null=True)
+    subscribed = models.ManyToManyField(UserProfile, related_name="subscribed")
     
     class Meta:
         ordering = ['-posted_at']

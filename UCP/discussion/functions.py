@@ -24,6 +24,7 @@ from discussion.models import DiscussionThread, Reply, Attachment
 from discussion.serializers import DiscussionThreadSerializer,DiscussionThreadFullSerializer, ReplySerializer, ReplyFullSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL, PAGE_SIZE
+from UCP.functions import send_parallel_mail
 
 
 def add_discussion_thread(request):
@@ -105,6 +106,14 @@ def get_discussion(pk):
     
     return response
 
+def send_notification(discussion):
+    """
+    send an email notification to people subscribed to a thread
+    """
+    for user in discussion.subscribed.all():
+        print user.user.email
+        send_parallel_mail(discussion.title + " - new reply","A new reply was added to the discussion",[user.user.email])
+
 def add_reply(pk, request):
     
     response = {}
@@ -124,7 +133,6 @@ def add_reply(pk, request):
         
         
         print "--"*40
-        print request.FILES.getlist('attachments') 
         
         for _file in request.FILES.getlist('attachments'):
             print _file
@@ -136,7 +144,10 @@ def add_reply(pk, request):
         
         
         discussion.no_of_replies += 1
+        discussion.subscribed.add(user_profile)
+        send_notification(discussion)
         discussion.save()
+        
         
         response["result"] = 1
         response["data"] = discussion_serializer.data
