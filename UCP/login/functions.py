@@ -22,6 +22,7 @@ from rest_framework.views import APIView
 from login.models import EmailVerificationCode, PasswordResetCode, UserProfile
 import login.serializers as Serializers
 from UCP.constants import result, message
+from UCP.functions import send_parallel_mail
 from UCP.settings import EMAIL_HOST_USER, BASE_URL
 
 
@@ -89,7 +90,7 @@ def send_verification_email(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    send_parallel_mail(emailSubject, emailMessage, to)
 
 
 def send_password_reset_email(user):
@@ -103,7 +104,7 @@ def send_password_reset_email(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    #send_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    send_parallel_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 def login(request):
     

@@ -3,10 +3,13 @@ functions.py file
 
 contains functions common to all apps 
 """
+import thread
 
+from django.core.mail import send_mail
 from django.utils import timezone
 from login.models import UserProfile
 from login.serializers import UserProfileFullSerializer
+from UCP.settings import EMAIL_HOST_USER
 
 
 def get_time_elapsed_string(date):
@@ -49,3 +52,9 @@ def get_base_context(request):
     context["user"] = serializer.data
     
     return context
+    
+
+def send_parallel_mail(sub,msg,to):
+    thread.start_new_thread( send_mail, (sub, msg, EMAIL_HOST_USER, to) )
+    
+    
