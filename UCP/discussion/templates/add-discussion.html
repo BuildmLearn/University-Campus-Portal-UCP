@@ -9,6 +9,9 @@
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/tagit.ui-zendesk.css' %}" rel="stylesheet" media="screen">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,7 +44,8 @@
         </fieldset>
         
         <fieldset class="form-group">
-            <input type="text" class="form-control" placeholder="Add tags"/>
+            <label>Add Tags</label>
+            <input type="text" name="tag" value="" class="tag" id="tags_1"/>
         </fieldset>
         
         <input type="submit"/>
@@ -54,9 +58,18 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script>
+    $(function() {
+    
+        $('#tags_1').tagit();
+    
+    });
+    </script>
     
   </body>
 </html>

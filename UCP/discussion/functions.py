@@ -31,13 +31,21 @@ def add_discussion_thread(request):
     
     response = {}
     serializer = DiscussionThreadSerializer(data=request.POST)
-
+    
+    print request.POST
+        
     if serializer.is_valid():
         user_profile = UserProfile.objects.get(user = request.user)
-        serializer.save(
+        discussion = serializer.save(
             posted_by = user_profile,
             posted_at = timezone.now()
         )
+
+        tags = request.POST["tag"].split(',')
+        for tag_name in tags:
+            tag = Tag(name=tag_name)
+            tag.save()
+            discussion.tags.add(tag)
         response["result"] = result.RESULT_SUCCESS
         response["error"] = []
     else:
