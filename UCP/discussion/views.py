@@ -53,7 +53,8 @@ class AddDiscussion(View):
     def get(self, request):
         
         context = get_base_context(request)
-        
+        context["tags"] = functions.get_all_tags()
+        print context
         return render(request, 'add-discussion.html', context)
     
     @method_decorator(login_required)

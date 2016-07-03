@@ -21,19 +21,25 @@ from rest_framework.views import APIView
 from login.models import UserProfile
 import login.serializers as Serializers
 from discussion.models import DiscussionThread, Reply, Attachment, Tag
-from discussion.serializers import DiscussionThreadSerializer,DiscussionThreadFullSerializer, ReplySerializer, ReplyFullSerializer
+from discussion.serializers import DiscussionThreadSerializer,DiscussionThreadFullSerializer, ReplySerializer, ReplyFullSerializer, TagSerializer
 from UCP.constants import result, message
 from UCP.settings import EMAIL_HOST_USER, BASE_URL, PAGE_SIZE
 from UCP.functions import send_parallel_mail
 
 
+def get_all_tags():
+    "returns a list of all availible tags"
+    tags = Tag.objects.all()
+    serializer = TagSerializer(tags, many=True)
+    return serializer.data
+    
 def add_discussion_thread(request):
     
     response = {}
     serializer = DiscussionThreadSerializer(data=request.POST)
     
     print request.POST
-        
+    
     if serializer.is_valid():
         user_profile = UserProfile.objects.get(user = request.user)
         discussion = serializer.save(

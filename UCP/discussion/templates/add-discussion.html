@@ -37,10 +37,10 @@
     <form action="/discussions/add_new_thread" method="post" >
         {% csrf_token %}
         <fieldset class="form-group">
-            <input class="form-control" name="title" placeholder="Thread Title">
+            <input class="form-control" name="title" placeholder="Thread Title" required>
         </fieldset>
         <fieldset class="form-group">
-            <textarea type="text" class="form-control" name="description" placeholder="description"></textarea>
+            <textarea type="text" class="form-control" name="description" placeholder="description" required></textarea>
         </fieldset>
         
         <fieldset class="form-group">
@@ -65,8 +65,10 @@
     <script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
     <script>
     $(function() {
-    
-        $('#tags_1').tagit();
+        var sampleTags = [ {% for tag in tags %}"{{tag.name}}",{% endfor %}];
+        $('#tags_1').tagit({
+                availableTags: sampleTags
+            });
     
     });
     </script>
