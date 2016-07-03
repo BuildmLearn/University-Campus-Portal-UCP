@@ -16,10 +16,10 @@ body {
 }
 
 #header-image{
-    background-color:red;
     width:70px;
     float:left;
     height:70px;
+    margin-right:10px;
 }
 
 #header-logo{
