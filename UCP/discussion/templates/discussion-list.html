@@ -20,7 +20,19 @@
     ul {
         list-style: none;
     }
+
+    ul .tag-container{
+        padding-left: 0px;
+    }
     
+    li .tag{
+        padding: 8px;
+        border-radius: 5px;
+        display: inline;
+        color: white;
+        background-color: #4CAF50;
+    }
+
     .discussion-card-time{
         color:#9E9E9E;
         font-size:0.8em;
@@ -85,6 +97,11 @@
                 <p class="discussion-card-text">
                     {{ discussion.description | safe }}
                 </p>
+                <ul class="tag-container">
+                {% for tag in discussion.tags %}
+                    <li class="tag">{{ tag.name }}</li>
+                {% endfor %}
+                </ul>
             
         </li>
     {% endfor %}

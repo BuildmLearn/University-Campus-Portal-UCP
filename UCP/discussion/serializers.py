@@ -57,8 +57,8 @@ class DiscussionThreadSerializer(serializers.ModelSerializer):
 
 class DiscussionThreadFullSerializer(serializers.ModelSerializer):
     posted_by = UserProfileShortSerializer()
-    
+    tags = TagSerializer(many=True)
     class Meta:
         model = DiscussionThread
         fields = ('id', 'title', 'description', 'no_of_replies', 'no_of_views', 'posted_at', 
-        'posted_by', 'time_elapsed')
+        'posted_by', 'time_elapsed', 'tags')
