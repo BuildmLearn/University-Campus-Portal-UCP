@@ -6,7 +6,7 @@ consists of common functions used by both api.py and views.py file
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.shortcuts import render
 from django.template import Context
 from django.utils import timezone
@@ -23,7 +23,7 @@ from login.models import EmailVerificationCode, PasswordResetCode, UserProfile
 import login.serializers as Serializers
 from UCP.constants import result, message
 from UCP.functions import send_parallel_mail
-from UCP.settings import EMAIL_HOST_USER, BASE_URL
+from UCP.settings import EMAIL_HOST_USER, BASE_URL, SITE_TITLE
 
 
 def get_user_details(request):
@@ -84,12 +84,25 @@ def send_verification_email(user):
     """
     
     emailVerificationCode = EmailVerificationCode.objects.create(user=user)
+
+    verification_link = "http://"+BASE_URL + "/user/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
+
+    emailMessage ='<div style="background-color:#4285f4;padding:20px;border-radius:10px;"><h2 style="text-align:center">Welcome to '+ SITE_TITLE +' Campus Portal</h2>'
+    emailMessage += '<p style="color:white">Hey '+user.first_name+' !</p>'
+    emailMessage += '<p>Thank you for signing up on our portal</p>'
+    emailMessage += '<p>Please click <a href="'+ verification_link +'">here</a> to verify your email address</p>'
+    emailMessage += '<p>If the above link does not work, copy paste the following in your browser address bar </p>'
+    emailMessage += '<p>'+verification_link+'</p>'
+    emailMessage += '</div>'
+    
+
     emailSubject = "Verification Email"
-    emailMessage = "Use the following link to activate your account \n"
-    emailMessage += BASE_URL + "/user/verify_email/?email=" + user.email+"&code="+ emailVerificationCode.verification_code+"&format=json"
+
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
-    print emailMessage
+    msg = EmailMultiAlternatives(emailSubject, emailMessage, senderEmail, to)
+    msg.attach_alternative(emailMessage, "text/html")
+    msg.send( )
     #send_parallel_mail(emailSubject, emailMessage, to)
 
 
