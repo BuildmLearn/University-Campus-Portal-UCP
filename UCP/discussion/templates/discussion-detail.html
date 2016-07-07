@@ -86,7 +86,7 @@
         <h1>{{ discussion.title }} 
         </h1>
         <p>
-            {{ discussion.description }}
+            {{ discussion.description | safe }}
         </p>
         <span>
             <a href="/user/{{ discussion.posted_by.id }}">

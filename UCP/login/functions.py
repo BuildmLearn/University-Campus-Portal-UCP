@@ -90,7 +90,7 @@ def send_verification_email(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    send_parallel_mail(emailSubject, emailMessage, to)
+    #send_parallel_mail(emailSubject, emailMessage, to)
 
 
 def send_password_reset_email(user):
@@ -104,7 +104,7 @@ def send_password_reset_email(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    send_parallel_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    #send_parallel_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 def login(request):
     
