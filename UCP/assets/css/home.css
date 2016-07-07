@@ -16,9 +16,9 @@ body {
 }
 
 #header-image{
-    background-color:red;
     width:70px;
     float:left;
+    margin-right: 20px;
     height:70px;
 }
 

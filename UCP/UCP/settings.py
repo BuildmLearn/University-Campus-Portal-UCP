@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'UCP.wsgi.application'
 
 SETTINGS_EXPORT = [
     'SITE_TITLE',
+    'LOGO',
 ]
 
 # Internationalization
@@ -138,6 +139,8 @@ PASSWORD_RESET_CODE_EXPIRY_TIME = 1
 BASE_URL = 'localhost:8000'
 
 SITE_TITLE = "University"
+
+LOGO = "images/logo.png"
 
 #import local_settings.py file if it exists
 try:
