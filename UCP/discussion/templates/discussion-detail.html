@@ -83,7 +83,7 @@
 
 <div class="container main-content">
     <div class="page-header">
-        <h1>{{ discussion.title }} 
+        <h1>{{ discussion.title }} <a href="/discussions/{{ discussion.id }}/subscribe" class="btn btn-primary pull-right">Subscribe</a>
         </h1>
         <p>
             {{ discussion.description | safe }}
@@ -98,6 +98,8 @@
                 {{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}
             </a>,
             {{ discussion.time_elapsed }}
+
+                
         <span>
     </div>
     <div>
