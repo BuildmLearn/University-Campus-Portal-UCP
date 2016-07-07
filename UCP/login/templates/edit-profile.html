@@ -47,29 +47,18 @@
             <input class="form-control" name="last_name" placeholder="Last Name" value="{{ user.user.last_name }}">
         </fieldset>
         <fieldset class="form-group">
-            <input class="form-control" name="last_name" placeholder="Age" value="{{ user.user.age }}">
+            <input class="form-control" name="age" placeholder="Age" value="{{ user.age }}">
         </fieldset>
        <div class="form-group">
-         <label for="sel1">Year</label>
-         <select class="form-control" id="year">
-           <option>1st</option>
-           <option>2nd</option>
-           <option>3rd</option>
-           <option>4th</option>
-           <option>5th</option>
-         </select>
-       </div>
-       <div class="form-group">
          <label for="sel1">Gender</label>
-         <select class="form-control" id="gender">
-           <option>Female</option>
-           <option>Male</option>
-           <option>Other</option>
+         <select class="form-control" name="gender" id="gender">
+
+           <option>female</option>
+           <option {% if male %}selected{% endif %}>male</option>
          </select>
        </div>
-       <label for="dob">Date of birth</label>
-       <input id="dob" name="dob" type="date" />
-       <input type=file style="display:none" name="profile_picture" id="profile-picture-input" type=hidden>
+              <input type=file style="display:none" name="profile_picture" id="profile-picture-input" type=hidden>
+
        <fieldset class="form-group">
             <button class="btn btn-primary" type="submit">Save changes</button>
         </fieldset>

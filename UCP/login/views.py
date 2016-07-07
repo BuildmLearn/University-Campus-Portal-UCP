@@ -114,8 +114,13 @@ class EditProfile(View):
         
         context={}
         
-        context['user'] = get_user_details(request)
-        print context
+        user = get_user_details(request)
+        print user
+        context["user"] = user
+        if user["gender"] == "male":
+            context["male"] = True
+        else:
+            context["male"] = False
         
         return render(request, 'edit-profile.html', context)
     
@@ -123,7 +128,14 @@ class EditProfile(View):
         context={}
         
         response = update_profile(request)
-        context['user'] = get_user_details(request)
+        
+        user = get_user_details(request)
+        context["user"] = user
+        if user["gender"] == "male":
+            context["male"] = True
+        else:
+            context["male"] = False
+
         context["response"] = response
         
         return render(request, 'edit-profile.html', context)

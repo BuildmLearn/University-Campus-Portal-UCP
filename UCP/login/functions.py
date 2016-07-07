@@ -50,13 +50,17 @@ def update_profile(request):
     """
     
     user = UserProfile.objects.get(user=request.user)
-    print request.FILES
+    print request.POST
     if "first_name" in request.POST:
         user.user.first_name = request.POST["first_name"].capitalize()
     if "last_name" in request.POST:
         user.user.last_name = request.POST["last_name"].capitalize()
     if "profile_picture" in request.FILES:
         user.profile_image = request.FILES["profile_picture"]
+    if "age" in request.POST:
+        user.age = request.POST["age"]
+    if "gender" in request.POST:
+        user.gender = request.POST["gender"]
         
     user.user.save()
     user.save()
