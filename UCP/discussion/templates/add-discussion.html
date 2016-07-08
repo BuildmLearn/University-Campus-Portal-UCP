@@ -10,7 +10,6 @@
     <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/tagit.ui-zendesk.css' %}" rel="stylesheet" media="screen">
@@ -23,12 +22,6 @@
     <![endif]-->
   </head>
   <body>
-      <style>
-      textarea {
-          resize: none;
-          height: 150px;
-      }
-      </style>
       {% include 'header.html' %}
 
 <div class="container main-content">
@@ -77,7 +70,7 @@
      <script>
     tinymce.init({
       selector: 'textarea',
-      height: 200,
+      height: 100,
       plugins: [
         'advlist autolink lists link image charmap print preview anchor',
         'searchreplace visualblocks code fullscreen',
