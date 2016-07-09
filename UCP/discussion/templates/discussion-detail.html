@@ -8,8 +8,8 @@
     <!-- Bootstrap -->
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/light/discussion-detail.css' %}" rel="stylesheet" media="screen">
+   <link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/static/css/{{ settings.THEME }}/discussion-detail.css" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
     
   </head>
@@ -66,6 +66,7 @@
                 </a>
                  <span class="reply-card-time">| {{ reply.time_elapsed }} </span>
             </span>
+            <div class="divider"></div>
             <p class="reply-card-text">
                 {{ reply.text | safe }}
             </p>

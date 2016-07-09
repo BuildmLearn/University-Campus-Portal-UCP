@@ -6,8 +6,9 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/light/discussion-list.css' %}" rel="stylesheet" media="screen">
+    <link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
+    
+    <link href="/static/css/{{ settings.THEME }}/discussion-list.css" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -48,15 +49,18 @@
                         | {{ discussion.time_elapsed }}
                     </span>
                 </span>
+            <div class="divider"></div>
 
                 <p class="discussion-card-text">
                     {{ discussion.description | safe }}
                 </p>
+                <div class="card-footer">
                 <ul class="tag-container">
                 {% for tag in discussion.tags %}
                     <li class="tag">{{ tag.name }}</li>
                 {% endfor %}
                 </ul>
+                </div>
             
         </li>
     {% endfor %}

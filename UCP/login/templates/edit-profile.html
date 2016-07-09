@@ -6,23 +6,11 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
+<link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="{% static 'css/light/edit-profile.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
   </head>
   <body>
-      <style>
-        .profile-img{
-            height : 200px;
-            width : 200px;
-            clip: rect(0px,200px,200px,0px);
-            margin-bottom: 20px;
-        }
-        
-      textarea {
-          resize: none;
-          height: 150px;
-      }
-      </style>
       {% include 'header.html' %}
 
 <div class="container main-content">

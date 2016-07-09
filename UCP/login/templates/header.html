@@ -1,5 +1,11 @@
 {% load staticfiles %}
-<link href="{% static 'css/light/header.css' %}" rel="stylesheet" media="screen">
+
+{% with "css/"|add:settings.THEME|add:"/header.css" as css %}
+
+<link href="{% static css %}" rel="stylesheet" media="screen">
+
+{% endwith %}
+
 
 
 <div id="desktop-nav-container">
