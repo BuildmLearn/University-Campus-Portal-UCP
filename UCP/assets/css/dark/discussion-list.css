@@ -1,4 +1,12 @@
 
+@media (max-width: 750px) {
+    body {
+      padding:0px;
+      margin-top:42px;
+    }
+}
+
+
     ul {
         list-style: none;
     }
