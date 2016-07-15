@@ -1,5 +1,13 @@
 {% load staticfiles %}
 
+{% with "css/"|add:settings.THEME|add:"/header.css" as css %}
+
+<link href="{% static css %}" rel="stylesheet" media="screen">
+
+{% endwith %}
+
+
+
 <div id="desktop-nav-container">
   <div id="header-title">
       <img src="{% static settings.LOGO %}" id="header-image">

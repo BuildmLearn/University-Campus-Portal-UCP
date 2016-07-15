@@ -1,0 +1,14 @@
+        .profile-img{
+            height : 200px;
+            width : 200px;
+            clip: rect(0px,200px,200px,0px);
+            margin-bottom: 20px;
+        }
+
+        
+@media (max-width: 750px) {
+    body {
+      padding:0px;
+      margin-top:42px;
+    }
+}

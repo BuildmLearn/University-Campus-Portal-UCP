@@ -5,10 +5,13 @@
   <head>
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
     <!-- Bootstrap -->
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" media="screen">
+    <link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/static/css/{{ settings.THEME }}/add-discussion.css" rel="stylesheet" media="screen">
+
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/home.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/tagit.ui-zendesk.css' %}" rel="stylesheet" media="screen">
@@ -21,12 +24,6 @@
     <![endif]-->
   </head>
   <body>
-      <style>
-      textarea {
-          resize: none;
-          height: 150px;
-      }
-      </style>
       {% include 'header.html' %}
 
 <div class="container main-content">
@@ -40,7 +37,7 @@
             <input class="form-control" name="title" placeholder="Thread Title" required>
         </fieldset>
         <fieldset class="form-group">
-            <textarea type="text" class="form-control" name="description" placeholder="description" required></textarea>
+            <textarea type="text" class="form-control" name="description" placeholder="description" ></textarea>
         </fieldset>
         
         <fieldset class="form-group">
@@ -48,7 +45,7 @@
             <input type="text" name="tag" value="" class="tag" id="tags_1"/>
         </fieldset>
         
-        <input type="submit"/>
+        <button class="btn btn-primary">Add</button>
     </form>
         
 </div><!-- /.container -->
@@ -70,6 +67,19 @@
                 availableTags: sampleTags
             });
     
+    });
+    </script>
+     <script>
+    tinymce.init({
+      selector: 'textarea',
+      height: 100,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+      ],
+      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      
     });
     </script>
     

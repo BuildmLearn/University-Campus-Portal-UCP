@@ -94,4 +94,14 @@ class Reply(View):
             return redirect('/discussions/'+str(pk))
         else:
             print response
-            return render(request, 'reply.html', context)
+            return render(request, 'reply.html', context)        
+        
+
+class Subscribe(View):
+    
+    @method_decorator(login_required)
+    def get(self, request, pk):
+        response = functions.subscribe(request, pk)
+        
+        return redirect('/discussions/'+str(pk))
+    

@@ -19,14 +19,24 @@ class UserProfile(models.Model):
     
     TEACHER = 'Teacher'
     STUDENT = 'Student'
-    
+
+    MALE = "male"
+    FEMALE = "female"
+
     DESIGNATION_CHOICES =(
         (TEACHER, 'Teacher'),
         (STUDENT, 'Student')
     )
+
+    GENDER_CHOICES = (
+        (MALE, 'male'),
+        (FEMALE, 'female')
+    )
     
     user = models.OneToOneField(User, unique=True, related_name='user_login')
     designation = models.CharField( choices = DESIGNATION_CHOICES, default=STUDENT, max_length=10)
+    age = models.IntegerField(null=True, blank=True)
+    gender = models.CharField(choices = GENDER_CHOICES, default=MALE, max_length=6)
     profile_image = models.ImageField(upload_to="user_images/profile_images", blank=True)
 
     class Admin:

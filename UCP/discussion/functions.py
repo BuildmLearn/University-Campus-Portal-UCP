@@ -83,6 +83,23 @@ def get_discussion_list(request):
     
     return response
     
+def subscribe(request, pk):
+    response = {}
+
+    if DiscussionThread.objects.filter(id = pk).exists():
+        discussion = DiscussionThread.objects.get(id = pk)
+        
+        user_profile = UserProfile.objects.get(user = request.user)
+        discussion.subscribed.add(user_profile)
+        discussion.save()
+
+        response["result"] = result.RESULT_SUCCESS
+        return response
+    else:
+        response["result"] = result.RESULT_FAILURE
+        response["error"] = "This discussion id does not exist"
+
+
 def get_tags(query):
     """returns a list of tags whose name match the query"""
     tags = Tag.objects.filter(name__icontains=query)
@@ -137,8 +154,12 @@ def send_notification(discussion):
     send an email notification to people subscribed to a thread
     """
     for user in discussion.subscribed.all():
-        print user.user.email
-        send_parallel_mail(discussion.title + " - new reply","A new reply was added to the discussion",[user.user.email])
+        discussion_url = "http://" + BASE_URL + "/discussions/" + str(discussion.id)
+        message  = "Hey "+user.user.first_name + "!\n"
+        message += "A new reply was added to this discussion\n"
+        message += 'To view the discussions click <a href="'+discussion_url+'">here</a>'
+        print message
+        send_parallel_mail(discussion.title + " - new reply",message,[user.user.email])
 
 def add_reply(pk, request):
     

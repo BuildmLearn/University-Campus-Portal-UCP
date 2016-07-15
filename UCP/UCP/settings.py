@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'UCP.wsgi.application'
 SETTINGS_EXPORT = [
     'SITE_TITLE',
     'LOGO',
+    'THEME',
 ]
 
 # Internationalization
@@ -140,7 +141,9 @@ BASE_URL = 'localhost:8000'
 
 SITE_TITLE = "University"
 
-LOGO = "images/iitb_logo.png"
+LOGO = "images/logo.png"
+
+THEME = "dark"
 
 #import local_settings.py file if it exists
 try:
