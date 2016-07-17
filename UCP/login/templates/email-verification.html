@@ -6,7 +6,7 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-<link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
+<link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -17,7 +17,28 @@
     <![endif]-->
   </head>
   <body>
+        <style>
+        body{
+            padding-top:70px;
+        }
+        </style>
+        <div class="navbar navbar-default navbar-fixed-top">
+              <div class="container">
+                <div class="navbar-header" >
+                  <a href="../" class="navbar-brand" style="padding-top:10px">
+                      <img src="{% static settings.LOGO %}" style="display: inline-block;height:30px;"/>
+                      {{ settings.SITE_TITLE }} Campus Portal
+                  </a>
+                  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
 
+                </div>
+              </div>
+            </div>
 <div class="container main-content">
     <div class="page-header">
         <h1>Welcome to {{ settings.SITE_TITLE }}'s Campus Portal!</h1>

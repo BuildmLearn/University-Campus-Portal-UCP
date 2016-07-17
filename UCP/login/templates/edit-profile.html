@@ -7,32 +7,54 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
 <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
-        <link href="{% static 'css/light/edit-profile.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
   </head>
+  
   <body>
       {% include 'header.html' %}
-
-<div class="container main-content">
+      <style>
+      body{
+          padding-top:40px;
+      }
+        .profile-img{
+            height : 200px;
+            width : 200px;
+            clip: rect(0px,200px,200px,0px);
+            margin-bottom: 20px;
+        }
+        
+      textarea {
+          resize: none;
+          height: 150px;
+      }
+      
+      
+      </style>
+<div class="container main-content ">
     <div class="page-header">
-        <h1>Edit Profile</h1>
+        <h2>Edit Profile</h2>
     </div>
-
+    
+    <div class="container well">
+        <div class="col-md-3">
     {% if user.profile_image %}
     <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
     {% else %}
     <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
     {% endif%}
+</div>
     
-    <form action="/user/edit_profile/" method= "post" enctype="multipart/form-data">
+    <form action="/user/edit_profile/" method= "post" enctype="multipart/form-data" class=col-md-9>
         {% csrf_token %}
         <fieldset class="form-group">
+            <label>First Name</label>
             <input class="form-control" name="first_name" placeholder="First Name" value="{{ user.user.first_name }}">
         </fieldset>
         <fieldset class="form-group">
+            <label>Last Name</label>
             <input class="form-control" name="last_name" placeholder="Last Name" value="{{ user.user.last_name }}">
         </fieldset>
         <fieldset class="form-group">
+            <label>Age</label>
             <input class="form-control" name="age" placeholder="Age" value="{{ user.age }}">
         </fieldset>
        <div class="form-group">
@@ -49,7 +71,7 @@
             <button class="btn btn-primary" type="submit">Save changes</button>
         </fieldset>
     </form>
-        
+</div>
 </div><!-- /.container -->
 
     
