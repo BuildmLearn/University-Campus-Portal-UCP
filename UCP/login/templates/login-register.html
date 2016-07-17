@@ -27,11 +27,6 @@
                           <img src="{% static settings.LOGO %}" style="display: inline-block;height:30px;"/>
                           {{ settings.SITE_TITLE }} Campus Portal
                       </a>
-                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
                     </div>
 
                     </div>
@@ -62,10 +57,11 @@
                                    <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                                    <div class="col-lg-10">
                                      <input type="password" class="form-control" required name="password" id="inputPassword" placeholder="Password">
+
+                                     <a href="#"
+                                     data-toggle="modal" data-target="#password-modal" class="pull-right">forgot password?</a>
                                    </div>
                                  </div>
-                                 <a href="#"
-                                 data-toggle="modal" data-target="#password-modal" class="pull-right">forgot password?</a>
                                  <div class="form-group">
                                    <div class="col-lg-10 col-lg-offset-2">
                                      <button type="submit" class="btn btn-primary">Login</button>
