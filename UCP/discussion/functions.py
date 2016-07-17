@@ -66,6 +66,9 @@ def get_discussion_list(request):
     response = {}
     
     threads = DiscussionThread.objects.all()
+    if "tag" in request.GET:
+        threads = DiscussionThread.objects.filter(tags__name = request.GET["tag"])
+        
     count = len(threads)
     page_count = count/PAGE_SIZE + 1
     

@@ -22,12 +22,12 @@
         }
         @media (max-width:768px){
             #mceu_14-body,#mceu_24{
-                display:none;
+                
             }
         }
         
 
-        ul {
+        ul .list-group{
             list-style: none;
         }
 
@@ -79,10 +79,12 @@
     </h1></p>
              <p>{{ discussion.description | safe }}</p>
              <hr class="m-y-2">
-             <p>
-    <span class="label label-info">Mechanical</span>
-    <span class="label label-default">ME213</span>
-    <span class="label label-success">2013</span></p>
+                          <p>
+
+                              {% for tag in discussion.tags %}
+                 <a href="/discussions/?tag={{tag.name}}" class="label label-success">{{ tag.name }}</a>
+             {% endfor %}
+             </p>
              <p class="lead">
                <a class="btn btn-primary" href="#" role="button" onclick="showreplybox()">Add Comment</a>
                <button class="btn btn-success" style="display:none;" id="post-comment" onclick="add_comment()">Post</button>
@@ -96,7 +98,7 @@
            
        </form>
            </div>
-           <ul class="list-group">
+           <ul class="list-group" style="list-style:none;">
            {% for reply in replies %}
            <li class="well">
                <p class="lead">
@@ -110,7 +112,7 @@
                    </a>
                     <span class="text-muted small">| {{ reply.time_elapsed }} </span>
                </p>
-               <p class="reply-card-text">
+               <p class="reply-card-text" style="overflow-x:scroll;">
                    {{ reply.text | safe }}
                </p>
                <ul>
@@ -224,18 +226,19 @@
         if(tinyMCE.get("content-text").getContent() != "" ){
             $("#add-comment-form").submit();
         }else{
-            $("#error").toggle();
+            $("#error").show();
         }
     }
     tinymce.init({
       selector: 'textarea',
       height: 200,
+      menubar:false,
       plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table contextmenu paste code'
+        '',
+        '',
+        'table contextmenu paste code'
       ],
-      toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      toolbar: '',
       
     });
     </script>

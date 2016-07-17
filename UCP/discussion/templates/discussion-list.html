@@ -14,9 +14,7 @@
             display: none;
         }
         @media (max-width:768px){
-            #mceu_14-body,#mceu_24{
-                display:none;
-            }
+        
         }
         
 
@@ -98,7 +96,7 @@
         </li> -->
         <li class="well">
             <h4 style="margin-top:0px;"><a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
-                <span class="label label-default label-pill pull-right">{{ discussion.no_of_replies }}</span></h4>
+                <span class="badge pull-right">{{ discussion.no_of_replies }}</span></h4>
             <p>
                 <a href="/user/{{ discussion.posted_by.id }}">
                                     {% if discussion.posted_by.profile_image %}
@@ -117,7 +115,7 @@
                      <p>
 
                          {% for tag in discussion.tags %}
-            <span class="label label-success">{{ tag.name }}</span>
+            <a href="/discussions/?tag={{tag.name}}" class="label label-success">{{ tag.name }}</a>
         {% endfor %}
         </p>
         </li>
