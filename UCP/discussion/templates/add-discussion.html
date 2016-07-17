@@ -9,9 +9,8 @@
 
     <!-- Bootstrap -->
     <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="/static/css/{{ settings.THEME }}/add-discussion.css" rel="stylesheet" media="screen">
+    <!-- <link href="/static/css/{{ settings.THEME }}/add-discussion.css" rel="stylesheet" media="screen"> -->
 
-    <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/tagit.ui-zendesk.css' %}" rel="stylesheet" media="screen">
@@ -26,20 +25,20 @@
   <body>
       {% include 'header.html' %}
         <style>
-            body{
-                padding-top:70px;
-            }
+            
             ul.tagit{
                 background-color:white;
             }
         </style>
-<div class="container main-content well">
-        <h2 style="margin-top:20px;">Add new Discussion</h2>
-    
+        
+        
+<div class="container well">
+        <h3 style="margin-top:0px;">Add new Discussion</h3>
+        
     <form action="/discussions/add_new_thread" method="post" >
         {% csrf_token %}
         <fieldset class="form-group">
-            <input class="form-control" name="title" placeholder="Thread Title" required>
+            <input class="form-control" name="title" required placeholder="Thread Title" required>
         </fieldset>
         <fieldset class="form-group">
             <textarea type="text" class="form-control" name="description" placeholder="description" ></textarea>

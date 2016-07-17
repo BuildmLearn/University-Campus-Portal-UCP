@@ -89,8 +89,10 @@
              </p>
              <form action="/discussions/{{ discussion.id }}/reply/" id="add-comment-form" method= "post" enctype="multipart/form-data">
                  {% csrf_token %}
-                 
-           <div id="reply_box"><textarea name="text"></textarea></div>
+                 <div class="alert alert-danger" id="error" style="display:none;">
+                   <strong>Error!</strong> Comment text can't be empty
+                 </div>
+           <div id="reply_box"><textarea id="content-text" name="text"></textarea></div>
            
        </form>
            </div>
@@ -219,7 +221,11 @@
     }
     
     function add_comment(){
-        $("#add-comment-form").submit();
+        if(tinyMCE.get("content-text").getContent() != "" ){
+            $("#add-comment-form").submit();
+        }else{
+            $("#error").toggle();
+        }
     }
     tinymce.init({
       selector: 'textarea',
