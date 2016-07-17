@@ -22,6 +22,11 @@ class UserProfile(models.Model):
 
     MALE = "male"
     FEMALE = "female"
+    
+    CERULEAN = "cerulean"
+    FLAT = "flat"
+    JOURNAL = "journal"
+    PAPER = "paper"
 
     DESIGNATION_CHOICES =(
         (TEACHER, 'Teacher'),
@@ -33,8 +38,16 @@ class UserProfile(models.Model):
         (FEMALE, 'female')
     )
     
+    THEME_CHOICES = (
+        (CERULEAN, 'cerulean'),
+        (JOURNAL, 'journal'),
+        (FLAT, 'flat'),
+        (PAPER, 'paper')
+    )
+    
     user = models.OneToOneField(User, unique=True, related_name='user_login')
     designation = models.CharField( choices = DESIGNATION_CHOICES, default=STUDENT, max_length=10)
+    theme = models.CharField( choices = THEME_CHOICES, default=CERULEAN, max_length=10)
     age = models.IntegerField(null=True, blank=True)
     gender = models.CharField(choices = GENDER_CHOICES, default=MALE, max_length=6)
     profile_image = models.ImageField(upload_to="user_images/profile_images", blank=True)

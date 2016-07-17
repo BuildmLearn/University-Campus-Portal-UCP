@@ -6,7 +6,7 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/static/css/{{user.theme}}.css" rel="stylesheet" media="screen">
     
     <link href="{% static 'css/light/profile.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
@@ -18,16 +18,16 @@
 
 <div class="container main-content">
     <div class="page-header">
-        <h1>{{ user.user.first_name }} {{ user.user.last_name }}</h1>
+        <h1>{{ other_user.user.first_name }} {{ other_user.user.last_name }}</h1>
     </div>
 
-    {% if user.profile_image %}
+    {% if other_user.profile_image %}
     <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
     {% else %}
     <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
     {% endif%}
-    <p><b>Gender:</b> {{user.gender}}</p>
-    <p><b>Age:</b> {{user.age}}</p>
+    <p><b>Gender:</b> {{other_user.gender}}</p>
+    <p><b>Age:</b> {{other_user.age}}</p>
     
         
 </div><!-- /.container -->

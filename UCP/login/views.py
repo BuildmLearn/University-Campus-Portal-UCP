@@ -121,7 +121,17 @@ class EditProfile(View):
             context["male"] = True
         else:
             context["male"] = False
-        
+        print user
+        context["flat"] = False
+        context["cerulean"] = False
+        context["paper"] = False
+        if user["theme"] == "cerulean":
+            context["cerulean"] = True
+        if user["theme"] == "flat":
+            context["flat"] = True
+        if user["theme"] == "paper":
+            context["paper"] = True
+        print context
         return render(request, 'edit-profile.html', context)
     
     def post(self, request):
@@ -136,6 +146,15 @@ class EditProfile(View):
         else:
             context["male"] = False
 
+        context["flat"] = False
+        context["cerulean"] = False
+        context["paper"] = False
+        if user["theme"] == "cerulean":
+            context["cerulean"] = True
+        if user["theme"] == "flat":
+            context["flat"] = True
+        if user["theme"] == "paper":
+            context["paper"] = True
         context["response"] = response
         
         return render(request, 'edit-profile.html', context)
@@ -145,9 +164,9 @@ class Profile(View):
     
     def get(self, request, pk):
         
-        context={}
+        context=get_base_context(request)
         
-        context['user'] = get_user_profile(pk)
+        context['other_user'] = get_user_profile(pk)
         
         return render(request, 'profile.html', context)
     

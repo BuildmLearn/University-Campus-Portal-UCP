@@ -61,6 +61,8 @@ def update_profile(request):
         user.age = request.POST["age"]
     if "gender" in request.POST:
         user.gender = request.POST["gender"]
+    if "theme" in request.POST:
+        user.theme = request.POST["theme"]
         
     user.user.save()
     user.save()
