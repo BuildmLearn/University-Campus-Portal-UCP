@@ -35,13 +35,19 @@
 <div class="container well">
         <h3 style="margin-top:0px;">Add new Discussion</h3>
         
-    <form action="/discussions/add_new_thread" method="post" >
+    <form action="/discussions/add_new_thread" method="post" id="add-discussion-form">
         {% csrf_token %}
+        <div class="alert alert-danger" id="error2" style="display:none;">
+          <strong>Error!</strong> Please Add a title
+        </div>
         <fieldset class="form-group">
-            <input class="form-control" name="title" required placeholder="Thread Title" required>
+            <input class="form-control" id="title" name="title" required placeholder="Thread Title" required>
         </fieldset>
         <fieldset class="form-group">
-            <textarea type="text" class="form-control" name="description" placeholder="description" ></textarea>
+            <div class="alert alert-danger" id="error1" style="display:none;">
+              <strong>Error!</strong> Please Add a description
+            </div>
+            <textarea type="text" class="form-control" id="description" name="description" placeholder="description" ></textarea>
         </fieldset>
         
         <fieldset class="form-group">
@@ -49,8 +55,9 @@
             <input type="text" name="tag" value="" class="tag" id="tags_1"/>
         </fieldset>
         
-        <button class="btn btn-primary">Add</button>
     </form>
+    
+    <button class="btn btn-primary" onclick="checkAndSubmit()">Add</button>
         
 </div><!-- /.container -->
 
@@ -65,6 +72,20 @@
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
     <script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
     <script>
+    function checkAndSubmit(){
+        $("#error1").hide();
+        $("#error2").hide();
+        if(tinyMCE.get("description").getContent() == "" ){
+            $("#error1").show();
+        }
+        if($("#title").val() == "" ){
+            $("#error2").show();
+        }
+        if(tinyMCE.get("description").getContent() != "" && $("#title").val() != "" ){
+            $("#add-discussion-form").submit();
+        }
+    }
+    
     $(function() {
         var sampleTags = [ {% for tag in tags %}"{{tag.name}}",{% endfor %}];
         $('#tags_1').tagit({
