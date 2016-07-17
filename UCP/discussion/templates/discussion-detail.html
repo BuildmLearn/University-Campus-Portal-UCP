@@ -8,16 +8,125 @@
     <!-- Bootstrap -->
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     
-   <link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="/static/css/{{ settings.THEME }}/discussion-detail.css" rel="stylesheet" media="screen">
-    <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
-    
+   <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
+
   </head>
   <body>
       {% include 'header.html' %}
+    <style>
+        body{
+            padding-top:80px;
+        }
+        #reply_box{
+            display: none;
+        }
+        @media (max-width:768px){
+            #mceu_14-body,#mceu_24{
+                display:none;
+            }
+        }
+        
 
+        ul {
+            list-style: none;
+        }
+
+        ul .tag-container{
+            padding-left: 0px;
+        }
+
+        li .tag{
+            padding: 8px;
+            border-radius: 5px;
+            display: inline;
+            color: white;
+            background-color: #4CAF50;
+        }
+
+        .discussion-card-time{
+            color:#9E9E9E;
+            font-size:0.8em;
+        }
+
+        .image-inline{
+            height:20px;
+            width: 20px;
+        }
+        .discussion-card{
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #f5f5f5;
+        }
+
+        .discussion-card-text{
+            margin-top: 10px;
+        }
+
+        .card {
+          box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+          transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        .card:hover {
+          box-shadow: 0 4px 8px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
+        }
+    
+    </style>
 <div class="container main-content">
-    <div class="page-header">
+           <div class="well">
+               <p class="lead">
+             <h1 class="display-3">{{ discussion.title }}<a href="/discussions/{{ discussion.id }}/subscribe" class="btn btn-sm btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Subscribe</a>
+    </h1></p>
+             <p>{{ discussion.description | safe }}</p>
+             <hr class="m-y-2">
+             <p>
+    <span class="label label-info">Mechanical</span>
+    <span class="label label-default">ME213</span>
+    <span class="label label-success">2013</span></p>
+             <p class="lead">
+               <a class="btn btn-primary" href="#" role="button" onclick="showreplybox()">Add Comment</a>
+               <button class="btn btn-success" style="display:none;" id="post-comment" onclick="add_comment()">Post</button>
+             </p>
+             <form action="/discussions/{{ discussion.id }}/reply/" id="add-comment-form" method= "post" enctype="multipart/form-data">
+                 {% csrf_token %}
+                 
+           <div id="reply_box"><textarea name="text"></textarea></div>
+           
+       </form>
+           </div>
+           <ul class="list-group">
+           {% for reply in replies %}
+           <li class="well">
+               <p class="lead">
+                   <a href="/user/{{ reply.posted_by.id }}">
+                       {% if reply.posted_by.profile_image %}
+                           <img src="{{ reply.posted_by.profile_image }}" class="img-circle image-inline">
+                       {% else %}
+                           <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                       {% endif %}
+                       <b>{{ reply.posted_by.user.first_name }} {{ reply.posted_by.user.last_name }}</b>
+                   </a>
+                    <span class="text-muted small">| {{ reply.time_elapsed }} </span>
+               </p>
+               <p class="reply-card-text">
+                   {{ reply.text | safe }}
+               </p>
+               <ul>
+                   {% for attachment in reply.attachments %}
+                   <li class="attachment">
+                       <a target="_blank" class="attachment-name" href="{{ attachment.uploaded_file }}">
+                        {{attachment.name}}
+                       </a>
+                       <span class="attachment-size">{{attachment.size_in_kb}}</span>
+                       <p class="attachment-size-small">{{attachment.size_in_kb}}</p>
+                   </li>
+                   {% endfor %}
+               </ul>
+           </li>
+           {% endfor %}
+           </ul>
+           
+<!--    <div class="page-header">
         <h1>{{ discussion.title }} <a href="/discussions/{{ discussion.id }}/subscribe" class="btn btn-primary pull-right">Subscribe</a>
         </h1>
         <p>
@@ -34,15 +143,15 @@
             </a>,
             {{ discussion.time_elapsed }}
 
-                
+
         <span>
     </div>
     <div>
-        <form action="/discussions/{{ discussion.id }}/reply/" method= "post" enctype="multipart/form-data"> 
+        <form action="/discussions/{{ discussion.id }}/reply/" method= "post" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
                 <textarea type="text" class="form-control" name="text" id="reply-textarea" placeholder="enter your reply"></textarea>
-                
+
             </fieldset>
 
             <fieldset class="form-group" id="attachment-group">
@@ -75,7 +184,7 @@
                 <li class="attachment">
                     <a target="_blank" class="attachment-name" href="{{ attachment.uploaded_file }}">
                      {{attachment.name}}
-                    </a> 
+                    </a>
                     <span class="attachment-size">{{attachment.size_in_kb}}</span>
                     <p class="attachment-size-small">{{attachment.size_in_kb}}</p>
                 </li>
@@ -84,7 +193,7 @@
         </li>
     {% endfor %}
     </ul>
-   
+    -->
     <nav>
       <ul class="pagination">
         {% for page in pages %}
@@ -104,6 +213,14 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
     <script>
+    function showreplybox(){
+        $("#reply_box").slideToggle();
+        $("#post-comment").toggle();
+    }
+    
+    function add_comment(){
+        $("#add-comment-form").submit();
+    }
     tinymce.init({
       selector: 'textarea',
       height: 200,

@@ -1,66 +1,94 @@
-{% load staticfiles %}
+<!-- {% load staticfiles %} -->
 
-{% with "css/"|add:settings.THEME|add:"/header.css" as css %}
+<!--{% with "css/"|add:settings.THEME|add:"/header.css" as css %} -->
 
-<link href="{% static css %}" rel="stylesheet" media="screen">
+<!-- <link href="{% static 'css/' %}" rel="stylesheet" media="screen"> -->
 
-{% endwith %}
+<!-- {% endwith %} -->
+<style>
+body{
+    padding-top:40px;
+}
+</style>
 
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header" >
+          <a href="../" class="navbar-brand" style="padding-top:10px">
+              <img src="{% static settings.LOGO %}" style="display: inline-block;height:30px;"/>
+              {{ settings.SITE_TITLE }} Campus Portal
+          </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <!-- <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="../default/">Default</a></li>
+                <li class="divider"></li>
+                <li><a href="../cerulean/">Cerulean</a></li>
+                <li><a href="../cosmo/">Cosmo</a></li>
+                <li><a href="../cyborg/">Cyborg</a></li>
+                <li><a href="../darkly/">Darkly</a></li>
+                <li><a href="../flatly/">Flatly</a></li>
+                <li><a href="../journal/">Journal</a></li>
+                <li><a href="../lumen/">Lumen</a></li>
+                <li><a href="../paper/">Paper</a></li>
+                <li><a href="../readable/">Readable</a></li>
+                <li><a href="../sandstone/">Sandstone</a></li>
+                <li><a href="../simplex/">Simplex</a></li>
+                <li><a href="../slate/">Slate</a></li>
+                <li><a href="../spacelab/">Spacelab</a></li>
+                <li><a href="../superhero/">Superhero</a></li>
+                <li><a href="../united/">United</a></li>
+                <li><a href="../yeti/">Yeti</a></li>
+              </ul>
+            </li> -->
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/discussions/">Discussions</a>
+            </li>
+            <li>
+              <a href="http://news.bootswatch.com">News</a>
+            </li>
+            <li>
+              <a href="http://news.bootswatch.com">Events</a>
+            </li>
+            <li>
+              <a href="http://news.bootswatch.com">Results</a>
+            </li>
+            </li>
+            <li>
+              <a href="http://news.bootswatch.com">Schedule</a>
+            </li>
+            </li>
+            <li>
+              <a href="http://news.bootswatch.com">Recruitment</a>
+            </li>
+            
+          </ul>
 
+          <ul class="nav navbar-nav navbar-right">
+            <li></li>
+              <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                             Hi! {{user.user.first_name}}</a>
+                <ul class="dropdown-menu" aria-labelledby="themes">
+                  <li><a href="../default/">Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="../cerulean/">Logout</a></li>
+                </ul>
+              </li>
+              
+          </ul>
 
-<div id="desktop-nav-container">
-  <div id="header-title">
-      <img src="{% static settings.LOGO %}" id="header-image">
-      <div id="header-logo">
-          <span class="title-college-name">{{ settings.SITE_TITLE }}</span><br>
-          <span class="title-portal">Campus Portal</span>
+        </div>
       </div>
-  </div>
-  
-  <div class="dropdown pull-right" id="profile-dropdown">
-    <a data-toggle="dropdown">Hi! {{user.user.first_name}}
-    <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a href="/user/logout">Logout</a></li>
-      <li><a href="/user/edit_profile">Edit Profile</a></li>
-    </ul>
-  </div>
-  
-  <div id="desktop-nav-list">
-      <ul id="menu">
-        <li><a href="/">Home</a></li>
-        <li class="active"><a href="/discussions/">Discussions</a></li>
-        <li><a href="#">News</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Results</a></li>
-        <li><a href="#">Schedule</a></li>
-        <li><a href="#">Recruitments</a></li>
-      </ul>
-  </div>
-</div>
-<nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
-    <a class="navmenu-brand" href="#">
-        <span style="color: #333;">{{ settings.SITE_TITLE }}<span><br>
-        <span style="color: #337ab7;">Campus Portal</span>
-    </a>
-      <ul class="nav navmenu-nav">
-        <li><a href="#">Recruitments</a></li>
-        <li><a href="#">Schedule</a></li>
-        <li><a href="#">Results</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">News</a></li>
-        <li><a href="/discussions/">Discussions</a></li>
-        <li><a href="/">Home</a></li>
-      </ul>
-      <ul class="nav navmenu-nav">
-        <li><a href="/user/logout">logout</a></li>
-        <li><a href="/user/edit_profile">edit profile</a></li>
-      </ul>
-</nav>
-<div id="navBarTop" class="navbar navbar-default navbar-fixed-top">
-  <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
-</div>
+    </div>

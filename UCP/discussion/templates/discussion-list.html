@@ -6,7 +6,7 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="/static/css/{{ settings.THEME }}/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
     
     <link href="/static/css/{{ settings.THEME }}/discussion-list.css" rel="stylesheet" media="screen">
     <link href="{% static 'css/jasny-bootstrap.min.css' %}" rel="stylesheet" media="screen">
@@ -33,7 +33,7 @@
     </div>
     <ul class="list-group">
     {% for discussion in discussions %}
-        <li class="discussion-card card">
+        <!-- <li class="discussion-card card">
             <h4 class="list-group-item-heading">
                 <a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
                 <span class="label label-default label-pill pull-right">{{ discussion.no_of_replies }}</span>
@@ -61,7 +61,32 @@
                 {% endfor %}
                 </ul>
                 </div>
+
+        </li> -->
+        <li class="well">
+            <h4 style="margin-top:0px;"><a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
+                <span class="label label-default label-pill pull-right">{{ discussion.no_of_replies }}</span></h4>
+            <p>
+                <a href="/user/{{ discussion.posted_by.id }}">
+                                    {% if discussion.posted_by.profile_image %}
+                                        <img src="{{ discussion.posted_by.profile_image }}" class="img-circle image-inline">
+                                    {% else %}
+                                        <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                                    {% endif %}
+                                    <b>{{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}</b></a>
+                 <span class="text-muted small">| 2 hours ago </span>
+            </p>
             
+            <p>
+                {{ discussion.description | safe }}
+            </p>
+            
+                     <p>
+
+                         {% for tag in discussion.tags %}
+            <span class="label label-success">{{ tag.name }}</span>
+        {% endfor %}
+        </p>
         </li>
     {% endfor %}
     </ul>
