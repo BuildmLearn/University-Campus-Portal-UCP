@@ -27,6 +27,7 @@ class UserProfile(models.Model):
     FLAT = "flat"
     JOURNAL = "journal"
     PAPER = "paper"
+    READABLE = "readable"
 
     DESIGNATION_CHOICES =(
         (TEACHER, 'Teacher'),
@@ -42,6 +43,7 @@ class UserProfile(models.Model):
         (CERULEAN, 'cerulean'),
         (JOURNAL, 'journal'),
         (FLAT, 'flat'),
+        (READABLE, 'readable'),
         (PAPER, 'paper')
     )
     
