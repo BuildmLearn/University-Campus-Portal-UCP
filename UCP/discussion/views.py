@@ -10,6 +10,8 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 
 from discussion import functions
+from discussion.models import DiscussionThread
+from login.models import UserProfile
 from UCP.functions import get_time_elapsed_string, get_base_context
 
 class DiscussionList(View):
@@ -36,10 +38,11 @@ class DiscussionDetails(View):
     def get(self, request, pk):
         
         context = get_base_context(request)
-        
+        discussion = DiscussionThread.objects.get(id=pk)
+        userProfile = UserProfile.objects.get(user = request.user)
         response = functions.get_replies(pk, request)
         page_count = response["page_count"]
-        print response
+        context["subscribed"] = (userProfile in discussion.subscribed.all())
         context["pages"] = range(1, page_count+1)
         context["replies"] = response["data"]["replies"]
         context["discussion"] = response["data"]["discussion"]
@@ -102,6 +105,15 @@ class Subscribe(View):
     @method_decorator(login_required)
     def get(self, request, pk):
         response = functions.subscribe(request, pk)
+        
+        return redirect('/discussions/'+str(pk))        
+        
+
+class UnSubscribe(View):
+    
+    @method_decorator(login_required)
+    def get(self, request, pk):
+        response = functions.unsubscribe(request, pk)
         
         return redirect('/discussions/'+str(pk))
     

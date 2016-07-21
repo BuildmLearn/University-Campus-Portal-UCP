@@ -22,6 +22,15 @@ def get_time_elapsed_string(date):
     time_elapsed = time_now - date
     seconds_elapsed = time_elapsed.seconds
     
+
+    print '-'*20
+    print time_now
+    print date
+    print time_elapsed
+    print seconds_elapsed
+    print time_elapsed.days
+    print '-'*20
+    
     if time_elapsed.days > 0:
         days_elapsed = time_elapsed.days
         return str(days_elapsed) + " days ago"

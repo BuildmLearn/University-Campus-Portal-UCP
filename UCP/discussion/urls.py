@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from discussion import views
 
 urlpatterns = [
+    url(r'^(?P<pk>[0-9]+)/unsubscribe', views.UnSubscribe.as_view(), name='reply'),
     url(r'^(?P<pk>[0-9]+)/subscribe', views.Subscribe.as_view(), name='reply'),
     url(r'^(?P<pk>[0-9]+)/reply', views.Reply.as_view(), name='reply'),
     url(r'^(?P<pk>[0-9]+)', views.DiscussionDetails.as_view(), name='discussion_detail'),

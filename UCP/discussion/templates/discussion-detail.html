@@ -75,7 +75,12 @@
 <div class="container main-content">
            <div class="well">
                <p class="lead">
-             <h4 class="display-3">{{ discussion.title }}<a href="/discussions/{{ discussion.id }}/subscribe" class="btn btn-xs btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Subscribe</a>
+             <h4 class="display-3">{{ discussion.title }}
+                 <a href="/discussions/{{ discussion.id }}/{% if subscribed %}unsubscribe{% else %}subscribe{% endif %}"
+                  class="btn btn-xs btn-primary pull-right">
+                     <span class="glyphicon glyphicon-eye-open"></span>
+                      {% if subscribed %}Unsubscribe{% else %}Subscribe{% endif %}
+                 </a>
     </h4></p>
              <p>{{ discussion.description | safe }}</p>
              <hr class="m-y-2">

@@ -105,7 +105,7 @@
                                         <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
                                     {% endif %}
                                     <b>{{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}</b></a>
-                 <span class="text-muted small">| 2 hours ago </span>
+                 <span class="text-muted small">| {{ discussion.time_elapsed }} </span>
             </p>
             
             <p>

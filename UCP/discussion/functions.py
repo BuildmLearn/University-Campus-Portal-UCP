@@ -101,6 +101,22 @@ def subscribe(request, pk):
     else:
         response["result"] = result.RESULT_FAILURE
         response["error"] = "This discussion id does not exist"
+    
+def unsubscribe(request, pk):
+    response = {}
+
+    if DiscussionThread.objects.filter(id = pk).exists():
+        discussion = DiscussionThread.objects.get(id = pk)
+        
+        user_profile = UserProfile.objects.get(user = request.user)
+        discussion.subscribed.remove(user_profile)
+        discussion.save()
+
+        response["result"] = result.RESULT_SUCCESS
+        return response
+    else:
+        response["result"] = result.RESULT_FAILURE
+        response["error"] = "This discussion id does not exist"
 
 
 def get_tags(query):
