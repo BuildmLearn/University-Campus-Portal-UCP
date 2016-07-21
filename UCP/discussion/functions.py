@@ -160,7 +160,7 @@ def send_notification(discussion):
         discussion_url = "http://" + BASE_URL + "/discussions/" + str(discussion.id)
         message  = "Hey "+user.user.first_name + "!\n"
         message += "A new reply was added to this discussion\n"
-        message += 'To view the discussions click <a href="'+discussion_url+'">here</a>'
+        message += 'To view the discussions click here - '+discussion_url
         print message
         send_parallel_mail(discussion.title + " - new reply",message,[user.user.email])
 

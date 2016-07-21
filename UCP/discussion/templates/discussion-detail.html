@@ -75,19 +75,19 @@
 <div class="container main-content">
            <div class="well">
                <p class="lead">
-             <h1 class="display-3">{{ discussion.title }}<a href="/discussions/{{ discussion.id }}/subscribe" class="btn btn-sm btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Subscribe</a>
-    </h1></p>
+             <h4 class="display-3">{{ discussion.title }}<a href="/discussions/{{ discussion.id }}/subscribe" class="btn btn-xs btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Subscribe</a>
+    </h4></p>
              <p>{{ discussion.description | safe }}</p>
              <hr class="m-y-2">
                           <p>
 
                               {% for tag in discussion.tags %}
-                 <a href="/discussions/?tag={{tag.name}}" class="label label-success">{{ tag.name }}</a>
+                 <a href="/discussions/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
              {% endfor %}
              </p>
              <p class="lead">
-               <a class="btn btn-primary" href="#" role="button" onclick="showreplybox()">Add Comment</a>
-               <button class="btn btn-success" style="display:none;" id="post-comment" onclick="add_comment()">Post</button>
+               <a class="btn btn-primary btn-xs" href="#" role="button" onclick="showreplybox()">Add Comment</a>
+               <button class="btn btn-success btn-xs" style="display:none;" id="post-comment" onclick="add_comment()">Post</button>
              </p>
              <form action="/discussions/{{ discussion.id }}/reply/" id="add-comment-form" method= "post" enctype="multipart/form-data">
                  {% csrf_token %}
@@ -101,7 +101,7 @@
            <ul class="list-group" style="list-style:none;">
            {% for reply in replies %}
            <li class="well">
-               <p class="lead">
+               <p>
                    <a href="/user/{{ reply.posted_by.id }}">
                        {% if reply.posted_by.profile_image %}
                            <img src="{{ reply.posted_by.profile_image }}" class="img-circle image-inline">
