@@ -33,6 +33,12 @@
           }
       }
       
+      @media (min-width:768px) {
+          .picdiv{
+              margin-top:10%;
+          }
+      }
+      
       </style>
 <div class="container main-content ">
     <div class="page-header">
@@ -40,7 +46,7 @@
     </div>
     
     <div class="container well">
-        <div class="col-md-3">
+        <div class="col-md-3 col-md-push-9 picdiv">
     {% if user.profile_image %}
     <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
     {% else %}
@@ -48,7 +54,7 @@
     {% endif%}
 </div>
     
-    <form action="/user/edit_profile/" method= "post" enctype="multipart/form-data" class=col-md-9>
+    <form action="/user/edit_profile/" method= "post" enctype="multipart/form-data" class="col-md-9 col-md-pull-3">
         {% csrf_token %}
         <fieldset class="form-group">
             <label>First Name</label>

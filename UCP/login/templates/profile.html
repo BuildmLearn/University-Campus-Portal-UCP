@@ -40,16 +40,25 @@
     <div class="page-header">
         <h1>{{ other_user.user.first_name }} {{ other_user.user.last_name }}</h1>
     </div>
+    
+    <div class="row well">
+        
 
-    {% if other_user.profile_image %}
-    <img src="{{ user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
-    {% else %}
-    <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
-    {% endif%}
-    <p><b>Gender:</b> {{other_user.gender}}</p>
-    <p><b>Age:</b> {{other_user.age}}</p>
+        <div class="col-md-3 col-md-push-9">
+            {% if user.profile_image %}
+            <img src="{{ other_user.profile_image }}" class="img-circle center-block profile-img" id="profile-picture">
+            {% else %}
+            <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle center-block profile-img" >
+            {% endif%}
+        </div>
+        
+        <div class="col-md-9 col-md-pull-3" >
+            <p><b>Gender:</b> {{other_user.gender}}</p>
+            <p><b>Age:</b> {{other_user.age}}</p>
+        </div>
     
         
+    </div>
 </div><!-- /.container -->
 
     
