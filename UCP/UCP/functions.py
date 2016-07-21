@@ -22,7 +22,10 @@ def get_time_elapsed_string(date):
     time_elapsed = time_now - date
     seconds_elapsed = time_elapsed.seconds
     
-    if seconds_elapsed > 3600:
+    if time_elapsed.days > 0:
+        days_elapsed = time_elapsed.days
+        return str(days_elapsed) + " days ago"
+    elif seconds_elapsed > 3600:
         hours_elapsed = seconds_elapsed/3600
         return str(hours_elapsed) + " hours ago"
     elif seconds_elapsed > 60:
