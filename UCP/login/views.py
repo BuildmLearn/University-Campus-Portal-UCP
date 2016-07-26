@@ -122,18 +122,7 @@ class EditProfile(View):
         else:
             context["male"] = False
         print user
-        context["flat"] = False
-        context["cerulean"] = False
-        context["paper"] = False
-        context["readable"] = False
-        if user["theme"] == "cerulean":
-            context["cerulean"] = True
-        if user["theme"] == "flat":
-            context["flat"] = True
-        if user["theme"] == "paper":
-            context["paper"] = True
-        if user["theme"] == "readable":
-            context["readable"] = True
+        
         print context
         return render(request, 'edit-profile.html', context)
     
@@ -149,17 +138,7 @@ class EditProfile(View):
         else:
             context["male"] = False
 
-        context["flat"] = False
-        context["cerulean"] = False
-        context["paper"] = False
-        if user["theme"] == "cerulean":
-            context["cerulean"] = True
-        if user["theme"] == "flat":
-            context["flat"] = True
-        if user["theme"] == "paper":
-            context["paper"] = True
-        if user["theme"] == "readable":
-            context["readable"] = True
+       
         context["response"] = response
         
         return render(request, 'edit-profile.html', context)

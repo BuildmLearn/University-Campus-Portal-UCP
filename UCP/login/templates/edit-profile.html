@@ -6,7 +6,7 @@
     <title>{{ settings.SITE_TITLE }} Campus Portal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-<link href="/static/css/{{user.theme}}.css" rel="stylesheet" media="screen">
+<link href="/static/css/{{settings.THEME}}.css" rel="stylesheet" media="screen">
   </head>
   
   <body>
@@ -76,17 +76,7 @@
            <option {% if male %}selected{% endif %}>male</option>
          </select>
        </div>
-       <div class="form-group">
-         <label for="sel1">Theme</label>
-         <select class="form-control" name="theme" id="theme">
-
-           <option>journal</option>
-           <option {% if flat %}selected{% endif %}>flat</option>
-           <option {% if cerulean %}selected{% endif %}>cerulean</option>
-           <option {% if paper %}selected{% endif %}>paper</option>
-           <option {% if readable %}selected{% endif %}>readable</option>
-         </select>
-       </div>
+      
               <input type=file style="display:none" name="profile_picture" id="profile-picture-input" type=hidden>
 
        <fieldset class="form-group">

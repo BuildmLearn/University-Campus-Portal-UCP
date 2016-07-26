@@ -149,7 +149,17 @@ SITE_TITLE = "University"
 
 LOGO = "images/logo.png"
 
-THEME = "dark"
+#Theme for the site
+"""
+Choices - 
+    paper
+    cerulean
+    journal
+    flat
+    readable
+"""
+
+THEME = "paper"
 
 #import local_settings.py file if it exists
 try:
