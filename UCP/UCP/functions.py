@@ -6,11 +6,22 @@ contains functions common to all apps
 import thread
 
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from login.models import UserProfile
 from login.serializers import UserProfileFullSerializer
 from UCP.settings import EMAIL_HOST_USER
 
+
+def my_login_required(function):
+    def wrapper(request, *args, **kw):
+        user=request.user  
+        if not UserProfile.objects.filter(user = user).exists():
+            return HttpResponseRedirect('/login/')
+        else:
+            return function(request, *args, **kw)
+    return wrapper
+    
 
 def get_time_elapsed_string(date):
     """
@@ -22,14 +33,6 @@ def get_time_elapsed_string(date):
     time_elapsed = time_now - date
     seconds_elapsed = time_elapsed.seconds
     
-
-    print '-'*20
-    print time_now
-    print date
-    print time_elapsed
-    print seconds_elapsed
-    print time_elapsed.days
-    print '-'*20
     
     if time_elapsed.days > 0:
         days_elapsed = time_elapsed.days
@@ -57,6 +60,7 @@ def get_base_context(request):
     """
     returns a base context with user details to be sent to a template
     """
+
     user = UserProfile.objects.get(user=request.user)
     serializer = UserProfileFullSerializer(user)
     

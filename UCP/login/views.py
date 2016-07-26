@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 
 from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile, verify_email
+from discussion.models import UserProfile
 from UCP.constants import result
 from UCP.functions import get_base_context
 
@@ -18,7 +19,7 @@ class Login(View):
         context = {}
         context["is_login_page"] = True
         
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
             context = get_base_context(request)
             return render(request, 'home.html', context)
             

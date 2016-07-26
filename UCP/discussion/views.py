@@ -12,11 +12,12 @@ from django.utils.decorators import method_decorator
 from discussion import functions
 from discussion.models import DiscussionThread
 from login.models import UserProfile
-from UCP.functions import get_time_elapsed_string, get_base_context
+from UCP.functions import get_time_elapsed_string, get_base_context, my_login_required
+
 
 class DiscussionList(View):
     
-    @method_decorator(login_required)
+    @method_decorator(my_login_required)
     def get(self, request):
         
         context = get_base_context(request)
