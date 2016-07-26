@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'login',
     'discussion',
+    'news_event',
     'rest_framework',
     'nested_admin',
     'django.contrib.admin',
