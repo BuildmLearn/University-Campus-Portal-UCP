@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'constance',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,6 +85,11 @@ SETTINGS_EXPORT = [
     'LOGO',
     'THEME',
 ]
+#constance
+CONSTANCE_CONFIG = {
+    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
+                       'The Universe, and Everything'),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
