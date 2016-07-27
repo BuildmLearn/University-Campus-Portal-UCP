@@ -24,6 +24,7 @@ urlpatterns += [
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^user/', include('login.urls')),
     url(r'^discussions/', include('discussion.urls')),
+    url(r'^news', include('news_event.urls')),
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^', Login.as_view()),
 ]
