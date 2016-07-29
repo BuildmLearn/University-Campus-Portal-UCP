@@ -77,18 +77,20 @@
                      <p>
 
                          {% for tag in news.tags.all %}
-            <a href="/discussions/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+            <a href="/news/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
         {% endfor %}
         </p>
         </li>
     {% endfor %}
     </ul>
     
+
+    
     <nav>
       <ul class="pagination">
         {% for page in pages %}
             <li class="page-item">
-                <a class="page-link" href="/discussions/?page={{ page }}">{{ page }}</a>
+                <a class="page-link" href="/news/?page={{ page }}">{{ page }}</a>
             </li>
         {% endfor %}
       </ul>

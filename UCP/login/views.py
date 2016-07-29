@@ -39,7 +39,7 @@ class Login(View):
         context = {}
         context["is_login_page"] = True
         
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
             context = get_base_context(request)
             return render(request, 'home.html', context)
         

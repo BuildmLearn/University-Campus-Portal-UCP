@@ -12,7 +12,7 @@ class News(models.Model):
     description = HTMLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag)
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
-    
+        
     def time_elapsed(self):
         return get_time_elapsed_string(self.posted_at)
         

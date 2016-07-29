@@ -75,7 +75,6 @@ def get_base_context(request):
     
     context = {}
     context["user"] = serializer.data
-    
     return context
     
 
