@@ -1,19 +1,27 @@
 from django.db import models
 from django.utils import timezone
-
+from tinymce.models import HTMLField
 from discussion.models import Tag
+from UCP.functions import get_time_elapsed_string, get_file_size_string
+
 
 # Create your models here.
 class News(models.Model):
     """(News description)"""
     title = models.CharField(blank=True, max_length=100)
-    description = models.CharField(blank=True, max_length=10000)
+    description = HTMLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag)
-    date = models.DateTimeField(blank=True, default=timezone.now)
+    posted_at = models.DateTimeField(blank=True, default=timezone.now)
     
+    def time_elapsed(self):
+        return get_time_elapsed_string(self.posted_at)
+        
+    def short_description(self):
+        return self.description[:200]+ "..."
+        
     class Admin:
         list_display = ('',)
         search_fields = ('',)
 
     def __unicode__(self):
-        return u"News"
+        return self.title

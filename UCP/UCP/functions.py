@@ -36,13 +36,22 @@ def get_time_elapsed_string(date):
     
     if time_elapsed.days > 0:
         days_elapsed = time_elapsed.days
-        return str(days_elapsed) + " days ago"
+        if days_elapsed > 1:
+            return str(days_elapsed) + " days ago"
+        else:
+            return str(days_elapsed) + " day ago"
     elif seconds_elapsed > 3600:
         hours_elapsed = seconds_elapsed/3600
-        return str(hours_elapsed) + " hours ago"
+        if hours_elapsed > 1:
+            return str(hours_elapsed) + " hours ago"
+        else:
+            return "1 hour ago"
     elif seconds_elapsed > 60:
         minutes_elapsed = seconds_elapsed/60
-        return str(minutes_elapsed) + " minutes ago"
+        if minutes_elapsed > 1:
+            return str(minutes_elapsed) + " minutes ago"
+        else:
+            return "1 minute ago"
     else:
         return str(seconds_elapsed) + " seconds ago"
         

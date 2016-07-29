@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'constance',
+    'tinymce',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -160,7 +161,7 @@ Choices -
     readable
 """
 
-THEME = "paper"
+THEME = "journal"
 
 #import local_settings.py file if it exists
 try:
