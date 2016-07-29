@@ -8,6 +8,7 @@ from rest_framework.routers import DefaultRouter
 from login.api import UserViewSet, UserPasswordViewSet
 from login.views import Login
 from discussion.api import DiscussionViewSet
+from news_event.views import NewsList, NewsDetail, EventList, EventDetail, EventCreate
 
 router = DefaultRouter()
 router.register(r'user', UserViewSet, base_name="Authentication")
@@ -24,7 +25,11 @@ urlpatterns += [
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^user/', include('login.urls')),
     url(r'^discussions/', include('discussion.urls')),
-    url(r'^news/', include('news_event.urls')),
+    url(r'^news/', NewsList.as_view()),
+    url(r'^news/(?P<pk>[0-9]+)$', NewsDetail.as_view(), name='news-detail'),
+    url(r'^events/add/', EventCreate.as_view()),
+    url(r'^events/(?P<pk>[0-9]+)$', EventDetail.as_view(), name='news-detail'),
+    url(r'^events/', EventList.as_view()),
     url(r'^nested_admin/', include('nested_admin.urls')),
     url(r'^', Login.as_view()),
     url(r'^tinymce/',include('tinymce.urls')),
