@@ -118,6 +118,7 @@ class EventCreate(View):
             return redirect('/events/')
         else:
             context["tags"] = get_all_tags()
+            print response["error"]
             return render(request, 'news_event/add-event.html', context)
     
         

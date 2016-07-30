@@ -14,6 +14,7 @@ def add_event(request):
         user_profile = UserProfile.objects.get(user = request.user)
         event = serializer.save(
             posted_by = user_profile,
+            image = request.FILES['image']
         )
 
         tags = request.POST["tag"].split(',')

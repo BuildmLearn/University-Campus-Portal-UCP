@@ -35,7 +35,7 @@
 <div class="container well">
         <h3 style="margin-top:0px;">Add new Event</h3>
         
-    <form action="/events/add/" method="post" id="add-discussion-form">
+    <form action="/events/add/" method="post" enctype="multipart/form-data" id="add-discussion-form">
         {% csrf_token %}
         <div class="alert alert-danger" id="error2" style="display:none;">
           <strong>Error!</strong> Please Add a title
@@ -53,6 +53,10 @@
         <fieldset class="form-group">
             <label>Add Tags</label>
             <input type="text" name="tag" value="" class="tag" id="tags_1"/>
+        </fieldset>
+        <fieldset class="form-group">
+            <label>Event Image</label>
+            <input type="file" id="image" name="image"/>
         </fieldset>
         
     </form>
