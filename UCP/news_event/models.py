@@ -13,6 +13,7 @@ class News(models.Model):
     description = HTMLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag)
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
+    posted_by = models.ForeignKey(UserProfile,null =True)
         
     def time_elapsed(self):
         return get_time_elapsed_string(self.posted_at)
@@ -35,7 +36,7 @@ class Event(models.Model):
     image = models.ImageField(upload_to="event_images",null=True)
     tags = models.ManyToManyField(Tag)
     venue = models.CharField(blank=True, max_length=100)
-    event_date = models.DateField(default=timezone.now)
+    event_date = models.DateTimeField(default=timezone.now)
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
     posted_by = models.ForeignKey(UserProfile,null =True)
         

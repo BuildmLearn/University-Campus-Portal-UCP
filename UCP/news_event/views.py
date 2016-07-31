@@ -48,12 +48,13 @@ class NewsList(ListView):
 
 class NewsDetail(DetailView):
     
-    model = Event
+    model = News
     context_object_name = "news"
     
     def get_context_data(self, **kwargs):
         context = super(NewsDetail, self).get_context_data(**kwargs)
         context['user'] = get_base_context(self.request)["user"]
+        print context
         return context
         
 
@@ -120,6 +121,28 @@ class EventCreate(View):
             context["tags"] = get_all_tags()
             print response["error"]
             return render(request, 'news_event/add-event.html', context)
+        
+        
+class NewsCreate(View):
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        context = get_base_context(request)
+        context["tags"] = get_all_tags()
+
+        return render(request, 'news_event/add-news.html', context)
+    
+    @method_decorator(login_required)
+    def post(self, request):
+        context = get_base_context(request)
+        response = functions.add_news(request)
+        
+        if response["result"] == 1:
+            return redirect('/news/')
+        else:
+            context["tags"] = get_all_tags()
+            print response["error"]
+            return render(request, 'news_event/add-news.html', context)
     
         
 

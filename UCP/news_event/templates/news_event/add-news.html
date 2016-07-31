@@ -14,7 +14,6 @@
     <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'css/tagit.ui-zendesk.css' %}" rel="stylesheet" media="screen">
-    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,9 +33,9 @@
         
         
 <div class="container well">
-        <h3 style="margin-top:0px;">Add new Event</h3>
+        <h3 style="margin-top:0px;">Add News</h3>
         
-    <form action="/events/add/" method="post" enctype="multipart/form-data" id="add-discussion-form">
+    <form action="/news/add/" method="post" enctype="multipart/form-data" id="add-discussion-form">
         {% csrf_token %}
         <div class="alert alert-danger" id="error2" style="display:none;">
           <strong>Error!</strong> Please Add a title
@@ -45,31 +44,14 @@
             <input class="form-control" id="title" name="title" required placeholder="Title" required>
         </fieldset>
         <fieldset class="form-group">
-            <input class="form-control" id="venue" name="venue" required placeholder="Venue" required>
-        </fieldset>
-        <fieldset class="form-group">
             <div class="alert alert-danger" id="error1" style="display:none;">
               <strong>Error!</strong> Please Add a description
             </div>
             <textarea type="text" class="form-control" id="description" name="description" placeholder="description" ></textarea>
         </fieldset>
-        <div class="form-group">
-            <label>Event Date and time</label>
-            <div class='input-group date' id='datetimepicker1'>
-                
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
         <fieldset class="form-group">
             <label>Add Tags</label>
             <input type="text" name="tag" value="" class="tag" id="tags_1"/>
-        </fieldset>
-        <fieldset class="form-group">
-            <label>Event Image</label>
-            <input type="file" id="image" name="image"/>
         </fieldset>
         
     </form>
@@ -88,7 +70,6 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
     <script src="{% static 'js/moment.js' %}"></script>
-    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
     <script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
     <script>
     function checkAndSubmit(){
@@ -112,10 +93,6 @@
                 availableTags: sampleTags
             });
     });
-    
-    $(function () {
-                    $('#datetimepicker1').datetimepicker();
-                });
     
     </script>
      <script>
