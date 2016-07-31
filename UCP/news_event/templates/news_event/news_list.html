@@ -60,9 +60,11 @@
 <div class="container main-content">
     <div class="page-header">
         <h1 style="margin-top:0px">News 
+            {% if user.is_moderator %}
             <a type="button" href="/news/add/" class="btn btn-primary pull-right">
                 Add new
             </a>
+            {% endif %}
         </h1>
         
     </div>

@@ -25,8 +25,16 @@
             }
         }
         
-        h4{
+        .event-img{
+            height : 200px;
+            width : 200px;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        
+        h4,h2,h3{
             margin-bottom:0px;
+            margin-top:0px;
         }
         ul .list-group{
             list-style: none;
@@ -71,28 +79,48 @@
         .card:hover {
           box-shadow: 0 4px 8px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
         }
+        
+        .panel{
+            height : 52px;
+            padding:0px;
+            margin:0px;
+        }
+        .panel-body{
+            padding-top:4px;
+            height:30px;
+        }
+        .panel-footer{
+            padding-top:0px;
+            padding-bottom:0px;
+            height:20px;
+        }
     
     </style>
 <div class="container main-content">
            <div class="well">
                <p class="lead">
-             <h4 class="display-3">{{ news.title }}
-                
-    </h4>
-<span class="text-muted small">{{ news.time_elapsed }} </span>
-    </p>
-    
              
-                          <p>
+                 <h2 class="display-3">{{ event.title }}</h2>
+                 <span class="text-muted small">{{ event.time_elapsed }} </span>
+    </p>
 
-                              {% for tag in news.tags.all %}
+    <hr class="m-y-2">
+    <div class="row" style="padding:0px">
+        <image class="col-md-3 center-block event-img" style="padding:20px" src="/media/{{ event.image }}"/>  
+        <div class="col-md-8">
+            <p>{{ event.description | safe }}</p>
+            <p><b>Venue : </b>{{ event.venue }}</p>
+            <p>
+             {% for tag in event.tags.all %}
                  <a href="/news/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
              {% endfor %}
              </p>
-             <hr class="m-y-2">
+            
+        </div>
+    </div>   
+      
              
              
-             <p>{{ news.description | safe }}</p>
            </div>
           
 </div><!-- /.container -->

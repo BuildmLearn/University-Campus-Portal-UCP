@@ -37,6 +37,7 @@ class UserProfile(models.Model):
     
 
     user = models.OneToOneField(User, unique=True, related_name='user_login')
+    is_moderator = models.BooleanField(default=True)
     designation = models.CharField( choices = DESIGNATION_CHOICES, default=STUDENT, max_length=10)
     age = models.IntegerField(null=True, blank=True)
     gender = models.CharField(choices = GENDER_CHOICES, default=MALE, max_length=6)
