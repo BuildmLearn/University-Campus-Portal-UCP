@@ -18,13 +18,19 @@ from news_event.models import News, Event
 from news_event.serializers import NewsSerializer, EventSerializer 
 
 
-class NewsViewSet(viewsets.ModelViewSet):
+class NewsViewSet(mixins.ListModelMixin,
+                mixins.RetrieveModelMixin,
+                mixins.CreateModelMixin,
+                viewsets.GenericViewSet):
     
     queryset = News.objects.all()
     serializer_class = NewsSerializer
     
 
-class EventViewSet(viewsets.ModelViewSet):
+class EventViewSet(mixins.ListModelMixin,
+                mixins.RetrieveModelMixin,
+                mixins.CreateModelMixin,
+                viewsets.GenericViewSet):
     
     queryset = Event.objects.all()
     serializer_class = EventSerializer
