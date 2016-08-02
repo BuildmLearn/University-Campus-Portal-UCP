@@ -50,8 +50,6 @@
           box-shadow: 0 4px 8px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
         }
         
-       
-    
     </style>
 </head>
   <body>
@@ -70,16 +68,18 @@
     {% for event in events %}
       
         <li class="well">
-            <h4 style="margin-top:0px;"><a href="/events/{{ event.id }}">{{ event.title }}</a></h4>
-            <span class="text-muted small">{{ event.time_elapsed }} </span>
-            <p >
-                {{ event.short_description | safe }}
-            </p>
-            <p>
-                {% for tag in event.tags.all %}
-                    <a href="/events/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
-                {% endfor %}
-            </p>
+                    <h4 style="margin-top:0px;"><a href="/events/{{ event.id }}">{{ event.title }}</a></h4>
+                    <span class="text-muted small">{{ event.time_elapsed }} </span>
+            
+                <p >
+                    {{ event.short_description | safe }}
+                </p>
+                <p>
+                    {% for tag in event.tags.all %}
+                        <a href="/events/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                    {% endfor %}
+                </p>
+            
         </li>
     {% endfor %}
     </ul>

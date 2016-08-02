@@ -108,8 +108,11 @@
     <div class="row" style="padding:0px">
         <image class="col-md-3 center-block event-img" style="padding:20px" src="/media/{{ event.image }}"/>  
         <div class="col-md-8">
-            <p>{{ event.description | safe }}</p>
+            <div style="min-height:60px">
+                <p>{{ event.description | safe }}</p>
+            </div>
             <p><b>Venue : </b>{{ event.venue }}</p>
+            <p><b>Timing : </b>{{ event.event_date }}</p>
             <p>
              {% for tag in event.tags.all %}
                  <a href="/events/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
