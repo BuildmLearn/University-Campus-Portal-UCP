@@ -12,10 +12,15 @@ def add_event(request):
         
     if serializer.is_valid():
         user_profile = UserProfile.objects.get(user = request.user)
-        event = serializer.save(
-            posted_by = user_profile,
-            image = request.FILES['image']
-        )
+        if 'image' in request.FILES:
+            event = serializer.save(
+                posted_by = user_profile,
+                image = request.FILES['image']
+            )
+        else:
+            event = serializer.save(
+                posted_by = user_profile
+            )
 
         tags = request.POST["tag"].split(',')
         for tag_name in tags:

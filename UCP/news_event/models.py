@@ -15,6 +15,9 @@ class News(models.Model):
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
     posted_by = models.ForeignKey(UserProfile,null =True)
         
+    class Meta:
+        ordering = ['-posted_at']
+        
     def time_elapsed(self):
         return get_time_elapsed_string(self.posted_at)
         
@@ -31,6 +34,7 @@ class News(models.Model):
 
 class Event(models.Model):
     """(Event description)"""
+    
     title = models.CharField(blank=True, max_length=100)
     description = HTMLField(blank=True, null=True)
     image = models.ImageField(upload_to="event_images",null=True)
@@ -39,6 +43,9 @@ class Event(models.Model):
     event_date = models.DateTimeField(default=timezone.now)
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
     posted_by = models.ForeignKey(UserProfile,null =True)
+        
+    class Meta:
+        ordering = ['-posted_at']
         
     def time_elapsed(self):
         return get_time_elapsed_string(self.posted_at)

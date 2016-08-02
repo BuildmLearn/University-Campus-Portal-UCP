@@ -112,7 +112,7 @@
             <p><b>Venue : </b>{{ event.venue }}</p>
             <p>
              {% for tag in event.tags.all %}
-                 <a href="/news/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                 <a href="/events/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
              {% endfor %}
              </p>
             

@@ -44,6 +44,10 @@
         <fieldset class="form-group">
             <input class="form-control" id="title" name="title" required placeholder="Title" required>
         </fieldset>
+
+        <div class="alert alert-danger" id="error_venue" style="display:none;">
+          <strong>Error!</strong> Please Add a Venue
+        </div>
         <fieldset class="form-group">
             <input class="form-control" id="venue" name="venue" required placeholder="Venue" required>
         </fieldset>
@@ -94,11 +98,15 @@
     function checkAndSubmit(){
         $("#error1").hide();
         $("#error2").hide();
+        $("#error_venue").hide();
         if(tinyMCE.get("description").getContent() == "" ){
             $("#error1").show();
         }
         if($("#title").val() == "" ){
             $("#error2").show();
+        }
+        if($("#venue").val() == "" ){
+            $("#error_venue").show();
         }
         if(tinyMCE.get("description").getContent() != "" && $("#title").val() != "" ){
             $("#add-discussion-form").submit();
