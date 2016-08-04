@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'login',
     'discussion',
     'news_event',
+    'result',
     'rest_framework',
     'nested_admin',
     'django.contrib.admin',
