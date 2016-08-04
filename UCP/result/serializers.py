@@ -20,4 +20,7 @@ class ResultCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Result
-        fields = ('id', 'title', 'teacher','tags', 'result_file')
+        fields = ('id', 'title', 'teacher', 'result_file')
+        
+    def validate_tags(self, validated_data):
+        return validated_data
