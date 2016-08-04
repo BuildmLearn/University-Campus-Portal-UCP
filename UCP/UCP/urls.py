@@ -9,6 +9,7 @@ from login.api import UserViewSet, UserPasswordViewSet
 from login.views import Login
 from discussion.api import DiscussionViewSet
 from result.api import ResultViewSet
+from schedule.api import ScheduleViewSet
 
 from news_event.api import NewsViewSet, EventViewSet
 from news_event.views import NewsList, NewsDetail, EventList, EventDetail, EventCreate, NewsCreate
@@ -21,6 +22,7 @@ router.register(r'discussions', DiscussionViewSet, base_name="Discussions")
 router.register(r'news', NewsViewSet, base_name="News")
 router.register(r'events', EventViewSet, base_name="Events")
 router.register(r'results', ResultViewSet, base_name="Results")
+router.register(r'schedule', ScheduleViewSet, base_name="Schedule")
 
 urlpatterns = []
 
