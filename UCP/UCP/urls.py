@@ -8,8 +8,11 @@ from rest_framework.routers import DefaultRouter
 from login.api import UserViewSet, UserPasswordViewSet
 from login.views import Login
 from discussion.api import DiscussionViewSet
+from result.api import ResultViewSet
+
 from news_event.api import NewsViewSet, EventViewSet
 from news_event.views import NewsList, NewsDetail, EventList, EventDetail, EventCreate, NewsCreate
+
 
 router = DefaultRouter()
 router.register(r'user', UserViewSet, base_name="Authentication")
@@ -17,6 +20,7 @@ router.register(r'password', UserPasswordViewSet, base_name="Passwords")
 router.register(r'discussions', DiscussionViewSet, base_name="Discussions")
 router.register(r'news', NewsViewSet, base_name="News")
 router.register(r'events', EventViewSet, base_name="Events")
+router.register(r'results', ResultViewSet, base_name="Results")
 
 urlpatterns = []
 
