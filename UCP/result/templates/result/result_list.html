@@ -1,0 +1,49 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ settings.SITE_TITLE }} Campus Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/css/{{settings.THEME}}.css" rel="stylesheet" media="screen">
+
+</head>
+  <body>
+      {% include 'header.html' %}
+
+<div class="container main-content">
+    <div class="page-header">
+        <h1 style="margin-top:0px">Results 
+            <a type="button" href="/results/add/" class="btn btn-primary pull-right">
+                Add new
+            </a>
+        </h1>
+        
+    </div>
+
+    
+
+    
+    <nav>
+      <ul class="pagination">
+        {% for page in pages %}
+            <li class="page-item">
+                <a class="page-link" href="/results/?page={{ page }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+      </ul>
+    </nav>
+        
+</div><!-- /.container -->
+
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
