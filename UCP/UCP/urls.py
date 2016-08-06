@@ -35,6 +35,7 @@ urlpatterns += [
     url(r'^user/', include('login.urls')),
     url(r'^discussions/', include('discussion.urls')),
     url(r'^results/', include('result.urls')),
+    url(r'^schedule/', include('schedule.urls')),
     url(r'^news/add/', NewsCreate.as_view()),
     url(r'^news/(?P<pk>[0-9]+)$', NewsDetail.as_view(), name='news-detail'),
     url(r'^news/', NewsList.as_view()),
