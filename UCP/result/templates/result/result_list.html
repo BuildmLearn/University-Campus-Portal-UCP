@@ -23,7 +23,30 @@
     </div>
 
     
-
+    <table class="table table-striped table-hover well ">
+        <thead>
+            <tr>
+              <th>Title</th>
+              <th>Uploaded by</th>
+              <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+              <td><a href="/media/{{result.result_file}}" >{{result.title}}</a></td>
+              <td>{{result.teacher.user.first_name}} {{result.teacher.user.last_name}}</td>
+              <td>
+                  <p>
+                      {% for tag in result.tags.all %}
+                          <a href="/results/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                      {% endfor %}
+                  </p>
+              </td>
+            </tr>
+            {% endfor %}
+        </tbody>  
+    </table>
     
     <nav>
       <ul class="pagination">

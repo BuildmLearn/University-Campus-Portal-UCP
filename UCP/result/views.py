@@ -12,7 +12,7 @@ from UCP.settings import PAGE_SIZE
 class ResultList(ListView):
     
     model = Result
-    context_object_name = 'news_list'    
+    context_object_name = 'results'    
 
     def get_context_data(self, **kwargs):
         context = super(ResultList, self).get_context_data(**kwargs)
@@ -24,17 +24,20 @@ class ResultList(ListView):
         return context
         
     def get_queryset(self):
+        
         if 'tag' in self.request.GET:
             result_list = Result.objects.filter(tags__name = self.request.GET["tag"])
-            count = len(result_list)
-            page_count = count/PAGE_SIZE + 1
-            if "page" in self.request.GET :
-                page_no = int(self.request.GET["page"]) - 1
-            else:
-                page_no = 0
-            offset = page_no * PAGE_SIZE
-            result_list = result_list[offset:offset+PAGE_SIZE]
-            ids = [result.pk for result in result_list]
-            return Result.objects.filter(pk__in=ids)
         else:
-            return Result.objects.all()
+            result_list = Result.objects.all()
+        
+        count = len(result_list)
+        page_count = count/PAGE_SIZE + 1
+        if "page" in self.request.GET :
+            page_no = int(self.request.GET["page"]) - 1
+        else:
+            page_no = 0
+        offset = page_no * PAGE_SIZE
+        result_list = result_list[offset:offset+PAGE_SIZE]
+        ids = [result.pk for result in result_list]
+        return Result.objects.filter(pk__in=ids)
+        
