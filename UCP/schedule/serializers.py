@@ -20,5 +20,5 @@ class ScheduleCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Schedule
-        fields = ('id', 'title', 'teacher', 'schedule_file')
+        fields = ('id', 'title')
         

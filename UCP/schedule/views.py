@@ -1,8 +1,12 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, View
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from discussion.functions import get_all_tags
 
 from schedule.models import Schedule
-
+from schedule import functions
 from UCP.functions import get_base_context
 from UCP.settings import PAGE_SIZE
 
@@ -41,4 +45,24 @@ class ScheduleList(ListView):
         ids = [schedule.pk for schedule in schedule_list]
         return Schedule.objects.filter(pk__in=ids)
         
-# Create your views here.
+
+class ScheduleCreate(View):
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        context = get_base_context(request)
+        context["tags"] = get_all_tags()
+
+        return render(request, 'schedule/add_schedule.html', context)
+    
+    @method_decorator(login_required)
+    def post(self, request):
+        context = get_base_context(request)
+        response = functions.add_schedule(request)
+        
+        if response["result"] == 1:
+            return redirect('/schedule/')
+        else:
+            context["tags"] = get_all_tags()
+            print response["error"]
+            return render(request, 'schedule/add_schedule.html', context)    
