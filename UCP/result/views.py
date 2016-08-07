@@ -1,7 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, View
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from discussion.functions import get_all_tags
 
 from result.models import Result
+from result import functions
 
 from UCP.functions import get_base_context
 from UCP.settings import PAGE_SIZE
@@ -41,3 +47,24 @@ class ResultList(ListView):
         ids = [result.pk for result in result_list]
         return Result.objects.filter(pk__in=ids)
         
+
+class ResultCreate(View):
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        context = get_base_context(request)
+        context["tags"] = get_all_tags()
+
+        return render(request, 'result/add_result.html', context)
+    
+    @method_decorator(login_required)
+    def post(self, request):
+        context = get_base_context(request)
+        response = functions.add_result(request)
+        
+        if response["result"] == 1:
+            return redirect('/results/')
+        else:
+            context["tags"] = get_all_tags()
+            print response["error"]
+            return render(request, 'result/add_result.html', context)        
