@@ -10,7 +10,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 
 from discussion import functions
-from discussion.models import DiscussionThread
+from discussion.models import DiscussionThread, Tag
 from login.models import UserProfile
 from UCP.functions import get_time_elapsed_string, get_base_context, my_login_required
 
@@ -100,6 +100,15 @@ class Reply(View):
             print response
             return render(request, 'reply.html', context)        
         
+
+class FollowTag(View):        
+    @method_decorator(login_required)
+    def get(self, request):
+        tag = Tag.objects.get(name = request.GET['tag'])
+        userProfile = UserProfile.objects.get(user = request.user)
+        userProfile.followed_tags.add(tag)
+        userProfile.save()
+        return redirect('/')
 
 class Subscribe(View):
     

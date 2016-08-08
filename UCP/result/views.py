@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from discussion.functions import get_all_tags
+from discussion.models import Tag
 
 from result.models import Result
 from result import functions
@@ -26,6 +27,10 @@ class ResultList(ListView):
         count = len(result_list)
         page_count = count/PAGE_SIZE + 1
         context["pages"] = range(1, page_count+1)
+        
+        if 'tag' in self.request.GET:
+            context['tag'] = self.request.GET["tag"]
+            
         return context
         
     def get_queryset(self):

@@ -15,7 +15,9 @@
             width: 20px;
         }
 
-    
+        h4{
+            margin:0px;
+        }
     </style>
 </head>
   <body>
@@ -24,10 +26,15 @@
 <div class="container main-content">
     <div class="page-header">
         <h1 style="margin-top:0px">Results 
+            
             <a type="button" href="/results/add/" class="btn btn-primary pull-right">
                 Add new
             </a>
         </h1>
+        {% if tag %}
+        <span class="label label-default">{{ tag }}</span>
+        <a class="small" href="/tag/follow/?tag={{tag}}">follow {{ tag }}</a>
+        {% endif %}
         
     </div>
 

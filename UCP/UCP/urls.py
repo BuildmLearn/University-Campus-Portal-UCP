@@ -13,7 +13,7 @@ from schedule.api import ScheduleViewSet
 
 from news_event.api import NewsViewSet, EventViewSet
 from news_event.views import NewsList, NewsDetail, EventList, EventDetail, EventCreate, NewsCreate
-
+from discussion.views import FollowTag
 
 router = DefaultRouter()
 router.register(r'user', UserViewSet, base_name="Authentication")
@@ -33,6 +33,7 @@ urlpatterns += [
     url(r'^api/', include(router.urls)),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^user/', include('login.urls')),
+    url(r'^tag/follow/', FollowTag.as_view()),
     url(r'^discussions/', include('discussion.urls')),
     url(r'^results/', include('result.urls')),
     url(r'^schedule/', include('schedule.urls')),
