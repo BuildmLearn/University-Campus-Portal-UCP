@@ -33,6 +33,9 @@ def get_all_tags():
     serializer = TagSerializer(tags, many=True)
     return serializer.data
     
+def get_top_discussions(tags):
+    return DiscussionThread.objects.filter(tags__in = tags)[:5]
+
 def add_discussion_thread(request):
     
     response = {}
@@ -49,8 +52,12 @@ def add_discussion_thread(request):
 
         tags = request.POST["tag"].split(',')
         for tag_name in tags:
-            tag = Tag(name=tag_name)
-            tag.save()
+            if Tag.objects.filter(name = tag_name).exists():
+                tag = Tag.objects.get(name = tag_name)
+            else:
+                tag = Tag(name=tag_name)
+                tag.save()
+                
             discussion.tags.add(tag)
         response["result"] = result.RESULT_SUCCESS
         response["error"] = []

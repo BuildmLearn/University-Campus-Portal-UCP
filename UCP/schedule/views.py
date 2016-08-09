@@ -25,6 +25,8 @@ class ScheduleList(ListView):
         count = len(schedule_list)
         page_count = count/PAGE_SIZE + 1
         context["pages"] = range(1, page_count+1)
+        if 'tag' in self.request.GET:
+            context['tag'] = self.request.GET["tag"]
         return context
         
     def get_queryset(self):

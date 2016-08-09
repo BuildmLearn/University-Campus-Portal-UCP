@@ -19,6 +19,10 @@
                 Add new
             </a>
         </h1>
+        {% if tag %}
+        <span class="label label-default">{{ tag }}</span>
+        <a class="small" href="/tag/follow/?tag={{tag}}">follow {{ tag }}</a>
+        {% endif %}
         <style>
       
 
@@ -56,7 +60,7 @@
               <td>
                   <p>
                       {% for tag in schedule.tags.all %}
-                          <a href="/schedules/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                          <a href="/schedule/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
                       {% endfor %}
                   </p>
               </td>
@@ -69,7 +73,7 @@
       <ul class="pagination">
         {% for page in pages %}
             <li class="page-item">
-                <a class="page-link" href="/schedules/?page={{ page }}">{{ page }}</a>
+                <a class="page-link" href="/schedule/?page={{ page }}">{{ page }}</a>
             </li>
         {% endfor %}
       </ul>

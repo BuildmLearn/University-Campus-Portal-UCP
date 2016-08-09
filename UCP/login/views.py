@@ -15,6 +15,8 @@ from discussion.models import Tag
 from UCP.functions import get_base_context
 from result.functions import get_top_results
 from schedule.functions import get_top_schedules
+from discussion.functions import get_top_discussions
+from news_event.functions import get_top_news, get_top_events
 
 class Login(View):
     
@@ -170,6 +172,11 @@ class TagPage(View):
         schedules = get_top_schedules([tag])
         context["results"] = results
         context["schedules"] = schedules
+        context["events"] = get_top_events([tag])
+        
+        context["news_list"] = get_top_news([tag])
+        context["discussions"] = get_top_discussions([tag])
+        
         return render(request, 'tag_page.html', context)
 
 class VerificationPage(View):

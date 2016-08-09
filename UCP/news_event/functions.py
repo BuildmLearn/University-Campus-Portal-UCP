@@ -2,8 +2,15 @@ from django.utils import timezone
 
 from discussion.models import Tag
 from login.models import UserProfile
+from news_event.models import News, Event
 from news_event.serializers import EventSerializer, NewsSerializer
 from UCP.constants import result
+
+def get_top_news(tags):
+    return News.objects.filter(tags__in = tags)
+    
+def get_top_events(tags):
+    return Event.objects.filter(tags__in = tags)
 
 def add_event(request):
     
@@ -24,8 +31,11 @@ def add_event(request):
 
         tags = request.POST["tag"].split(',')
         for tag_name in tags:
-            tag = Tag(name=tag_name)
-            tag.save()
+            if Tag.objects.filter(name = tag_name).exists():
+                tag = Tag.objects.get(name = tag_name)
+            else:
+                tag = Tag(name=tag_name)
+                tag.save()
             event.tags.add(tag)
         response["result"] = result.RESULT_SUCCESS
         response["error"] = []
@@ -49,8 +59,12 @@ def add_news(request):
 
         tags = request.POST["tag"].split(',')
         for tag_name in tags:
-            tag = Tag(name=tag_name)
-            tag.save()
+            if Tag.objects.filter(name = tag_name).exists():
+                tag = Tag.objects.get(name = tag_name)
+            else:
+                tag = Tag(name=tag_name)
+                tag.save()
+                
             news.tags.add(tag)
         response["result"] = result.RESULT_SUCCESS
         response["error"] = []

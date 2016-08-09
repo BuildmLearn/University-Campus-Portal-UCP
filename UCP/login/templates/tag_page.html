@@ -18,6 +18,18 @@
         h4{
             margin:0px;
         }
+       
+        ul {
+            list-style: none;
+        }
+
+     
+
+        .image-inline{
+            height:20px;
+            width: 20px;
+        }
+
     </style>
 </head>
   <body>
@@ -28,9 +40,9 @@
      <ul class="nav nav-tabs">
        <li class="active"><a data-toggle="tab" href="#menu_result">Results</a></li>
        <li><a data-toggle="tab" href="#menu_schedule">Schedule</a></li>
-       <li><a data-toggle="tab" href="#menu1">Discussions</a></li>
-       <li><a data-toggle="tab" href="#menu2">News</a></li>
-       <li><a data-toggle="tab" href="#menu3">Events</a></li>
+       <li><a data-toggle="tab" href="#menu_discussions">Discussions</a></li>
+       <li><a data-toggle="tab" href="#menu_news">News</a></li>
+       <li><a data-toggle="tab" href="#menu_events">Events</a></li>
      </ul>
 
      <div class="tab-content">
@@ -104,13 +116,82 @@
          </table>
          <a href="/schedule/?tag={{tag.name}}">View all</a>
        </div>
-       <div id="menu2" class="tab-pane fade">
-         <h3>Menu 2</h3>
-         <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+       <div id="menu_events" class="tab-pane fade">
+        <ul class="list-group">
+        {% for event in events %}
+      
+            <li class="well">
+                        <h4 style="margin-top:0px;"><a href="/events/{{ event.id }}">{{ event.title }}</a></h4>
+                        <span class="text-muted small">{{ event.time_elapsed }} </span>
+            
+                    <p >
+                        {{ event.short_description | safe }}
+                    </p>
+                    <p>
+                        {% for tag in event.tags.all %}
+                            <a href="/events/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                        {% endfor %}
+                    </p>
+            
+            </li>
+        {% endfor %}
+        </ul>
+         <a href="/events/?tag={{tag.name}}">View all</a>
        </div>
-       <div id="menu3" class="tab-pane fade">
-         <h3>Menu 3</h3>
-         <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+       <div id="menu_news" class="tab-pane fade">
+           <ul class="list-group">
+           {% for news in news_list %}
+      
+               <li class="well">
+                   <h4 style="margin-top:0px;"><a href="/news/{{ news.id }}">{{ news.title }}</a></h4>
+                   <span class="text-muted small">{{ news.time_elapsed }} </span>
+                   <p >
+                       {{ news.short_description | safe }}
+                   </p>
+            
+                            <p>
+
+                                {% for tag in news.tags.all %}
+                   <a href="/news/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+               {% endfor %}
+               </p>
+               </li>
+           {% endfor %}
+           </ul>
+         <a href="/news/?tag={{tag.name}}">View all</a>
+       </div>
+       <div id="menu_discussions" class="tab-pane fade">
+           <ul class="list-group">
+           {% for discussion in discussions %}
+
+               <li class="well">
+                   <h4 style="margin-top:0px;"><a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
+                       <span class="badge pull-right">{{ discussion.no_of_replies }}</span></h4>
+                   <p>
+                       <a href="/user/{{ discussion.posted_by.id }}">
+                                           {% if discussion.posted_by.profile_image %}
+                                               <img src="/media/{{ discussion.posted_by.profile_image }}" class="img-circle image-inline">
+                                           {% else %}
+                                               <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                                           {% endif %}
+                                           <b>{{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}</b></a>
+                        <span class="text-muted small">| {{ discussion.time_elapsed }} </span>
+                   </p>
+            
+                   <p>
+                       {{ discussion.description | safe }}
+                   </p>
+            
+                            <p>
+
+                                {% for tag in discussion.tags.all %}
+                   <a href="/discussions/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+               {% endfor %}
+               </p>
+               </li>
+           {% endfor %}
+           </ul>
+         <a href="/discussions/?tag={{tag.name}}">View all</a>
        </div>
      </div>
    
