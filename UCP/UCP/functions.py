@@ -74,7 +74,7 @@ def get_base_context(request):
     serializer = UserProfileFullSerializer(user)
     
     context = {}
-    context["user"] = serializer.data
+    context["user"] = user
     return context
     
 

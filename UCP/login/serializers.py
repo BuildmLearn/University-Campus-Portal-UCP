@@ -13,7 +13,6 @@ from login.models import UserProfile
 from UCP.constants import error
 
 
-
 class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -55,10 +54,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class UserProfileFullSerializer(serializers.ModelSerializer):
     
     user = UserSerializer()
-    
     class Meta:
         model = UserProfile
-        fields = ('id','designation', 'profile_image', 'user', 'age', 'gender', 'is_moderator')
+        fields = ('id','designation', 'profile_image', 'user', 'age', 'gender', 'is_moderator', 'followed_tags')
         read_only_fields = ('id',)
         
 

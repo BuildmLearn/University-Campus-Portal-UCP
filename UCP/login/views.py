@@ -9,9 +9,12 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 
 from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile, verify_email
-from discussion.models import UserProfile
+from login.models import UserProfile
 from UCP.constants import result
+from discussion.models import Tag
 from UCP.functions import get_base_context
+from result.functions import get_top_results
+from schedule.functions import get_top_schedules
 
 class Login(View):
     
@@ -21,6 +24,7 @@ class Login(View):
         
         if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
             context = get_base_context(request)
+            print context["user"].followed_tags.all()
             return render(request, 'home.html', context)
             
         return render(request, 'login-register.html', context)
@@ -154,7 +158,19 @@ class Profile(View):
         context['other_user'] = get_user_profile(pk)
         
         return render(request, 'profile.html', context)
+
+class TagPage(View):
     
+    def get(self, request):
+        
+        context=get_base_context(request)
+        tag = Tag.objects.get(name = request.GET["tag"])
+        context["tag"] = tag
+        results = get_top_results([tag])
+        schedules = get_top_schedules([tag])
+        context["results"] = results
+        context["schedules"] = schedules
+        return render(request, 'tag_page.html', context)
 
 class VerificationPage(View):
     

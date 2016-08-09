@@ -4,6 +4,11 @@ from discussion.models import Tag
 from login.models import UserProfile
 from result.serializers import ResultCreateSerializer
 from UCP.constants import result
+from UCP.settings import PAGE_SIZE
+from result.models import Result
+
+def get_top_results(tags):
+    return Result.objects.filter(tags__in=tags)[:5]
 
 def add_result(request):
     
@@ -19,8 +24,11 @@ def add_result(request):
         
         tags = request.POST["tag"].split(',')
         for tag_name in tags:
-            tag = Tag(name=tag_name)
-            tag.save()
+            if Tag.objects.filter(name = tag_name).exists():
+                tag = Tag.objects.get(name = tag_name)
+            else:
+                tag = Tag(name=tag_name)
+                tag.save()
             result_item.tags.add(tag)
         response["result"] = result.RESULT_SUCCESS
         response["error"] = []

@@ -1,0 +1,131 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ settings.SITE_TITLE }} Campus Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/css/{{settings.THEME}}.css" rel="stylesheet" media="screen">
+    <style>
+      
+
+        .image-inline{
+            height:20px;
+            width: 20px;
+        }
+
+        h4{
+            margin:0px;
+        }
+    </style>
+</head>
+  <body>
+      {% include 'header.html' %}
+
+<div class="container main-content">
+     <h2>Items with the Tag Me216</h2>
+     <ul class="nav nav-tabs">
+       <li class="active"><a data-toggle="tab" href="#menu_result">Results</a></li>
+       <li><a data-toggle="tab" href="#menu_schedule">Schedule</a></li>
+       <li><a data-toggle="tab" href="#menu1">Discussions</a></li>
+       <li><a data-toggle="tab" href="#menu2">News</a></li>
+       <li><a data-toggle="tab" href="#menu3">Events</a></li>
+     </ul>
+
+     <div class="tab-content">
+       <div id="menu_result" class="tab-pane fade in active">
+           <table class="table table-striped table-hover well ">
+               <thead>
+                   <tr>
+                     <th class="col-md-8">Title</th>
+                     <th>Teacher</th>
+                     <th>Tags</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   {% for result in results %}
+                   <tr>
+                     <td><a href="/media/{{result.result_file}}" >{{result.title}}</a></td>
+                     <td>
+                         <a href="/user/{{ result.teacher.id }}">
+                         {% if result.teacher.profile_image %}
+                             <img src="/media/{{ result.teacher.profile_image }}" class="img-circle image-inline">
+                         {% else %}
+                             <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                         {% endif %}
+                         <b>{{ result.teacher.user.first_name }} {{ result.teacher.user.last_name }}</b></a>
+                     </td>
+                     <td>
+                         <p>
+                             {% for tag in result.tags.all %}
+                                 <a href="/results/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                             {% endfor %}
+                         </p>
+                     </td>
+                   </tr>
+                   {% endfor %}
+               </tbody>  
+           </table>
+           <a href="/results/?tag={{tag.name}}">View all</a>
+       </div>
+       <div id="menu_schedule" class="tab-pane fade">
+         <table class="table table-striped table-hover well ">
+             <thead>
+                 <tr>
+                   <th class="col-md-8">Title</th>
+                   <th>Uploaded by</th>
+                   <th>Tags</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for schedule in schedules %}
+                 <tr>
+                   <td><a href="/media/{{schedule.schedule_file}}" >{{schedule.title}}</a></td>
+                   <td>
+                       <a href="/user/{{ schedule.teacher.id }}">
+                       {% if schedule.teacher.profile_image %}
+                           <img src="/media/{{ schedule.teacher.profile_image }}" class="img-circle image-inline">
+                       {% else %}
+                           <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
+                       {% endif %}
+                       <b>{{ schedule.teacher.user.first_name }} {{ schedule.teacher.user.last_name }}</b></a>
+                   </td>
+                   <td>
+                       <p>
+                           {% for tag in schedule.tags.all %}
+                               <a href="/schedule/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
+                           {% endfor %}
+                       </p>
+                   </td>
+                 </tr>
+                 {% endfor %}
+             </tbody>  
+         </table>
+         <a href="/schedule/?tag={{tag.name}}">View all</a>
+       </div>
+       <div id="menu2" class="tab-pane fade">
+         <h3>Menu 2</h3>
+         <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+       </div>
+       <div id="menu3" class="tab-pane fade">
+         <h3>Menu 3</h3>
+         <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+       </div>
+     </div>
+   
+    
+   
+        
+</div><!-- /.container -->
+
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
