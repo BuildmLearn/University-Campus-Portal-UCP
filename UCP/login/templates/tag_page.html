@@ -15,10 +15,6 @@
             width: 20px;
         }
 
-        h4{
-            margin:0px;
-        }
-       
         ul {
             list-style: none;
         }
@@ -157,7 +153,7 @@
          {% endif %}
        </div>
        <div id="menu_news" class="tab-pane fade">
-           {% if news %}
+           {% if news_list %}
            <ul class="list-group">
            {% for news in news_list %}
       
@@ -185,7 +181,7 @@
       {% endif %}
        </div>
        <div id="menu_discussions" class="tab-pane fade">
-           {% if discussion %}
+           {% if discussions %}
            <ul class="list-group">
            {% for discussion in discussions %}
 
