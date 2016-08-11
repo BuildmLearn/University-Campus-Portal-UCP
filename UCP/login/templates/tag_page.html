@@ -47,6 +47,7 @@
 
      <div class="tab-content">
        <div id="menu_result" class="tab-pane fade in active">
+           {% if results %}
            <table class="table table-striped table-hover well ">
                <thead>
                    <tr>
@@ -80,8 +81,14 @@
                </tbody>  
            </table>
            <a href="/results/?tag={{tag.name}}">View all</a>
+              {% else %}
+           <div class="well">
+           </h3>No Results found for this tag</h3>
+           </div>
+           {% endif %}
        </div>
        <div id="menu_schedule" class="tab-pane fade">
+           {% if schedules %}
          <table class="table table-striped table-hover well ">
              <thead>
                  <tr>
@@ -115,8 +122,14 @@
              </tbody>  
          </table>
          <a href="/schedule/?tag={{tag.name}}">View all</a>
+            {% else %}
+         <div class="well">
+         </h3>No Schedules found for this tag</h3>
+         </div>
+         {% endif %}
        </div>
        <div id="menu_events" class="tab-pane fade">
+           {% if events %}
         <ul class="list-group">
         {% for event in events %}
       
@@ -137,8 +150,14 @@
         {% endfor %}
         </ul>
          <a href="/events/?tag={{tag.name}}">View all</a>
+            {% else %}
+         <div class="well">
+         </h3>No Events found for this tag</h3>
+         </div>
+         {% endif %}
        </div>
        <div id="menu_news" class="tab-pane fade">
+           {% if news %}
            <ul class="list-group">
            {% for news in news_list %}
       
@@ -159,8 +178,14 @@
            {% endfor %}
            </ul>
          <a href="/news/?tag={{tag.name}}">View all</a>
+         {% else %}
+      <div class="well">
+      </h3>No News found for this tag</h3>
+      </div>
+      {% endif %}
        </div>
        <div id="menu_discussions" class="tab-pane fade">
+           {% if discussion %}
            <ul class="list-group">
            {% for discussion in discussions %}
 
@@ -192,6 +217,11 @@
            {% endfor %}
            </ul>
          <a href="/discussions/?tag={{tag.name}}">View all</a>
+            {% else %}
+         <div class="well">
+         </h3>No Discussions found for this tag</h3>
+         </div>
+         {% endif %}
        </div>
      </div>
    
