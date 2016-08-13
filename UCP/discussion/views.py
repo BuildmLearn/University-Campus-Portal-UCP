@@ -27,7 +27,10 @@ class DiscussionList(View):
         page_count = response["page_count"]
         
         context["pages"] = range(1, page_count+1)
-        
+
+        if 'tag' in self.request.GET:
+            context["tag"] = self.request.GET["tag"]
+            
         context["discussions"] = response["data"]
 
         return render(request, 'discussion-list.html', context)

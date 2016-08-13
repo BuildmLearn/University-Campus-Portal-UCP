@@ -60,7 +60,10 @@
                 Add new
             </a>
         </h1>
-        
+        {% if tag %}
+        <span class="label label-default">{{ tag }}</span>
+        <a class="small" href="/tag/follow/?tag={{tag}}">follow {{ tag }}</a>
+        {% endif %}
     </div>
     <ul class="list-group">
     {% for discussion in discussions %}
