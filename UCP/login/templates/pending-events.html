@@ -1,0 +1,81 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ settings.SITE_TITLE }} Campus Portal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+<link href="/static/css/{{settings.THEME}}.css" rel="stylesheet" media="screen">
+  </head>
+  
+  <body>
+      {% include 'header.html' %}
+      <style>
+      body{
+          padding-top:40px;
+      }
+        .profile-img{
+            height : 200px;
+            width : 200px;
+            clip: rect(0px,200px,200px,0px);
+            margin-bottom: 20px;
+        }
+        
+      textarea {
+          resize: none;
+          height: 150px;
+      }
+      
+      @media (min-width:768px) and (max-width:991px){
+          body{
+              padding-top:70px;
+          }
+      }
+      
+      @media (min-width:768px) {
+          .picdiv{
+              margin-top:10%;
+          }
+      }
+      
+      </style>
+<div class="container main-content ">
+    <div class="page-header">
+        <h2>Pending Events</h2>
+    </div>
+    <table class="table table-striped table-hover well ">
+        {% for event in pending_events %}
+            <tr><td><a href="/events/{{event.id}}">{{event.title}}</a></td>
+                <td><a href="/events/{{event.id}}/approve/">Approve</a></td>
+                <td><a href="/events/{{event.id}}/reject/">reject</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+</div><!-- /.container -->
+
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jasny-bootstrap.min.js' %}"></script>
+    <script>
+        $("#profile-picture").click(function() {
+            $("#profile-picture-input").click();
+        });
+        
+        document.getElementById("profile-picture-input").onchange = function () {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById("profile-picture").src = e.target.result;
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        };
+    </script>
+  </body>
+</html>

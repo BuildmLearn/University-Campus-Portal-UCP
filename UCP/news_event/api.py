@@ -53,6 +53,14 @@ class EventViewSet(mixins.ListModelMixin,
     
         return Response(response, status=status.HTTP_200_OK)
     
+    @list_route()
+    def pending(self, request):
+        response = {}
+        events = Event.objects.pending()
+        response["data"] = EventSerializer(events, many=True).data
+        
+        return Response(response, status=status.HTTP_200_OK)
+    
     
     def get_queryset(self):
         if self.action == "approve":

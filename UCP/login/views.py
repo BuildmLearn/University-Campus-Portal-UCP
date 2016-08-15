@@ -17,6 +17,7 @@ from result.functions import get_top_results
 from schedule.functions import get_top_schedules
 from discussion.functions import get_top_discussions
 from news_event.functions import get_top_news, get_top_events
+from news_event.models import Event
 
 class Login(View):
     
@@ -113,8 +114,32 @@ class ResetPassword(View):
            return render(request, 'login-register.html', context)
        if(response["result"] == 0):
            return render(request, 'reset-password.html', context)
+
+
+class PendingEvents(View):
     
+    def get(self, request):
         
+        context = {}
+        user = get_user_details(request)
+        context["user"] = user
+        context["pending_events"] = Event.objects.pending()
+        
+        return render(request, 'pending-events.html', context)
+
+
+class ApproveEvent(View):
+    
+    def post(self, request, pk):
+        
+        context = {}
+        user = get_user_details(request)
+        context["user"] = user
+        context["pending_events"] = Event.objects.pending()
+        
+        return render(request, 'pending-events.html', context)
+
+
 class EditProfile(View):
     
     def get(self, request):
