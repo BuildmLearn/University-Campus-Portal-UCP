@@ -43,6 +43,7 @@ class Event(models.Model):
     event_date = models.DateTimeField(default=timezone.now)
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
     posted_by = models.ForeignKey(UserProfile,null =True)
+    is_approved = models.BooleanField(default = False)
         
     class Meta:
         ordering = ['-posted_at']
