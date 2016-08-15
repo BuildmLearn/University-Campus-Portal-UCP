@@ -10,7 +10,7 @@ def get_top_news(tags):
     return News.objects.filter(tags__in = tags)
     
 def get_top_events(tags):
-    return Event.objects.filter(tags__in = tags)
+    return Event.objects.approved().filter(tags__in = tags)
 
 def add_event(request):
     

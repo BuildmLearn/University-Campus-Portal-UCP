@@ -32,7 +32,7 @@ class EventViewSet(mixins.ListModelMixin,
                 mixins.CreateModelMixin,
                 viewsets.GenericViewSet):
     
-    queryset = Event.objects.all()
+    queryset = Event.objects.approved()
     serializer_class = EventSerializer
     
     

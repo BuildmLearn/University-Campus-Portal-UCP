@@ -6,6 +6,27 @@ from login.models import UserProfile
 from UCP.functions import get_time_elapsed_string, get_file_size_string
 
 
+class EventQueryset(models.query.QuerySet):
+    
+    def approved(self):
+        return self.filter(is_approved = True)
+    
+    def pending(self):
+        return self.filter(is_approved = False)
+
+
+class EventManager(models.Manager):
+    
+    def get_queryset(self):
+        return EventQueryset(self.model, using=self._db)
+    
+    def approved(self):
+        return self.get_queryset().approved()
+        
+    def pending(self):
+        return self.get_queryset().pending()
+        
+        
 # Create your models here.
 class News(models.Model):
     """(News description)"""
@@ -45,6 +66,8 @@ class Event(models.Model):
     posted_by = models.ForeignKey(UserProfile,null =True)
     is_approved = models.BooleanField(default = False)
         
+    objects = EventManager()
+    
     class Meta:
         ordering = ['-posted_at']
         
