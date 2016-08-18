@@ -2,21 +2,9 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from login.models import UserProfile
 from discussion.models import DiscussionThread, Tag, Attachment, Reply
-
-
-class UserShortSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('first_name','last_name','email')
-
-class UserProfileShortSerializer(serializers.ModelSerializer):
-    
-    user = UserShortSerializer()
-    class Meta:
-        model = UserProfile
-        fields = ('id', 'designation', 'user', 'profile_image')
+from login.models import UserProfile
+from login.serializers import UserShortSerializer, UserProfileShortSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -47,6 +35,7 @@ class ReplyFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reply
         fields = ('id', 'text', 'posted_at', 'time_elapsed', 'posted_by', 'attachments')
+
 
 class DiscussionThreadSerializer(serializers.ModelSerializer):
         

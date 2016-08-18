@@ -8,16 +8,19 @@ from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
-from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile, verify_email
-from login.models import UserProfile
-from UCP.constants import result
+
+from discussion.functions import get_top_discussions
 from discussion.models import Tag
-from UCP.functions import get_base_context
+from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile
+from login.functions import get_user_profile, verify_email
+from login.models import UserProfile
+from news_event.functions import get_top_news, get_top_events
 from result.functions import get_top_results
 from schedule.functions import get_top_schedules
-from discussion.functions import get_top_discussions
-from news_event.functions import get_top_news, get_top_events
 from news_event.models import Event
+from UCP.constants import result
+from UCP.functions import get_base_context
+
 
 class Login(View):
     
@@ -83,7 +86,7 @@ class Register(View):
         context["message"] = get_response_text(response)
         
         return render(request, 'login-register.html', context)
-        
+
 
 class ForgotPassword(View):
     
@@ -99,7 +102,7 @@ class ForgotPassword(View):
             return render(request, 'login-register.html', context)
         if(response["result"] == 1):
             return render(request, 'reset-password.html', context)
-       
+
 
 class ResetPassword(View):
 
@@ -130,11 +133,12 @@ class PendingEvents(View):
 
 class ApproveEvent(View):
     
-    def post(self, request, pk):
+    def get(self, request, pk):
         
         context = {}
         user = get_user_details(request)
         context["user"] = user
+        Event.objects.filter(pk = pk).update(is_approved = True)
         context["pending_events"] = Event.objects.pending()
         
         return render(request, 'pending-events.html', context)
@@ -174,8 +178,8 @@ class EditProfile(View):
         context["response"] = response
         
         return render(request, 'edit-profile.html', context)
-    
-        
+
+
 class Profile(View):
     
     def get(self, request, pk):
@@ -185,6 +189,7 @@ class Profile(View):
         context['other_user'] = get_user_profile(pk)
         
         return render(request, 'profile.html', context)
+
 
 class TagPage(View):
     
@@ -203,6 +208,7 @@ class TagPage(View):
         context["discussions"] = get_top_discussions([tag])
         
         return render(request, 'tag_page.html', context)
+
 
 class VerificationPage(View):
     

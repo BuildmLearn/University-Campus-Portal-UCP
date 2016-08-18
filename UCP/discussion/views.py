@@ -21,7 +21,7 @@ class DiscussionList(View):
     def get(self, request):
         
         context = get_base_context(request)
-        
+
         response = functions.get_discussion_list(request)
 
         page_count = response["page_count"]
@@ -104,7 +104,8 @@ class Reply(View):
             return render(request, 'reply.html', context)        
         
 
-class FollowTag(View):        
+class FollowTag(View):
+    
     @method_decorator(login_required)
     def get(self, request):
         tag = Tag.objects.get(name = request.GET['tag'])

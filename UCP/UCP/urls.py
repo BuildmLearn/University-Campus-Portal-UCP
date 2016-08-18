@@ -6,7 +6,7 @@ from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
 from login.api import UserViewSet, UserPasswordViewSet
-from login.views import Login
+from login.views import Login, ApproveEvent
 from discussion.api import DiscussionViewSet
 from result.api import ResultViewSet
 from schedule.api import ScheduleViewSet
@@ -42,6 +42,7 @@ urlpatterns += [
     url(r'^news/', NewsList.as_view()),
     url(r'^news/(?P<pk>[0-9]+)$', NewsDetail.as_view(), name='news-detail'),
     url(r'^events/add/', EventCreate.as_view()),
+    url(r'^events/approve/(?P<pk>[0-9]+)$', ApproveEvent.as_view(), name='approve-event'),
     url(r'^events/(?P<pk>[0-9]+)$', EventDetail.as_view(), name='news-detail'),
     url(r'^events/', EventList.as_view()),
     url(r'^nested_admin/', include('nested_admin.urls')),

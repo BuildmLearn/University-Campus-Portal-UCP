@@ -1,7 +1,7 @@
 """
-API file for login app
+API file for discussion app
 
-consists of the viewsets for the apis in the login app
+consists of the viewsets for the apis in the discussion app
 """
 
 from django.utils import timezone

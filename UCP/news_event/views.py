@@ -81,7 +81,7 @@ class EventList(ListView):
         
     def get_queryset(self):
         if 'tag' in self.request.GET:
-            events = Event.objects.filter(tags__name = self.request.GET["tag"])
+            events = Event.objects.approved().filter(tags__name = self.request.GET["tag"])
             count = len(events)
             page_count = count/PAGE_SIZE + 1
             if "page" in self.request.GET :
@@ -91,9 +91,9 @@ class EventList(ListView):
             offset = page_no * PAGE_SIZE
             events = events[offset:offset+PAGE_SIZE]
             ids = [event.pk for event in events]
-            return Event.objects.filter(pk__in=ids)
+            return Event.objects.approved().filter(pk__in=ids)
         else:
-            return Event.objects.all()
+            return Event.objects.approved()
 
 
 class EventDetail(DetailView):

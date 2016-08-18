@@ -73,6 +73,9 @@ def update_profile(request):
     return response
 
 def get_response_text(response):
+    """
+    Combines message and errors returned by a function to create an HTML to be displayed in a modal
+    """
     messageHTML = ""
     if "message" in response:
         messageHTML += "<h4>" + response["message"] + "</h4>"
@@ -109,12 +112,12 @@ def send_verification_email(user):
     msg = EmailMultiAlternatives(emailSubject, emailMessage, senderEmail, to)
     msg.attach_alternative(emailMessage, "text/html")
     msg.send( )
-    #send_parallel_mail(emailSubject, emailMessage, to)
+    send_parallel_mail(emailSubject, emailMessage, to)
 
 
 def send_password_reset_email(user):
     """
-    Creates a PasswordResetCode Object and send the code to the user
+    Creates a PasswordResetCode Object and mails it the code to the user
     """
     
     passwordResetCode = PasswordResetCode.objects.create(user=user)
@@ -123,10 +126,12 @@ def send_password_reset_email(user):
     to = [user.email]
     senderEmail = EMAIL_HOST_USER
     print emailMessage
-    #send_parallel_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
+    send_parallel_mail(emailSubject, emailMessage, senderEmail, to, fail_silently=False)
 
 def login(request):
-    
+    """
+    Logs in the user
+    """
     serializer = Serializers.LoginRequestSerializer(data = request.POST)
     response = {}
     
@@ -167,7 +172,9 @@ def login(request):
     return response
     
 def register(request):
-    
+    """
+    Register a new user
+    """
     response = {}
     
     serializer = Serializers.UserSerializer(data=request.POST)

@@ -47,8 +47,8 @@
     <table class="table table-striped table-hover well ">
         {% for event in pending_events %}
             <tr><td><a href="/events/{{event.id}}">{{event.title}}</a></td>
-                <td><a href="/events/{{event.id}}/approve/">Approve</a></td>
-                <td><a href="/events/{{event.id}}/reject/">reject</a></td>
+                <td><a href="/events/approve/{{event.id}}">Approve</a></td>
+                <td><a href="/events/reject/{{event.id}}">reject</a></td>
             </tr>
         {% endfor %}
     </table>
