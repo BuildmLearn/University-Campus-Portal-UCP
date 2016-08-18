@@ -126,19 +126,45 @@ class PendingEvents(View):
         context = {}
         user = get_user_details(request)
         context["user"] = user
-        context["pending_events"] = Event.objects.pending()
         
+        if not user["is_moderator"]:
+            return redirect('/user/login/')
+            
+        context["pending_events"] = Event.objects.pending()
         return render(request, 'pending-events.html', context)
 
 
 class ApproveEvent(View):
     
     def get(self, request, pk):
-        
-        context = {}
         user = get_user_details(request)
+        context = {}
+        
         context["user"] = user
+        
+        if not user["is_moderator"]:
+            return redirect('/user/login/')
+        
+        
         Event.objects.filter(pk = pk).update(is_approved = True)
+        context["pending_events"] = Event.objects.pending()
+        
+        return render(request, 'pending-events.html', context)
+
+
+class RejectEvent(View):
+    
+    def get(self, request, pk):
+        user = get_user_details(request)
+        context = {}
+        
+        context["user"] = user
+        
+        if not user["is_moderator"]:
+            return redirect('/user/login/')
+        
+        
+        Event.objects.filter(pk = pk).update(is_approved = False)
         context["pending_events"] = Event.objects.pending()
         
         return render(request, 'pending-events.html', context)
@@ -151,7 +177,6 @@ class EditProfile(View):
         context={}
         
         user = get_user_details(request)
-        print user
         context["user"] = user
         if user["gender"] == "male":
             context["male"] = True
