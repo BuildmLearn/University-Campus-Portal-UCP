@@ -38,6 +38,29 @@ class EventViewSet(mixins.ListModelMixin,
     
     @detail_route(methods=['post'])
     def approve(self, request, pk):
+        """
+        approve a event
+        """
+        response = {}
+
+        if Event.objects.pending().filter(id = pk).exists():
+            event = Event.objects.get(id = pk)
+            event.is_approved = True
+            event.save()
+
+            response["result"] = result.RESULT_SUCCESS
+        else:
+            response["result"] = result.RESULT_FAILURE
+            response["error"] = "This Event id does not exist"
+            
+    
+        return Response(response, status=status.HTTP_200_OK)
+    
+    @detail_route(methods=['post'])
+    def reject(self, request, pk):
+        """
+        reject a event
+        """
         response = {}
 
         if Event.objects.pending().filter(id = pk).exists():
@@ -55,6 +78,9 @@ class EventViewSet(mixins.ListModelMixin,
     
     @list_route()
     def pending(self, request):
+        """
+        Get list of pending events
+        """
         response = {}
         events = Event.objects.pending()
         response["data"] = EventSerializer(events, many=True).data

@@ -28,8 +28,11 @@ class DiscussionList(View):
         
         context["pages"] = range(1, page_count+1)
 
-        if 'tag' in self.request.GET:
-            context["tag"] = self.request.GET["tag"]
+        my_tags = [tag.name for tag in context['user'].followed_tags.all()]
+        
+        if 'tag' in self.request.GET and not self.request.GET["tag"] in my_tags:
+            
+            context['tag'] = self.request.GET["tag"]
             
         context["discussions"] = response["data"]
 
@@ -96,7 +99,6 @@ class Reply(View):
         response = functions.add_reply(pk, request)
         context["discussion"] = response["data"]
         
-        print request.FILES
         if response["result"] == 1:
             return redirect('/discussions/'+str(pk))
         else:

@@ -27,8 +27,11 @@ class NewsList(ListView):
         count = len(news_list)
         page_count = count/PAGE_SIZE + 1
 
-        if 'tag' in self.request.GET:
-            context["tag"] = self.request.GET["tag"]
+        my_tags = [tag.name for tag in context['user'].followed_tags.all()]
+        
+        if 'tag' in self.request.GET and not self.request.GET["tag"] in my_tags:
+            
+            context['tag'] = self.request.GET["tag"]
             
         context["pages"] = range(1, page_count+1)
         return context
@@ -75,8 +78,12 @@ class EventList(ListView):
         count = len(news_list)
         page_count = count/PAGE_SIZE + 1
         context["pages"] = range(1, page_count+1)
-        if 'tag' in self.request.GET:
-            context["tag"] = self.request.GET["tag"]
+        my_tags = [tag.name for tag in context['user'].followed_tags.all()]
+        
+        if 'tag' in self.request.GET and not self.request.GET["tag"] in my_tags:
+            
+            context['tag'] = self.request.GET["tag"]
+            
         return context
         
     def get_queryset(self):

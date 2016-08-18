@@ -28,7 +28,10 @@ class ResultList(ListView):
         page_count = count/PAGE_SIZE + 1
         context["pages"] = range(1, page_count+1)
         
-        if 'tag' in self.request.GET:
+        my_tags = [tag.name for tag in context['user'].followed_tags.all()]
+        
+        if 'tag' in self.request.GET and not self.request.GET["tag"] in my_tags:
+            
             context['tag'] = self.request.GET["tag"]
             
         return context
