@@ -12,7 +12,7 @@ class EventQueryset(models.query.QuerySet):
         return self.filter(is_approved = True)
     
     def pending(self):
-        return self.filter(is_approved = False)
+        return self.filter(is_approved = False, is_rejected = False)
 
 
 class EventManager(models.Manager):
@@ -65,6 +65,7 @@ class Event(models.Model):
     posted_at = models.DateTimeField(blank=True, default=timezone.now)
     posted_by = models.ForeignKey(UserProfile,null =True)
     is_approved = models.BooleanField(default = False)
+    is_rejected = models.BooleanField(default = False)
         
     objects = EventManager()
     

@@ -164,7 +164,7 @@ class RejectEvent(View):
             return redirect('/user/login/')
         
         
-        Event.objects.filter(pk = pk).update(is_approved = False)
+        Event.objects.filter(pk = pk).update(is_rejected = True)
         context["pending_events"] = Event.objects.pending()
         
         return render(request, 'pending-events.html', context)
