@@ -69,8 +69,11 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-posted_at&#39;</span><span class="p">]</span>
     
-    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span>
+<div class="viewcode-block" id="Schedule.time_elapsed"><a class="viewcode-back" href="../../modules/models.html#schedule.models.Schedule.time_elapsed">[docs]</a>    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns time elapsed since the schedule was posted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span></div>
         
     <span class="k">class</span> <span class="nc">Admin</span><span class="p">:</span>
         <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,)</span>

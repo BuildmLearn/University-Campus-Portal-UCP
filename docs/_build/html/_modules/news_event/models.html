@@ -90,11 +90,17 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-posted_at&#39;</span><span class="p">]</span>
         
-    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span>
+<div class="viewcode-block" id="News.time_elapsed"><a class="viewcode-back" href="../../modules/models.html#news_event.models.News.time_elapsed">[docs]</a>    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns time elapsed since the news article was posted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span></div>
         
-    <span class="k">def</span> <span class="nf">short_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span><span class="o">+</span> <span class="s2">&quot;...&quot;</span>
+<div class="viewcode-block" id="News.short_description"><a class="viewcode-back" href="../../modules/models.html#news_event.models.News.short_description">[docs]</a>    <span class="k">def</span> <span class="nf">short_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns first 200 characters of the description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span><span class="o">+</span> <span class="s2">&quot;...&quot;</span></div>
         
     <span class="k">class</span> <span class="nc">Admin</span><span class="p">:</span>
         <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,)</span>
@@ -126,11 +132,17 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-posted_at&#39;</span><span class="p">]</span>
         
-    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span>
+<div class="viewcode-block" id="Event.time_elapsed"><a class="viewcode-back" href="../../modules/models.html#news_event.models.Event.time_elapsed">[docs]</a>    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns time elapsed since the event was posted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span></div>
         
-    <span class="k">def</span> <span class="nf">short_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span><span class="o">+</span> <span class="s2">&quot;...&quot;</span>
+<div class="viewcode-block" id="Event.short_description"><a class="viewcode-back" href="../../modules/models.html#news_event.models.Event.short_description">[docs]</a>    <span class="k">def</span> <span class="nf">short_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns first 200 characters of the description</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span><span class="o">+</span> <span class="s2">&quot;...&quot;</span></div>
         
     <span class="k">class</span> <span class="nc">Admin</span><span class="p">:</span>
         <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,)</span>

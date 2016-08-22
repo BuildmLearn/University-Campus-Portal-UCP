@@ -81,8 +81,11 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-posted_at&#39;</span><span class="p">]</span>
     
-    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span>
+<div class="viewcode-block" id="DiscussionThread.time_elapsed"><a class="viewcode-back" href="../../modules/models.html#discussion.models.DiscussionThread.time_elapsed">[docs]</a>    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Time elapsed since the discussion thread was posted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span></div>
     
     <span class="k">class</span> <span class="nc">Admin</span><span class="p">:</span>
         <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,)</span>
@@ -105,8 +108,11 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-posted_at&#39;</span><span class="p">]</span>
     
-    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Reply.time_elapsed"><a class="viewcode-back" href="../../modules/models.html#discussion.models.Reply.time_elapsed">[docs]</a>    <span class="k">def</span> <span class="nf">time_elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Time elapsed since the discussion thread was posted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_time_elapsed_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posted_at</span><span class="p">)</span></div></div>
     
 
 
@@ -121,8 +127,11 @@
     <span class="n">uploaded_file</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s2">&quot;user-attachments&quot;</span><span class="p">)</span>
     <span class="n">size</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     
-    <span class="k">def</span> <span class="nf">size_in_kb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">get_file_size_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<div class="viewcode-block" id="Attachment.size_in_kb"><a class="viewcode-back" href="../../modules/models.html#discussion.models.Attachment.size_in_kb">[docs]</a>    <span class="k">def</span> <span class="nf">size_in_kb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns a string containing the size of the file in kb, example - &quot;24 kb&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_file_size_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span></div>
     
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uploaded_file</span><span class="o">.</span><span class="n">name</span>

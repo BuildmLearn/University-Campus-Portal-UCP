@@ -49,6 +49,18 @@
 <em class="property">class </em><code class="descclassname">login.models.</code><code class="descname">EmailVerificationCode</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#EmailVerificationCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.EmailVerificationCode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Codes for verifying user emails after registration
 related to <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code></p>
+<dl class="method">
+<dt id="login.models.EmailVerificationCode.create_hash_code">
+<code class="descname">create_hash_code</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#EmailVerificationCode.create_hash_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.EmailVerificationCode.create_hash_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a random hash code</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="login.models.EmailVerificationCode.set_expiry_date">
+<code class="descname">set_expiry_date</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#EmailVerificationCode.set_expiry_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.EmailVerificationCode.set_expiry_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the expiry date for code to 30 days from the time now</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -56,6 +68,18 @@ related to <code class="xref py py-class docutils literal"><span class="pre">dja
 <em class="property">class </em><code class="descclassname">login.models.</code><code class="descname">PasswordResetCode</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#PasswordResetCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.PasswordResetCode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Codes for users to recover their accounts
 related to <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code></p>
+<dl class="method">
+<dt id="login.models.PasswordResetCode.create_hash_code">
+<code class="descname">create_hash_code</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#PasswordResetCode.create_hash_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.PasswordResetCode.create_hash_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a random hash code</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="login.models.PasswordResetCode.set_expiry_date">
+<code class="descname">set_expiry_date</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#PasswordResetCode.set_expiry_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.PasswordResetCode.set_expiry_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the expiry date for code to 30 days from the time now</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -72,6 +96,12 @@ related to <code class="xref py py-class docutils literal"><span class="pre">dja
 <em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">Attachment</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Attachment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores detail for file attachements on a reply</p>
 <p>related to <a class="reference internal" href="#discussion.models.Reply" title="discussion.models.Reply"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Reply</span></code></a></p>
+<dl class="method">
+<dt id="discussion.models.Attachment.size_in_kb">
+<code class="descname">size_in_kb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Attachment.size_in_kb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Attachment.size_in_kb" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a string containing the size of the file in kb, example - &#8220;24 kb&#8221;</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -79,6 +109,12 @@ related to <code class="xref py py-class docutils literal"><span class="pre">dja
 <em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">DiscussionThread</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#DiscussionThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.DiscussionThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores a Discussion Thread related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a>
 and <a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+<dl class="method">
+<dt id="discussion.models.DiscussionThread.time_elapsed">
+<code class="descname">time_elapsed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#DiscussionThread.time_elapsed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.DiscussionThread.time_elapsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time elapsed since the discussion thread was posted</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -86,6 +122,12 @@ and <a class="reference internal" href="#discussion.models.Tag" title="discussio
 <em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">Reply</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Reply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Reply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores reply to a discussion thread
 related to <a class="reference internal" href="#discussion.models.DiscussionThread" title="discussion.models.DiscussionThread"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.DiscussionThread</span></code></a> and <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a></p>
+<dl class="method">
+<dt id="discussion.models.Reply.time_elapsed">
+<code class="descname">time_elapsed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Reply.time_elapsed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Reply.time_elapsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time elapsed since the discussion thread was posted</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -101,12 +143,36 @@ related to <a class="reference internal" href="#discussion.models.DiscussionThre
 <em class="property">class </em><code class="descclassname">news_event.models.</code><code class="descname">Event</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#Event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.Event" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores a Schedule, related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a> and
 <a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+<dl class="method">
+<dt id="news_event.models.Event.short_description">
+<code class="descname">short_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#Event.short_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.Event.short_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns first 200 characters of the description</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="news_event.models.Event.time_elapsed">
+<code class="descname">time_elapsed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#Event.time_elapsed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.Event.time_elapsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns time elapsed since the event was posted</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="news_event.models.News">
 <em class="property">class </em><code class="descclassname">news_event.models.</code><code class="descname">News</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#News"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.News" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores a News article, related to <a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+<dl class="method">
+<dt id="news_event.models.News.short_description">
+<code class="descname">short_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#News.short_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.News.short_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns first 200 characters of the description</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="news_event.models.News.time_elapsed">
+<code class="descname">time_elapsed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#News.time_elapsed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.News.time_elapsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns time elapsed since the news article was posted</p>
+</dd></dl>
+
 </dd></dl>
 
 <span class="target" id="module-result.models"></span><p>Models file for Result App</p>
@@ -125,6 +191,12 @@ related to <a class="reference internal" href="#discussion.models.DiscussionThre
 <em class="property">class </em><code class="descclassname">schedule.models.</code><code class="descname">Schedule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schedule/models.html#Schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#schedule.models.Schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores a Schedule, related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a> and
 <a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+<dl class="method">
+<dt id="schedule.models.Schedule.time_elapsed">
+<code class="descname">time_elapsed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schedule/models.html#Schedule.time_elapsed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#schedule.models.Schedule.time_elapsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns time elapsed since the schedule was posted</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
