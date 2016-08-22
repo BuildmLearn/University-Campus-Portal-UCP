@@ -13,15 +13,21 @@ from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework import viewsets
 
+from login.models import UserProfile
 from discussion.models import Tag
 from result.models import Result
 from result.serializers import ResultSerializer, ResultCreateSerializer
+from result import functions
 
 from UCP.constants import result
 
-class ResultViewSet(mixins.ListModelMixin,
-                mixins.CreateModelMixin,
-                viewsets.GenericViewSet):
+class ResultViewSet(viewsets.ViewSet):
+    """
+    Viewset for creating and listing results
+    """
+    
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
     
     def create(self,request):
         """
@@ -29,8 +35,6 @@ class ResultViewSet(mixins.ListModelMixin,
         parameters:
             - name : result_file
               type : file
-            - name : teacher
-              type : int
             - name : tags
               type : string
               description : tag ids seperated by commas
@@ -38,8 +42,9 @@ class ResultViewSet(mixins.ListModelMixin,
         response = {}
         serializer = ResultCreateSerializer(data = request.POST)
         if serializer.is_valid():
-            new_result = serializer.save()
-            tag_ids = [ int(t) for t in request.POST["tags"].split(",") ]
+            teacher = UserProfile.objects.get(user = request.user)
+            new_result = serializer.save(teacher = teacher)
+            tag_ids = [ int(t) if t else 0 for t in request.POST.get("tags", "").split(",") ]
             tags = Tag.objects.filter(pk__in = tag_ids)
             new_result.tags = tags
             new_result.save()
@@ -51,8 +56,24 @@ class ResultViewSet(mixins.ListModelMixin,
             response["errors"] = serializer.errors
         return Response(response, status=status.HTTP_200_OK)
     
-    queryset = Result.objects.all()
-    serializer_class = ResultSerializer
+    @list_route()
+    def get(self, request):
+        """
+        Get a list of all discussion threads
+        ---
+        # YAML
+        
+        parameters:
+            -   name: page
+                description: page no. of the results
+                type: string
+                paramType: query
+        """
+        
+        response = functions.get_results(request)
+
+        return Response(response, status=status.HTTP_200_OK)
+        
     
     def get_serializer_class(self):
         if self.action == "create":

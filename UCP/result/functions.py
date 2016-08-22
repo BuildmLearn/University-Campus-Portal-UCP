@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from discussion.models import Tag
 from login.models import UserProfile
-from result.serializers import ResultCreateSerializer
+from result.serializers import ResultCreateSerializer, ResultSerializer
 from UCP.constants import result
 from UCP.settings import PAGE_SIZE
 from result.models import Result
@@ -38,4 +38,34 @@ def add_result(request):
         response["error"] = serializer.errors
     
     print response
+    return response
+    
+
+def get_results(request):
+    """
+    Return a list of results filtered by page number and tag
+    """
+    response = {}
+    
+    threads = Result.objects.all()
+    if "tag" in request.GET:
+        #return a filtererd list
+        threads = Result.objects.filter(tags__name = request.GET["tag"])
+    
+    #code for pagination
+    count = len(threads)
+    page_count = count/PAGE_SIZE + 1
+    
+    if("page" in request.GET):
+        page_no = int(request.GET["page"]) - 1
+    else:
+        page_no = 0
+    offset = page_no * PAGE_SIZE
+    threads = threads[offset:offset+PAGE_SIZE]
+    
+    serializer = ResultSerializer(threads, many=True)
+
+    response["page_count"] = page_count
+    response["data"] = serializer.data
+    
     return response
