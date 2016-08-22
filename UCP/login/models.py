@@ -15,6 +15,7 @@ from UCP.settings import VERIFICATION_EMAIL_EXPIRY_TIME,PASSWORD_RESET_CODE_EXPI
 class UserProfile(models.Model):
     """
     Teachers and student profiles who are portal users.
+    related to :class:`django.contrib.auth.User`
     """
     
     TEACHER = 'Teacher'
@@ -55,6 +56,7 @@ class UserProfile(models.Model):
 class EmailVerificationCode(models.Model):
     """
     Codes for verifying user emails after registration
+    related to :class:`django.contrib.auth.User`
     """
     
     user = models.ForeignKey(User)
@@ -62,9 +64,15 @@ class EmailVerificationCode(models.Model):
     expiry_date = models.DateField()
     
     def set_expiry_date(self):
+        """
+        Set the expiry date for code to 30 days from the time now
+        """
         return timezone.now()+timedelta(days=VERIFICATION_EMAIL_EXPIRY_TIME)
         
     def create_hash_code(self):
+        """
+        Create a random hash code
+        """
         return os.urandom(32).encode('hex')
     
     def save(self, *args, **kwargs):
@@ -77,6 +85,7 @@ class EmailVerificationCode(models.Model):
 class PasswordResetCode(models.Model):
     """
     Codes for users to recover their accounts
+    related to :class:`django.contrib.auth.User`
     """
     
     user = models.ForeignKey(User)
@@ -84,9 +93,15 @@ class PasswordResetCode(models.Model):
     expiry_date = models.DateField()
     
     def set_expiry_date(self):
+        """
+        Set the expiry date for code to 30 days from the time now
+        """
         return timezone.now()+timedelta(days=PASSWORD_RESET_CODE_EXPIRY_TIME)
         
     def create_hash_code(self):
+        """
+        Create a random hash code
+        """
         return os.urandom(6).encode('hex')
     
     def save(self, *args, **kwargs):

@@ -22,7 +22,8 @@ class Tag(models.Model):
 
 class DiscussionThread(models.Model):
     """
-    Discussion Thread model, a thread can have multiple replies or comments.
+    Stores a Discussion Thread related to :class:`login.models.UserProfile`
+    and :class:`discussion.models.Tag`
     """
     title = models.CharField( max_length=100)
     description = models.CharField( max_length=1000)
@@ -38,6 +39,9 @@ class DiscussionThread(models.Model):
         ordering = ['-posted_at']
     
     def time_elapsed(self):
+        """
+        Time elapsed since the discussion thread was posted
+        """
         return get_time_elapsed_string(self.posted_at)
     
     class Admin:
@@ -50,7 +54,8 @@ class DiscussionThread(models.Model):
 
 class Reply(models.Model):
     """
-    Model for comments on a discussion thread
+    Stores reply to a discussion thread
+    related to :class:`discussion.models.DiscussionThread` and :class:`login.models.UserProfile`
     """
     thread = models.ForeignKey(DiscussionThread)
     posted_by = models.ForeignKey("login.UserProfile", null=True, blank=True)
@@ -61,13 +66,18 @@ class Reply(models.Model):
         ordering = ['-posted_at']
     
     def time_elapsed(self):
+        """
+        Time elapsed since the discussion thread was posted
+        """
         return get_time_elapsed_string(self.posted_at)
     
 
 
 class Attachment(models.Model):
     """
-    Model for file attachements on a reply to a discussion thread
+    Stores detail for file attachements on a reply
+    
+    related to :class:`discussion.models.Reply`
     """
     name = models.CharField(blank=True ,null=True, max_length=100)
     reply = models.ForeignKey(Reply, related_name="attachments")
@@ -75,6 +85,9 @@ class Attachment(models.Model):
     size = models.FloatField(default=0, blank=True)
     
     def size_in_kb(self):
+        """
+        returns a string containing the size of the file in kb, example - "24 kb"
+        """
         return get_file_size_string(self.size)
     
     def save(self, *args, **kwargs):

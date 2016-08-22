@@ -1,3 +1,9 @@
+"""
+Models file for News and Event App
+
+consists of the model definitions for the news_event app
+"""
+
 from django.db import models
 from django.utils import timezone
 from tinymce.models import HTMLField
@@ -29,7 +35,9 @@ class EventManager(models.Manager):
         
 # Create your models here.
 class News(models.Model):
-    """(News description)"""
+    """
+    Stores a News article, related to :class:`discussion.models.Tag`
+    """
     title = models.CharField(blank=True, max_length=100)
     description = HTMLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag)
@@ -40,9 +48,15 @@ class News(models.Model):
         ordering = ['-posted_at']
         
     def time_elapsed(self):
+        """
+        returns time elapsed since the news article was posted
+        """
         return get_time_elapsed_string(self.posted_at)
         
     def short_description(self):
+        """
+        returns first 200 characters of the description
+        """
         return self.description[:200]+ "..."
         
     class Admin:
@@ -54,7 +68,10 @@ class News(models.Model):
 
 
 class Event(models.Model):
-    """(Event description)"""
+    """
+    Stores a Schedule, related to :class:`login.models.UserProfile` and
+    :class:`discussion.models.Tag`
+    """
     
     title = models.CharField(blank=True, max_length=100)
     description = HTMLField(blank=True, null=True)
@@ -73,9 +90,15 @@ class Event(models.Model):
         ordering = ['-posted_at']
         
     def time_elapsed(self):
+        """
+        returns time elapsed since the event was posted
+        """
         return get_time_elapsed_string(self.posted_at)
         
     def short_description(self):
+        """
+        returns first 200 characters of the description
+        """
         return self.description[:200]+ "..."
         
     class Admin:

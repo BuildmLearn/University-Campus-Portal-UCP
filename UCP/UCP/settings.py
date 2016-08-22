@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'nested_admin',
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'rest_framework_swagger',
     'django.contrib.auth',
     'rest_framework.authtoken',
