@@ -1,0 +1,1 @@
+Search.setIndex({envversion:49,filenames:["index","modules/models"],objects:{},objnames:{},objtypes:{},terms:{content:0,index:0,model:[],modul:0,page:0,search:0},titles:["Welcome to UCP&#8217;s documentation!","Models"],titleterms:{document:0,indice:0,model:1,tabl:0,ucp:0,welcom:0}})
