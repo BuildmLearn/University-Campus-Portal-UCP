@@ -1,16 +1,17 @@
 Models
 ======
-.. automodule:: UCP.login.models
+
+.. automodule:: login.models
     :members:
 
-.. automodule:: UCP.discussion.models
+.. automodule:: discussion.models
     :members:
 
-.. automodule:: UCP.news_event.models
+.. automodule:: news_event.models
     :members:
 
-.. automodule:: UCP.result.models
+.. automodule:: result.models
     :members:
 
-.. automodule:: UCP.schedule.models
+.. automodule:: schedule.models
     :members:

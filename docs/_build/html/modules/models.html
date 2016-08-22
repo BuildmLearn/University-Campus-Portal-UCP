@@ -40,8 +40,93 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="models">
-<h1>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-login.models">
+<span id="models"></span><h1>Models<a class="headerlink" href="#module-login.models" title="Permalink to this headline">¶</a></h1>
+<p>Models file for Login App</p>
+<p>consists of the model definitions for the login app</p>
+<dl class="class">
+<dt id="login.models.EmailVerificationCode">
+<em class="property">class </em><code class="descclassname">login.models.</code><code class="descname">EmailVerificationCode</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#EmailVerificationCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.EmailVerificationCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Codes for verifying user emails after registration
+related to <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="login.models.PasswordResetCode">
+<em class="property">class </em><code class="descclassname">login.models.</code><code class="descname">PasswordResetCode</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#PasswordResetCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.PasswordResetCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Codes for users to recover their accounts
+related to <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="login.models.UserProfile">
+<em class="property">class </em><code class="descclassname">login.models.</code><code class="descname">UserProfile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/login/models.html#UserProfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#login.models.UserProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Teachers and student profiles who are portal users.
+related to <code class="xref py py-class docutils literal"><span class="pre">django.contrib.auth.User</span></code></p>
+</dd></dl>
+
+<span class="target" id="module-discussion.models"></span><p>Models file for Discussion App</p>
+<p>consists of the model definitions for the discussion app</p>
+<dl class="class">
+<dt id="discussion.models.Attachment">
+<em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">Attachment</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores detail for file attachements on a reply</p>
+<p>related to <a class="reference internal" href="#discussion.models.Reply" title="discussion.models.Reply"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Reply</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="discussion.models.DiscussionThread">
+<em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">DiscussionThread</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#DiscussionThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.DiscussionThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a Discussion Thread related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a>
+and <a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="discussion.models.Reply">
+<em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">Reply</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Reply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Reply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores reply to a discussion thread
+related to <a class="reference internal" href="#discussion.models.DiscussionThread" title="discussion.models.DiscussionThread"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.DiscussionThread</span></code></a> and <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="discussion.models.Tag">
+<em class="property">class </em><code class="descclassname">discussion.models.</code><code class="descname">Tag</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/discussion/models.html#Tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#discussion.models.Tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tags for discussions , news , events and schedules.</p>
+</dd></dl>
+
+<span class="target" id="module-news_event.models"></span><p>Models file for News and Event App</p>
+<p>consists of the model definitions for the news_event app</p>
+<dl class="class">
+<dt id="news_event.models.Event">
+<em class="property">class </em><code class="descclassname">news_event.models.</code><code class="descname">Event</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#Event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a Schedule, related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a> and
+<a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="news_event.models.News">
+<em class="property">class </em><code class="descclassname">news_event.models.</code><code class="descname">News</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/news_event/models.html#News"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#news_event.models.News" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a News article, related to <a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+</dd></dl>
+
+<span class="target" id="module-result.models"></span><p>Models file for Result App</p>
+<p>consists of the model definitions for the result app</p>
+<dl class="class">
+<dt id="result.models.Result">
+<em class="property">class </em><code class="descclassname">result.models.</code><code class="descname">Result</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/result/models.html#Result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#result.models.Result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a Result, related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a> and
+<a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+</dd></dl>
+
+<span class="target" id="module-schedule.models"></span><p>Models file for Schedule App</p>
+<p>consists of the model definitions for the schedule app</p>
+<dl class="class">
+<dt id="schedule.models.Schedule">
+<em class="property">class </em><code class="descclassname">schedule.models.</code><code class="descname">Schedule</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schedule/models.html#Schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#schedule.models.Schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores a Schedule, related to <a class="reference internal" href="#login.models.UserProfile" title="login.models.UserProfile"><code class="xref py py-class docutils literal"><span class="pre">login.models.UserProfile</span></code></a> and
+<a class="reference internal" href="#discussion.models.Tag" title="discussion.models.Tag"><code class="xref py py-class docutils literal"><span class="pre">discussion.models.Tag</span></code></a></p>
+</dd></dl>
+
 </div>
 
 

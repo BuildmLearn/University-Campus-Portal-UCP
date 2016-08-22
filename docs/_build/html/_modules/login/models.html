@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>login.models &#8212; UCP 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="UCP 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for login.models</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Models file for Login App</span>
+
+<span class="sd">consists of the model definitions for the login app</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="k">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">UCP.settings</span> <span class="k">import</span> <span class="n">VERIFICATION_EMAIL_EXPIRY_TIME</span><span class="p">,</span><span class="n">PASSWORD_RESET_CODE_EXPIRY_TIME</span>
+
+
+<div class="viewcode-block" id="UserProfile"><a class="viewcode-back" href="../../modules/models.html#login.models.UserProfile">[docs]</a><span class="k">class</span> <span class="nc">UserProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Teachers and student profiles who are portal users.</span>
+<span class="sd">    related to :class:`django.contrib.auth.User`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">TEACHER</span> <span class="o">=</span> <span class="s1">&#39;Teacher&#39;</span>
+    <span class="n">STUDENT</span> <span class="o">=</span> <span class="s1">&#39;Student&#39;</span>
+
+    <span class="n">MALE</span> <span class="o">=</span> <span class="s2">&quot;male&quot;</span>
+    <span class="n">FEMALE</span> <span class="o">=</span> <span class="s2">&quot;female&quot;</span>
+    
+
+
+    <span class="n">DESIGNATION_CHOICES</span> <span class="o">=</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">TEACHER</span><span class="p">,</span> <span class="s1">&#39;Teacher&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">STUDENT</span><span class="p">,</span> <span class="s1">&#39;Student&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">GENDER_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">MALE</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">FEMALE</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;user_login&#39;</span><span class="p">)</span>
+    <span class="n">is_moderator</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">designation</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span> <span class="n">choices</span> <span class="o">=</span> <span class="n">DESIGNATION_CHOICES</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">STUDENT</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">choices</span> <span class="o">=</span> <span class="n">GENDER_CHOICES</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">MALE</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">profile_image</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s2">&quot;user_images/profile_images&quot;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">followed_tags</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="s2">&quot;discussion.Tag&quot;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="k">class</span> <span class="nc">Admin</span><span class="p">:</span>
+        <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span><span class="s1">&#39;designation&#39;</span><span class="p">)</span>
+        <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span><span class="s1">&#39;designation&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">last_name</span></div>
+
+
+<div class="viewcode-block" id="EmailVerificationCode"><a class="viewcode-back" href="../../modules/models.html#login.models.EmailVerificationCode">[docs]</a><span class="k">class</span> <span class="nc">EmailVerificationCode</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Codes for verifying user emails after registration</span>
+<span class="sd">    related to :class:`django.contrib.auth.User`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">verification_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">expiry_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">set_expiry_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">+</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">VERIFICATION_EMAIL_EXPIRY_TIME</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">create_hash_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expiry_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_expiry_date</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">verification_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_hash_code</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EmailVerificationCode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PasswordResetCode"><a class="viewcode-back" href="../../modules/models.html#login.models.PasswordResetCode">[docs]</a><span class="k">class</span> <span class="nc">PasswordResetCode</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Codes for users to recover their accounts</span>
+<span class="sd">    related to :class:`django.contrib.auth.User`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">reset_code</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">expiry_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">set_expiry_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">+</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">PASSWORD_RESET_CODE_EXPIRY_TIME</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">create_hash_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expiry_date</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_expiry_date</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_hash_code</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PasswordResetCode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Pranav Tiwari.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
