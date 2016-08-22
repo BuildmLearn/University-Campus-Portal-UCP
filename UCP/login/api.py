@@ -34,12 +34,12 @@ class UserViewSet(viewsets.ViewSet):
                 description: User's email
                 required: true
                 type: string
-                paramType: query
+                paramType: form
             -   name: password
                 description: User's password
                 required: true
                 type: string
-                paramType: query
+                paramType: form
         """
         response = login(request)
             

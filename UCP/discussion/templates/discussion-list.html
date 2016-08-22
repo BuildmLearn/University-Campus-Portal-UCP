@@ -60,40 +60,14 @@
                 Add new
             </a>
         </h1>
-        
+        {% if tag %}
+        <span class="label label-default">{{ tag }}</span>
+        <a class="small" href="/tag/follow/?tag={{tag}}">follow {{ tag }}</a>
+        {% endif %}
     </div>
     <ul class="list-group">
     {% for discussion in discussions %}
-        <!-- <li class="discussion-card card">
-            <h4 class="list-group-item-heading">
-                <a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
-                <span class="label label-default label-pill pull-right">{{ discussion.no_of_replies }}</span>
-            </h4>
-                <span><a href="/user/{{ discussion.posted_by.id }}">
-                    {% if discussion.posted_by.profile_image %}
-                        <img src="{{ discussion.posted_by.profile_image }}" class="img-circle image-inline">
-                    {% else %}
-                        <img src="{% static 'images/blank-profile-image.png' %}" class="img-circle image-inline">
-                    {% endif %}
-                    <b>{{ discussion.posted_by.user.first_name }} {{ discussion.posted_by.user.last_name }}</b></a>
-                    <span class="discussion-card-time">
-                        | {{ discussion.time_elapsed }}
-                    </span>
-                </span>
-            <div class="divider"></div>
 
-                <p class="discussion-card-text">
-                    {{ discussion.description | safe }}
-                </p>
-                <div class="card-footer">
-                <ul class="tag-container">
-                {% for tag in discussion.tags %}
-                    <li class="tag">{{ tag.name }}</li>
-                {% endfor %}
-                </ul>
-                </div>
-
-        </li> -->
         <li class="well">
             <h4 style="margin-top:0px;"><a href="/discussions/{{ discussion.id }}">{{ discussion.title }}</a>
                 <span class="badge pull-right">{{ discussion.no_of_replies }}</span></h4>
@@ -115,7 +89,7 @@
                      <p>
 
                          {% for tag in discussion.tags %}
-            <a href="/discussions/?tag={{tag.name}}" class="label label-success">{{ tag.name }}</a>
+            <a href="/discussions/?tag={{tag.name}}" class="label label-default">{{ tag.name }}</a>
         {% endfor %}
         </p>
         </li>

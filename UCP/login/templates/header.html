@@ -26,29 +26,7 @@ body{
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
-            <!-- <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Themes <span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="themes">
-                <li><a href="../default/">Default</a></li>
-                <li class="divider"></li>
-                <li><a href="../cerulean/">Cerulean</a></li>
-                <li><a href="../cosmo/">Cosmo</a></li>
-                <li><a href="../cyborg/">Cyborg</a></li>
-                <li><a href="../darkly/">Darkly</a></li>
-                <li><a href="../flatly/">Flatly</a></li>
-                <li><a href="../journal/">Journal</a></li>
-                <li><a href="../lumen/">Lumen</a></li>
-                <li><a href="../paper/">Paper</a></li>
-                <li><a href="../readable/">Readable</a></li>
-                <li><a href="../sandstone/">Sandstone</a></li>
-                <li><a href="../simplex/">Simplex</a></li>
-                <li><a href="../slate/">Slate</a></li>
-                <li><a href="../spacelab/">Spacelab</a></li>
-                <li><a href="../superhero/">Superhero</a></li>
-                <li><a href="../united/">United</a></li>
-                <li><a href="../yeti/">Yeti</a></li>
-              </ul>
-            </li> -->
+            
             <li>
               <a href="/">Home</a>
             </li>
@@ -56,17 +34,17 @@ body{
               <a href="/discussions/">Discussions</a>
             </li>
             <li>
-              <a href="#">News</a>
+              <a href="/news/">News</a>
             </li>
             <li>
-              <a href="#">Events</a>
+              <a href="/events/">Events</a>
             </li>
             <li>
-              <a href="#">Results</a>
+              <a href="/results/">Results</a>
             </li>
             </li>
             <li>
-              <a href="#">Schedule</a>
+              <a href="/schedule/">Schedule</a>
             </li>
             </li>
             <li>
@@ -84,6 +62,10 @@ body{
                   <li><a href="/user/edit_profile">Settings</a></li>
                   <li class="divider"></li>
                   <li><a href="/user/logout/">Logout</a></li>
+                  {% if user.is_moderator %}
+                  <li class="divider"></li>
+                  <li><a href="/user/pending_events/">Pending Events</a></li>
+                  {% endif %}
                 </ul>
               </li>
               

@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^edit_profile', views.EditProfile.as_view(), name='edit_profile'),
     url(r'^verify_email', views.VerificationPage.as_view(), name='verify_email'),
     url(r'^(?P<pk>[0-9]+)', views.Profile.as_view(), name='profile'),
+    url(r'^tag_page/', views.TagPage.as_view(), name='tag_page'),
+    url(r'^pending_events/', views.PendingEvents.as_view(), name='pending_events'),
 ]

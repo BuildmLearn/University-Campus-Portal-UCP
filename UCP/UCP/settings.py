@@ -35,6 +35,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'login',
     'discussion',
+    'news_event',
+    'result',
+    'schedule',
     'rest_framework',
     'nested_admin',
     'django.contrib.admin',
@@ -46,6 +49,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'constance',
+    'tinymce',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -159,7 +163,7 @@ Choices -
     readable
 """
 
-THEME = "paper"
+THEME = "journal"
 
 #import local_settings.py file if it exists
 try:

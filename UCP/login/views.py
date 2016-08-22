@@ -8,9 +8,19 @@ from django.contrib.auth import logout as django_logout
 from django.shortcuts import render, redirect
 from django.views.generic import View
 
-from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile, get_user_profile, verify_email
+
+from discussion.functions import get_top_discussions
+from discussion.models import Tag
+from login.functions import login, register, forgot_password, reset_password, get_response_text, get_user_details, update_profile
+from login.functions import get_user_profile, verify_email
+from login.models import UserProfile
+from news_event.functions import get_top_news, get_top_events
+from result.functions import get_top_results
+from schedule.functions import get_top_schedules
+from news_event.models import Event
 from UCP.constants import result
 from UCP.functions import get_base_context
+
 
 class Login(View):
     
@@ -18,8 +28,9 @@ class Login(View):
         context = {}
         context["is_login_page"] = True
         
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
             context = get_base_context(request)
+            print context["user"].followed_tags.all()
             return render(request, 'home.html', context)
             
         return render(request, 'login-register.html', context)
@@ -38,7 +49,7 @@ class Login(View):
         context = {}
         context["is_login_page"] = True
         
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
             context = get_base_context(request)
             return render(request, 'home.html', context)
         
@@ -75,7 +86,7 @@ class Register(View):
         context["message"] = get_response_text(response)
         
         return render(request, 'login-register.html', context)
-        
+
 
 class ForgotPassword(View):
     
@@ -91,7 +102,7 @@ class ForgotPassword(View):
             return render(request, 'login-register.html', context)
         if(response["result"] == 1):
             return render(request, 'reset-password.html', context)
-       
+
 
 class ResetPassword(View):
 
@@ -106,8 +117,59 @@ class ResetPassword(View):
            return render(request, 'login-register.html', context)
        if(response["result"] == 0):
            return render(request, 'reset-password.html', context)
+
+
+class PendingEvents(View):
     
+    def get(self, request):
         
+        context = {}
+        user = get_user_details(request)
+        context["user"] = user
+        
+        if not user["is_moderator"]:
+            return redirect('/user/login/')
+            
+        context["pending_events"] = Event.objects.pending()
+        return render(request, 'pending-events.html', context)
+
+
+class ApproveEvent(View):
+    
+    def get(self, request, pk):
+        user = get_user_details(request)
+        context = {}
+        
+        context["user"] = user
+        
+        if not user["is_moderator"]:
+            return redirect('/user/login/')
+        
+        
+        Event.objects.filter(pk = pk).update(is_approved = True)
+        context["pending_events"] = Event.objects.pending()
+        
+        return render(request, 'pending-events.html', context)
+
+
+class RejectEvent(View):
+    
+    def get(self, request, pk):
+        user = get_user_details(request)
+        context = {}
+        
+        context["user"] = user
+        
+        if not user["is_moderator"]:
+            return redirect('/user/login/')
+        
+        
+        Event.objects.filter(pk = pk).update(is_rejected = True)
+        context["pending_events"] = Event.objects.pending()
+        
+        return render(request, 'pending-events.html', context)
+
+
 class EditProfile(View):
     
     def get(self, request):
@@ -115,7 +177,6 @@ class EditProfile(View):
         context={}
         
         user = get_user_details(request)
-        print user
         context["user"] = user
         if user["gender"] == "male":
             context["male"] = True
@@ -142,8 +203,8 @@ class EditProfile(View):
         context["response"] = response
         
         return render(request, 'edit-profile.html', context)
-    
-        
+
+
 class Profile(View):
     
     def get(self, request, pk):
@@ -153,7 +214,26 @@ class Profile(View):
         context['other_user'] = get_user_profile(pk)
         
         return render(request, 'profile.html', context)
+
+
+class TagPage(View):
     
+    def get(self, request):
+        
+        context=get_base_context(request)
+        tag = Tag.objects.get(name = request.GET["tag"])
+        context["tag"] = tag
+        results = get_top_results([tag])
+        schedules = get_top_schedules([tag])
+        context["results"] = results
+        context["schedules"] = schedules
+        context["events"] = get_top_events([tag])
+        
+        context["news_list"] = get_top_news([tag])
+        context["discussions"] = get_top_discussions([tag])
+        
+        return render(request, 'tag_page.html', context)
+
 
 class VerificationPage(View):
     

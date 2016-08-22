@@ -10,23 +10,30 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 
 from discussion import functions
-from discussion.models import DiscussionThread
+from discussion.models import DiscussionThread, Tag
 from login.models import UserProfile
-from UCP.functions import get_time_elapsed_string, get_base_context
+from UCP.functions import get_time_elapsed_string, get_base_context, my_login_required
+
 
 class DiscussionList(View):
     
-    @method_decorator(login_required)
+    @method_decorator(my_login_required)
     def get(self, request):
         
         context = get_base_context(request)
-        
+
         response = functions.get_discussion_list(request)
 
         page_count = response["page_count"]
         
         context["pages"] = range(1, page_count+1)
+
+        my_tags = [tag.name for tag in context['user'].followed_tags.all()]
         
+        if 'tag' in self.request.GET and not self.request.GET["tag"] in my_tags:
+            
+            context['tag'] = self.request.GET["tag"]
+            
         context["discussions"] = response["data"]
 
         return render(request, 'discussion-list.html', context)
@@ -92,13 +99,22 @@ class Reply(View):
         response = functions.add_reply(pk, request)
         context["discussion"] = response["data"]
         
-        print request.FILES
         if response["result"] == 1:
             return redirect('/discussions/'+str(pk))
         else:
             print response
             return render(request, 'reply.html', context)        
         
+
+class FollowTag(View):
+    
+    @method_decorator(login_required)
+    def get(self, request):
+        tag = Tag.objects.get(name = request.GET['tag'])
+        userProfile = UserProfile.objects.get(user = request.user)
+        userProfile.followed_tags.add(tag)
+        userProfile.save()
+        return redirect('/')
 
 class Subscribe(View):
     

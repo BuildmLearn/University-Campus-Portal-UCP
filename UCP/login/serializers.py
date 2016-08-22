@@ -12,10 +12,12 @@ from rest_framework import serializers
 from login.models import UserProfile
 from UCP.constants import error
 
-
+#MODEL SERIALIZERS
 
 class UserSerializer(serializers.ModelSerializer):
-    
+    """
+    Serializer for creating a new django.contrib.auth.models.User object
+    """
     class Meta:
         model = User
         fields = ('id', 'email', 'password', 'first_name', 'last_name')
@@ -45,7 +47,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    
+    """
+    Serializer for creating a new User Profile object
+    """
     class Meta:
         model = UserProfile
         fields = ('id','designation', 'profile_image')
@@ -53,15 +57,36 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class UserProfileFullSerializer(serializers.ModelSerializer):
-    
+    """
+    Serializer for getting full details of a User Profile object
+    """
     user = UserSerializer()
-    
     class Meta:
         model = UserProfile
-        fields = ('id','designation', 'profile_image', 'user', 'age', 'gender')
+        fields = ('id','designation', 'profile_image', 'user', 'age', 'gender', 'is_moderator', 'followed_tags')
         read_only_fields = ('id',)
-        
 
+
+class UserShortSerializer(serializers.ModelSerializer):
+    """
+    Serializer for getting limited details of a django.contrib.auth.models.User object
+    """
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','email')
+
+
+class UserProfileShortSerializer(serializers.ModelSerializer):
+    """
+    Serializer for getting limited details of a UserProfile Object
+    """
+    user = UserShortSerializer()
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'designation', 'user', 'profile_image')
+
+
+#REQUEST SERIALIZERS
 class LoginRequestSerializer(serializers.Serializer):
     """
     Serializer for verifying if the request by the login API is valid
