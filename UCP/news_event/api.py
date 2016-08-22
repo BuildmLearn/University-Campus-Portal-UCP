@@ -14,28 +14,112 @@ from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework import viewsets
 
+from news_event import functions
 from news_event.models import News, Event
 from news_event.serializers import NewsSerializer, EventSerializer 
 
 from UCP.constants import result
 
-class NewsViewSet(mixins.ListModelMixin,
-                mixins.RetrieveModelMixin,
-                mixins.CreateModelMixin,
-                viewsets.GenericViewSet):
-    
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
-    
 
-class EventViewSet(mixins.ListModelMixin,
-                mixins.RetrieveModelMixin,
-                mixins.CreateModelMixin,
-                viewsets.GenericViewSet):
+class NewsViewSet(viewsets.ViewSet):
+    """
+    Viewset for creating and listing results
+    """
     
-    queryset = Event.objects.approved()
+    authentication_classes = (TokenAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
+    
+    @list_route(methods=['POST'])
+    def add(self,request):
+        """
+        Add a new News article
+        ---
+        parameters:
+            - name : tags
+              type : string
+              description : tag ids seperated by commas
+        """
+        response = functions.add_news(request)
+        
+        return Response(response, status=status.HTTP_200_OK)
+    
+    @list_route()
+    def get(self, request):
+        """
+        Get a list of all Schedules
+        ---
+        # YAML
+        
+        parameters:
+            -   name: page
+                description: page no. of the news list
+                type: string
+                paramType: query
+        """
+        
+        response = functions.get_news_list(request)
+
+        return Response(response, status=status.HTTP_200_OK)
+    
+    def retrieve(self, request, pk):
+        """
+        Get full details of a news article with id pk
+        """
+        
+        response = functions.get_news(pk)
+        return Response(response, status=status.HTTP_200_OK)
+    
+    def get_serializer_class(self):
+        if self.action == "add":
+            return NewsSerializer
+        else:
+            return NewsSerializer
+
+
+class EventViewSet(viewsets.ViewSet):
+    
     serializer_class = EventSerializer
     
+    @list_route(methods=['POST'])
+    def add(self,request):
+        """
+        Add a new event article
+        ---
+        parameters:
+            - name : tags
+              type : string
+              description : tag ids seperated by commas
+        """
+        response = functions.add_event(request)
+        
+        return Response(response, status=status.HTTP_200_OK)
+    
+    @list_route()
+    def get(self, request):
+        """
+        Get a list of all events
+        ---
+        # YAML
+        
+        parameters:
+            -   name: page
+                description: page no. of the events
+                type: string
+                paramType: query
+        """
+        
+        response = functions.get_events(request)
+
+        return Response(response, status=status.HTTP_200_OK)
+    
+    def retrieve(self, request, pk):
+        """
+        Get full details of a news article with id pk
+        """
+        
+        response = functions.get_events(pk)
+        return Response(response, status=status.HTTP_200_OK)
+        
     @detail_route(methods=['post'])
     def approve(self, request, pk):
         """
@@ -51,7 +135,7 @@ class EventViewSet(mixins.ListModelMixin,
             response["result"] = result.RESULT_SUCCESS
         else:
             response["result"] = result.RESULT_FAILURE
-            response["error"] = "This Event id does not exist"
+            response["errors"] = ["This Event id does not exist"]
             
     
         return Response(response, status=status.HTTP_200_OK)
@@ -71,7 +155,7 @@ class EventViewSet(mixins.ListModelMixin,
             response["result"] = result.RESULT_SUCCESS
         else:
             response["result"] = result.RESULT_FAILURE
-            response["error"] = "This Event id does not exist"
+            response["errors"] = ["This Event id does not exist"]
             
     
         return Response(response, status=status.HTTP_200_OK)
@@ -83,6 +167,7 @@ class EventViewSet(mixins.ListModelMixin,
         """
         response = {}
         events = Event.objects.pending()
+        response["result"] = result.RESULT_SUCCESS
         response["data"] = EventSerializer(events, many=True).data
         
         return Response(response, status=status.HTTP_200_OK)

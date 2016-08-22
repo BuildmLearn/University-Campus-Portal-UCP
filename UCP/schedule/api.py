@@ -29,8 +29,10 @@ class ScheduleViewSet(viewsets.ViewSet):
     authentication_classes = (TokenAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
     
-    def create(self,request):
+    @list_route(methods=['POST'])
+    def add(self,request):
         """
+        Add a new Schedule
         ---
         parameters:
             - name : schedule_file
@@ -76,7 +78,7 @@ class ScheduleViewSet(viewsets.ViewSet):
         
     
     def get_serializer_class(self):
-        if self.action == "create":
+        if self.action == "add":
             return ScheduleCreateSerializer
         else:
             return ScheduleSerializer
