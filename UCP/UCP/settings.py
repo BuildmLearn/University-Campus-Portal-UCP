@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'news_event',
     'result',
     'schedule',
+    'corsheaders',
     'rest_framework',
     'nested_admin',
     'django.contrib.admin',
@@ -55,6 +56,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.COrsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -65,6 +67,11 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'UCP.urls'
+
+CORS_ORIGIN_WHITELIST = (
+    'gsoc.pranavtiwari.xyz',
+)
+
 
 TEMPLATES = [
     {
