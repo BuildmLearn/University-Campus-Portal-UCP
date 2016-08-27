@@ -68,9 +68,20 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'UCP.urls'
 
-CORS_ORIGIN_WHITELIST = (
-    'gsoc.pranavtiwari.xyz',
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'localhost:2000',
+    'pranavtiwari.xyz'
+]
+CORS_ALLOW_METHODS = (
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
 )
+CORS_ORIGIN_REGEX_WHITELIST = ('^(http?://)?([\w-]+\.)?pranavtiwari\.xyz\/?(\/[.\w]*)*',)
 
 
 TEMPLATES = [
