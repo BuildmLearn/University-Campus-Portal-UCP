@@ -23,14 +23,20 @@ from UCP.functions import get_base_context
 
 
 class Login(View):
-    
+    """
+    This view class handles login of a user to the portal
+    """
     def get(self, request):
+        """
+        returns the login/register page.
+        If the user is already logged in then this returns the home page
+        """
         context = {}
         context["is_login_page"] = True
         
         if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
+            
             context = get_base_context(request)
-            print context["user"].followed_tags.all()
             return render(request, 'home.html', context)
             
         return render(request, 'login-register.html', context)
@@ -46,6 +52,9 @@ class Login(View):
             return render(request, 'login-register.html', context)
     
     def post(self, request):
+        """
+        endpoint for the login form submission
+        """
         context = {}
         context["is_login_page"] = True
         
@@ -67,18 +76,33 @@ class Login(View):
 class Logout(View):
     
     def get(self, request):
-        
+        """
+        Logs out the user using the django.contrib.auth.logout function
+        """
         django_logout(request)
         return redirect('/user/login')
 
 
 class Register(View):
+    """
+    Handles Users registration to the portal
     
+    """
     def get(self, request):
+        """
+        Returns the login register page.
+        If the user is already logged in, it returns the home page
+        """
+        context = {}
+        if request.user.is_authenticated() and UserProfile.objects.filter(user=request.user).exists():
+            context = get_base_context(request)
+            return render(request, 'home.html', context)
         return render(request, 'login-register.html')
         
     def post(self, request):
-
+        """
+        endpoint for the user registeration form
+        """
         context={}
         
         response = register(request)
@@ -91,7 +115,10 @@ class Register(View):
 class ForgotPassword(View):
     
     def get(self, request):
-        
+        """
+        recieves the email of the user as a GET parameter and sends a password reset email if the email 
+        belongs to a valid user
+        """
         context={}
         response = forgot_password(request)
         context["message"] = get_response_text(response)
@@ -107,7 +134,9 @@ class ForgotPassword(View):
 class ResetPassword(View):
 
    def post(self, request):
-
+       """
+       Resets user password using a code mailed to the user
+       """
        context={}
        response = reset_password(request)
        context["message"] = get_response_text(response)
@@ -122,7 +151,10 @@ class ResetPassword(View):
 class PendingEvents(View):
     
     def get(self, request):
-        
+        """
+        Display a list of events pending for approval
+        visible only to users with a moderator status
+        """
         context = {}
         user = get_user_details(request)
         context["user"] = user
@@ -137,6 +169,10 @@ class PendingEvents(View):
 class ApproveEvent(View):
     
     def get(self, request, pk):
+        """
+        Change status of a pending event with id pk to approved
+        visible only to users with a moderator status
+        """
         user = get_user_details(request)
         context = {}
         
@@ -155,6 +191,10 @@ class ApproveEvent(View):
 class RejectEvent(View):
     
     def get(self, request, pk):
+        """
+        Change status of a pending event with id pk to rejected
+        visible only to users with a moderator status
+        """
         user = get_user_details(request)
         context = {}
         
@@ -173,7 +213,9 @@ class RejectEvent(View):
 class EditProfile(View):
     
     def get(self, request):
-        
+        """
+        returns the edit profile page for the user
+        """
         context={}
         
         user = get_user_details(request)
@@ -182,12 +224,13 @@ class EditProfile(View):
             context["male"] = True
         else:
             context["male"] = False
-        print user
-        
-        print context
+            
         return render(request, 'edit-profile.html', context)
     
     def post(self, request):
+        """
+        end point for the edit profile form
+        """
         context={}
         
         response = update_profile(request)
@@ -208,18 +251,26 @@ class EditProfile(View):
 class Profile(View):
     
     def get(self, request, pk):
-        
+        """
+        profile page for user with id pk
+        """
         context=get_base_context(request)
         
+        # As base context already has a key 'user' that contains the logged in user, the details of the user with id pk, whose profile page is
+        # to be displayed is saved as other_user
         context['other_user'] = get_user_profile(pk)
         
         return render(request, 'profile.html', context)
 
 
 class TagPage(View):
-    
+    """
+    The page for a tag, that has a tabulated list of all items which have that tag
+    """
     def get(self, request):
-        
+        """
+        returns tag page for tag with id pk
+        """
         context=get_base_context(request)
         tag = Tag.objects.get(name = request.GET["tag"])
         context["tag"] = tag
@@ -236,7 +287,9 @@ class TagPage(View):
 
 
 class VerificationPage(View):
-    
+    """
+    page for the verifying user's email id. the link to this page is send in the verificaion email
+    """
     def get(self, request):
         
         context={}
