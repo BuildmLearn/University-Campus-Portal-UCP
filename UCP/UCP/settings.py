@@ -68,10 +68,11 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'UCP.urls'
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
-    'localhost:2000',
-    'pranavtiwari.xyz'
+    '127.0.0.1:2000',
+    'pranavtiwari.xyz',
+    'gsoc.pranavtiwari.xyz',
 ]
 CORS_ALLOW_METHODS = (
     'GET',
