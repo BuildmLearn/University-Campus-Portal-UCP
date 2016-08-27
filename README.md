@@ -32,7 +32,10 @@ EMAIL_HOST_USER = 'your_smtp_username'
 EMAIL_HOST_PASSWORD = 'your_smtp_password'
 EMAIL_PORT = your_smtp_port_number
     ```
-6. Run python migrations.
+6.  Other Settings you can choose to personalize the portal are SITE_TITLE, LOGO and THEME
+
+    ```
+7. Run python migrations.
     
     ```bash
     python manage.py makemigrations
