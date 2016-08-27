@@ -1,3 +1,9 @@
+"""
+Views file for Results App
+
+contains views for the frontend pages of the Results App
+"""
+
 from django.views.generic import ListView, View
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -12,11 +18,12 @@ from result import functions
 from UCP.functions import get_base_context
 from UCP.settings import PAGE_SIZE
 
-# Create your views here.
-
 
 class ResultList(ListView):
-    
+    """
+    Returns paginated list of results
+    if tag is provided as a query, the list is filtered by that tag
+    """
     model = Result
     context_object_name = 'results'    
 
@@ -56,9 +63,17 @@ class ResultList(ListView):
         
 
 class ResultCreate(View):
+    """
+    Handles creation of new results
     
+    TO DO -
+    restrict creation of results to users with a teacher status
+    """
     @method_decorator(login_required)
     def get(self, request):
+        """
+        returns add result form
+        """
         context = get_base_context(request)
         context["tags"] = get_all_tags()
 
@@ -66,6 +81,9 @@ class ResultCreate(View):
     
     @method_decorator(login_required)
     def post(self, request):
+        """
+        create new result with data sent from the add result form
+        """
         context = get_base_context(request)
         response = functions.add_result(request)
         

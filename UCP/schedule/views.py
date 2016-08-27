@@ -14,7 +14,10 @@ from UCP.settings import PAGE_SIZE
 
 
 class ScheduleList(ListView):
-    
+    """
+    Returns paginated list of schedules
+    if tag is provided as a query, the list is filtered by that tag
+    """
     model = Schedule
     context_object_name = 'schedules'    
 
@@ -53,7 +56,12 @@ class ScheduleList(ListView):
         
 
 class ScheduleCreate(View):
+    """
+    Handles creation of new schedules
     
+    TO DO -
+    restrict creation of schedules to users with a teacher status
+    """
     @method_decorator(login_required)
     def get(self, request):
         context = get_base_context(request)
